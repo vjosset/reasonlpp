@@ -11,3 +11,6 @@ In its current state, this firmware has support for the Reason Combinator.
 
 For instructions on using this firmware with your Launchpad Pro, see Dave's instructions here:
 https://github.com/dvhdr/launchpad-pro/blob/master/README.md
+
+Button map:
+![Button Map](LaunchpadLayoutTemplate.png)
