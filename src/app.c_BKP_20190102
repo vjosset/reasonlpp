@@ -1,0 +1,533 @@
+/******************************************************************************
+ 
+ Copyright (c) 2015, Focusrite Audio Engineering Ltd.
+ All rights reserved.
+ 
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions are met:
+ 
+ * Redistributions of source code must retain the above copyright notice, this
+ list of conditions and the following disclaimer.
+ 
+ * Redistributions in binary form must reproduce the above copyright notice,
+ this list of conditions and the following disclaimer in the documentation
+ and/or other materials provided with the distribution.
+ 
+ * Neither the name of Focusrite Audio Engineering Ltd., nor the names of its
+ contributors may be used to endorse or promote products derived from
+ this software without specific prior written permission.
+ 
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ 
+ *****************************************************************************/
+
+//______________________________________________________________________________
+//
+// Headers
+//______________________________________________________________________________
+
+#include "app.h"
+
+//______________________________________________________________________________
+//
+// This is where the fun is!  Add your code to the callbacks below to define how
+// your app behaves.
+//
+// In this example, we either render the raw ADC data as LED rainbows or store
+// and recall the pad state from flash.
+//______________________________________________________________________________
+
+/*
+
+	Reason Combinator
+		Rotary1 - 71
+		Rotary2 - 72
+		Rotary3 - 73
+		Rotary4 - 74
+		
+		Button1 - 75
+		Button2 - 76
+		Button3 - 77
+		Button4 - 78
+
+		Pad 1-1 - Note 36
+		Pad 1-2 - Note 37
+		Pad 1-3 - Note 38
+		
+*/
+
+// store ADC frame pointer
+//static const u16 *g_ADC = 0;
+
+// Define bool type
+typedef int bool;
+#define true 1
+#define false 0
+
+
+// Current octave
+static u8 currentoctave = 1;
+
+// Button shortcuts
+#define TOP1 		91
+#define TOP2 		92
+#define TOP3 		93
+#define TOP4 		94
+#define TOP5 		95
+#define TOP6 		96
+#define TOP7 		97
+#define TOP8 		98
+
+#define LEFT1 		80
+#define LEFT2 		70
+#define LEFT3 		60
+#define LEFT4 		50
+#define LEFT5 		40
+#define LEFT6 		30
+#define LEFT7 		20
+#define LEFT8 		10
+
+#define RIGHT1		19
+#define RIGHT2		29
+#define RIGHT3		39
+#define RIGHT4		49
+#define RIGHT5		59
+#define RIGHT6		69
+#define RIGHT7		79
+#define RIGHT8		89
+
+#define BOTTOM1		 1
+#define BOTTOM2		 2
+#define BOTTOM3		 3
+#define BOTTOM4		 4
+#define BOTTOM5		 5
+#define BOTTOM6		 6
+#define BOTTOM7		 7
+#define BOTTOM8		 8
+
+#define PAD11		11
+#define PAD12		12
+#define PAD13		13
+#define PAD14		14
+#define PAD15		15
+#define PAD16		16
+#define PAD17		17
+#define PAD18		18
+
+#define PAD21		21
+#define PAD22		22
+#define PAD23		23
+#define PAD24		24
+#define PAD25		25
+#define PAD26		26
+#define PAD27		27
+#define PAD28		28
+
+#define PAD31		31
+#define PAD32		32
+#define PAD33		33
+#define PAD34		34
+#define PAD35		35
+#define PAD36		36
+#define PAD37		37
+#define PAD38		38
+
+#define PAD41		41
+#define PAD42		42
+#define PAD43		43
+#define PAD44		44
+#define PAD45		45
+#define PAD46		46
+#define PAD47		47
+#define PAD48		48
+
+#define PAD51		51
+#define PAD52		52
+#define PAD53		53
+#define PAD54		54
+#define PAD55		55
+#define PAD56		56
+#define PAD57		57
+#define PAD58		58
+
+#define PAD61		61
+#define PAD62		62
+#define PAD63		63
+#define PAD64		64
+#define PAD65		65
+#define PAD66		66
+#define PAD67		67
+#define PAD68		68
+
+#define PAD71		71
+#define PAD72		72
+#define PAD73		73
+#define PAD74		74
+#define PAD75		75
+#define PAD76		76
+#define PAD77		77
+#define PAD78		78
+
+#define PAD81		81
+#define PAD82		82
+#define PAD83		83
+#define PAD84		84
+#define PAD85		85
+#define PAD86		86
+#define PAD87		87
+#define PAD88		88
+
+#define BUTTON_COUNT 100
+
+//Variables for button values 1-4
+static u8 button1 = 0;
+static u8 button2 = 0;
+static u8 button3 = 0;
+static u8 button4 = 0;
+
+//Color constants
+static u8 color_off[3] 		= { 0,  0,  0};
+static u8 color_wht[3] 		= {63, 63, 63};
+
+static u8 color_red[3] 		= {63,  0,  0};
+static u8 color_grn[3] 		= { 0, 63,  0};
+static u8 color_blu[3] 		= { 0,  0, 63};
+
+static u8 color_ylw[3] 		= {63, 63,  0};
+static u8 color_org[3] 		= {63, 32,  0};
+static u8 color_dor[3] 		= {63, 16,  0};
+
+//Colorutton presses
+static u8 color_press[3]	= {63, 63, 63};
+
+static u8 color_button_off[3] = {0, 0, 16};
+static u8 color_button_on[3] = {0, 0, 63};
+
+//Default map of pad colors (init and returning to default state)
+static u8 color_map[BUTTON_COUNT][3] = 
+{  
+	{ 0,  0,  0}, {63,  0,  0}, {63,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, {63,  0,  0}, {63,  0,  0}, {63,  0,  0}, { 0,  0,  0},
+	{ 0,  0,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0,  0},
+	{ 0,  0,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0,  0}, 
+	{ 0,  0,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0,  0}, 
+	{ 0,  0,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0,  0}, 
+	{ 0,  0,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0},
+	{ 0,  0,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, 
+	{ 0,  0,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, 
+	{ 0,  0,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, 
+	{ 0,  0,  0}, {63,  0,  0}, {63,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0,  0}
+};
+
+static const u8 note_map[BUTTON_COUNT] =
+{
+	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
+	 0, 24, 25, 26, 27,  0,  0,  0,  0,  0, 
+	 0, 28, 29, 30, 31,  0,  0,  0,  0,  0, 
+	 0, 32, 33, 34, 35,  0,  0,  0,  0,  0, 
+	 0, 36, 37, 38, 39,  0,  0,  0,  0,  0, 
+	 0, 40, 41, 42, 43,  0,  0,  0,  0,  0, 
+	 0, 44, 45, 46, 47,  0,  0,  0,  0,  0, 
+	 0, 48, 49, 50, 51,  0,  0,  0,  0,  0, 
+	 0, 52, 53, 54, 55,  0,  0,  0,  0,  0,
+	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0
+};
+ 
+//______________________________________________________________________________
+/**
+ * Returns a value indicating whether the specified button index is a pad (as opposed to a util button)
+ */
+bool is_pad(u8 index)
+{
+	return index > 10 && index < 89 && index % 10 != 0 && index % 10 != 9;
+}
+
+void set_color_map(u8 index, u8 color[])
+{
+	color_map[index][0] = color[0];
+	color_map[index][1] = color[1];
+	color_map[index][2] = color[2];
+}
+
+/**
+ * Called when the user presses or releases any button or pad on the control surface.
+ *
+ * @param type - TYPEPAD for normal pads or buttons, TYPESETUP for the Setup button
+ * @param index - The index of the button, as detailed at the start of this file.
+ * @param value - 0 for release, nonzero for press.
+ */
+void app_surface_event(u8 type, u8 index, u8 value)
+{
+	bool is_release = value == 0;
+	
+	//Button press - Set the pad to blue
+	if (!is_release)
+	{		
+		//Pad press - Make the pad blue
+		hal_plot_led(TYPEPAD, index, color_press[0], color_press[1], color_press[2]);
+	}
+	else
+	{
+		//Pad release - Set the pad to original color
+		hal_plot_led(TYPEPAD, index, color_map[index][0], color_map[index][1], color_map[index][2]);
+	}
+	
+	
+	if (type == TYPEPAD)
+	{
+		//Check if this is a note or a control button
+		if (is_pad(index))
+		{
+			//This is a pad
+			
+			//Check if this is one of our note pads (left half of the pads)
+			if (index % 10 < 5)
+			{
+				//This is a note pad
+				if (!is_release)
+				{
+					//User pressed the pad
+					//	Send NOTEON
+					hal_send_midi(USBMIDI, NOTEON | 0, note_map[index] + (currentoctave * 12), value);
+				}
+				else
+				{
+					//User released the pad
+					//	Send NOTEOFF
+					hal_send_midi(USBMIDI, NOTEOFF | 0, note_map[index] + (currentoctave * 12), value);
+				}
+			}
+			else
+			{
+				//This is a fader pad
+				//	Send the corresponding value through MIDI
+				//	Make this pad and the ones below it green
+				//	Make the pads above it dark/off
+				
+				//Calculate the CC number (71-74)
+				u8 cc_number = (index % 10) + 66;
+				
+				//Calculate the value
+				u8 cc_value = ((index / 10) - 1) * 18;
+				
+				hal_send_midi(USBMIDI, CC | 0, cc_number, cc_value);
+				
+				//Update the pads below this pad
+				for (u8 i = index; i > 10; i -= 10)
+				{
+					hal_plot_led(TYPEPAD, i, color_blu[0], color_blu[1], color_blu[2]);
+				}
+				
+				//Update the pads above this pad (turn them off)
+				for (u8 i = index + 10; i < 90; i += 10)
+				{
+					hal_plot_led(TYPEPAD, i, color_off[0], color_off[1], color_off[2]);
+				}
+			}
+		}
+		else
+		{
+			//This is a util button
+			if (!is_release)
+			{
+				switch (index)
+				{
+					case TOP1:
+						//Octave up
+						if (currentoctave < 7)
+						{
+							currentoctave++;
+						}
+						break;
+					case TOP2:
+						//Octave down
+						if (currentoctave > 0)
+						{
+							currentoctave--;
+						}
+						break;
+					case TOP5:
+						//CC 75
+						//Toggle the value
+						if (button1 == 0)
+						{
+							button1 = 127;
+							//Set the color to indicate the current value
+							//color_map[TOP5][0] = 0; color_map[TOP5][1] = 0; color_map[TOP5][2] = 63;
+							set_color_map(TOP5, color_blu);
+						}
+						else
+						{
+							button1 = 0;
+							//Set the color to indicate the current value
+							//color_map[TOP5][0] = 0; color_map[TOP5][1] = 0; color_map[TOP5][2] = 8;
+							set_color_map(TOP5, {0, 0, 8});
+						}
+						hal_send_midi(USBMIDI, CC | 0, 75, button1);
+						break;
+					case TOP6:
+						//CC 76
+						//Toggle the value
+						if (button2 == 0)
+						{
+							button2 = 127;
+							//Set the color to indicate the current value
+							//color_map[TOP6][0] = 0; color_map[TOP6][1] = 0; color_map[TOP6][2] = 63;
+							set_color_map(TOP6, color_blu);
+						}
+						else
+						{
+							button2 = 0;
+							//Set the color to indicate the current value
+							//color_map[TOP6][0] = 0; color_map[TOP6][1] = 0; color_map[TOP6][2] = 8;
+							set_color_map(TOP6, {0, 0, 8});
+						}
+						hal_send_midi(USBMIDI, CC | 0, 76, button2);
+						break;
+					case TOP7:
+						//CC 77
+						//Toggle the value
+						if (button3 == 0)
+						{
+							button3 = 127;
+							//Set the color to indicate the current value
+							//color_map[TOP7][0] = 0; color_map[TOP7][1] = 0; color_map[TOP7][2] = 63;
+							set_color_map(TOP7, color_blu);
+						}
+						else
+						{
+							button3 = 0;
+							//Set the color to indicate the current value
+							//color_map[TOP7][0] = 0; color_map[TOP7][1] = 0; color_map[TOP7][2] = 8;
+							set_color_map(TOP7, {0, 0, 8});
+						}
+						hal_send_midi(USBMIDI, CC | 0, 77, button3);
+						break;
+					case TOP8:
+						//CC 78
+						//Toggle the value
+						if (button4 == 0)
+						{
+							button4 = 127;
+							//Set the color to indicate the current value
+							//color_map[TOP8][0] = 0; color_map[TOP8][1] = 0; color_map[TOP8][2] = 63;
+							set_color_map(TOP8, color_blu);
+						}
+						else
+						{
+							button4 = 0;
+							//Set the color to indicate the current value
+							//color_map[TOP8][0] = 0; color_map[TOP8][1] = 0; color_map[TOP8][2] = 8;
+							set_color_map(TOP8, {0, 0, 8});
+						}
+						hal_send_midi(USBMIDI, CC | 0, 78, button4);
+						
+						break;
+					case BOTTOM1:
+						break;
+					case BOTTOM2:
+						break;
+					case BOTTOM5:
+						break;
+					case BOTTOM6:
+						//Transport - Stop
+						hal_send_midi(USBMIDI, MIDISTOP, 0, 0);
+						break;
+					case BOTTOM7:
+						//Transport - Play/pause
+						hal_send_midi(USBMIDI, MIDICONTINUE, 0, 0);
+						break;
+					case BOTTOM8:
+						//Transport - Record
+						//	???? [TBD]
+						break;
+					default:
+						break;
+				}
+				
+				if (currentoctave == 0)
+				{
+					//Disable the octave down button
+					//color_map[TOP2][0] = color_off[0]; color_map[TOP2][1] = color_off[1]; color_map[TOP2][2] = color_off[2];
+					set_color_map(TOP2, color_off);
+				}
+				else
+				{
+					//Enable the octave down button
+					//color_map[TOP2][0] = color_red[0]; color_map[TOP2][1] = color_red[1]; color_map[TOP2][2] = color_red[2];
+					set_color_map(TOP2, color_red);
+				}
+				
+				if (currentoctave == 7)
+				{
+					//Disable the octave up button
+					//color_map[TOP1][0] = color_off[0]; color_map[TOP1][1] = color_off[1]; color_map[TOP1][2] = color_off[2];
+					set_color_map(TOP1, color_off);
+				}
+				else
+				{
+					//Enable the octave up button
+					//hal_plot_led(TYPEPAD, TOP1, color_red[0], color_red[1], color_red[2]);
+					//color_map[TOP1][0] = color_red[0]; color_map[TOP1][1] = color_red[1]; color_map[TOP1][2] = color_red[2];
+					set_color_map(TOP1, color_red);
+				}
+			}
+		}
+	}
+}
+
+//______________________________________________________________________________
+
+void app_midi_event(u8 port, u8 status, u8 d1, u8 d2)
+{
+}
+
+//______________________________________________________________________________
+
+void app_sysex_event(u8 port, u8 * data, u16 count)
+{
+}
+
+//______________________________________________________________________________
+
+void app_aftertouch_event(u8 index, u8 value)
+{
+    if (is_pad(index) && index % 10 < 5)
+	{
+		//This is a note pad
+		hal_send_midi(USBMIDI, POLYAFTERTOUCH | 0, index, value);
+	}
+}
+
+//______________________________________________________________________________
+
+void app_cable_event(u8 type, u8 value)
+{
+}
+
+//______________________________________________________________________________
+
+void app_timer_event()
+{
+}
+
+//______________________________________________________________________________
+
+void app_init(const u16 *adc_raw)
+{
+	//Set up starting octave
+	currentoctave = 1;
+	
+	for (u8 i = 0; i < BUTTON_COUNT; i++)
+	{
+		hal_plot_led(TYPEPAD, i, color_map[i][0], color_map[i][1], color_map[i][2]);
+	}
+}
