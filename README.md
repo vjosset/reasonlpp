@@ -1,6 +1,6 @@
 # Reason Launchpad Pro Firmware
 
-This project is a fork of Dave Hoder's open-source Launchpad Pro firmware (https://github.com/dvhdr/launchpad-pro), with custom instructions to play nice with Reason.
+This project is a fork of Dave Hodder's open-source Launchpad Pro firmware (https://github.com/dvhdr/launchpad-pro), with custom instructions to play nice with Reason.
 
 In its current state, this firmware has support for the Reason Combinator.
 
