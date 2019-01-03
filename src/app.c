@@ -409,14 +409,19 @@ void event_util(u8 index, u8 value) {
 				toggle_full_velocity();
 				break;
 			case BTN_PREVINST:
+				//Not implemented
 				break;
 			case BTN_NEXTINST:
+				//Not implemented
 				break;
 			case BTN_PLAY:
+				//Not implemented
 				break;
 			case BTN_STOP:
+				//Not implemented
 				break;
 			case BTN_REC:
+				//Not implemented
 				break;
 		}
 	}
