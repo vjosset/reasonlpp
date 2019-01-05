@@ -64,23 +64,23 @@ Map:
 
 
 	    +---+---+---+---+---+---+---+---+
-	    | UP|DWN|LFT|RGT|   |   |   |   |
+	    | UP|DWN|   |   | M1| M2| M3| M4|
 	+---+---+---+---+---+---+---+---+---+---+
-	|   | E3| F3|F#3| G3| F1| F2| F3| F4|   +
+	|   | E3| F3|F#3| G3| F1| F2| F3| F4|CH8+
 	+---+---+---+---+---+---+---+---+---+---+
-	|   | C3|C#3| D3|D#3| F1| F2| F3| F4|   +
+	|   | C3|C#3| D3|D#3| F1| F2| F3| F4|CH7+
 	+---+---+---+---+---+---+---+---+---+---+
-	|   |G#2| A2|A#2| B2| F1| F2| F3| F4|   +
+	|   |G#2| A2|A#2| B2| F1| F2| F3| F4|CH6+
 	+---+---+---+---+---+---+---+---+---+---+
-	|   | E2| F2|F#2| G2| F1| F2| F3| F4|   +
+	|   | E2| F2|F#2| G2| F1| F2| F3| F4|CH5+
 	+---+---+---+---+---+---+---+---+---+---+
-	|   | C2|C#2| D2|D#2| F1| F2| F3| F4|   +
+	|   | C2|C#2| D2|D#2| F1| F2| F3| F4|CH4+
 	+---+---+---+---+---+---+---+---+---+---+
-	|   |G#1| A1|A#1| B1| F1| F2| F3| F4|   +
+	|   |G#1| A1|A#1| B1| F1| F2| F3| F4|CH3+
 	+---+---+---+---+---+---+---+---+---+---+
-	|   | E1| F1|F#1| G1| F1| F2| F3| F4|   +
+	|   | E1| F1|F#1| G1| F1| F2| F3| F4|CH2+
 	+---+---+---+---+---+---+---+---+---+---+
-	|VEL| C1|C#1| D1|D#1| T1| T2| T3| T4|   +
+	|VEL| C1|C#1| D1|D#1| T1| T2| T3| T4|CH1+
 	+---+---+---+---+---+---+---+---+---+---+
 	    |   |   |   |   |   |STP|PLY|REC|
 	    +---+---+---+---+---+---+---+---+
@@ -101,15 +101,24 @@ bool full_velocity = false;
 //Midi channel for output
 u8 channel_number = 0;
 
+//Current page/mode
+u8 mode = 0;
+
 //Button shortcuts
 #define BTN_OCTAVEUP 		TOP1
 #define BTN_OCTAVEDOWN 		TOP2
 #define BTN_TOGGLEFULLVEL 	LEFT1
-#define BTN_PREVINST		TOP3
-#define BTN_NEXTINST		TOP4
 #define BTN_PLAY			BOTTOM6
 #define BTN_STOP			BOTTOM7
 #define BTN_REC				BOTTOM8
+
+//Page/Mode Shortcuts
+#define MODE_NOTES			0
+#define MODE_MIXER			1
+#define MODE_FX				2
+
+static u8 color_util_on[3]	= {63, 0, 63};
+static u8 color_util_off[3]	= { 4, 0,  4};
 
 //Color constants
 static u8 color_off[3] 		= { 0,  0,  0};
@@ -139,30 +148,30 @@ static u8 color_fader_off[3] = {0, 0, 4};
 static u8 default_color_map[BUTTON_COUNT][3] = 
 {  
 	{ 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, {63,  0,  0}, {63,  0,  0}, {63,  0,  0}, { 0,  0,  0},
-	{ 4,  0,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  0,  0},
-	{ 0,  0,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0,  0}, 
-	{ 0,  0,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0,  0}, 
-	{ 0,  0,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0,  0}, 
-	{ 0,  0,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0,  0},
-	{ 0,  0,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  0}, 
-	{ 0,  0,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  0}, 
-	{ 0,  0,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  0}, 
-	{ 0,  0,  0}, {63,  0,  0}, {63,  0,  0}, { 0,  0,  0}, {63,  0,  0}, {63,  0, 63}, {63,  0, 63}, {63,  0, 63}, {63,  0, 63}, { 0,  0,  0}
+	{ 4,  0,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, {63,  0, 63},
+	{ 0,  0,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
+	{ 0,  0,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
+	{ 0,  0,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
+	{ 0,  0,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4},
+	{ 0,  0,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
+	{ 0,  0,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
+	{ 0,  0,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
+	{ 0,  0,  0}, {63,  0,  0}, {63,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, {63,  0, 63}, {63,  0, 63}, {63,  0, 63}, {63,  0, 63}, { 0,  0,  0}
 };
 
 //Current map of pad colors
 static u8 color_map[BUTTON_COUNT][3] = 
 {  
 	{ 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, {63,  0,  0}, {63,  0,  0}, {63,  0,  0}, { 0,  0,  0},
-	{ 4,  0,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  0,  0},
-	{ 0,  0,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0,  0}, 
-	{ 0,  0,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0,  0}, 
-	{ 0,  0,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0,  0}, 
-	{ 0,  0,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0,  0},
-	{ 0,  0,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  0}, 
-	{ 0,  0,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  0}, 
-	{ 0,  0,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  0}, 
-	{ 0,  0,  0}, {63,  0,  0}, {63,  0,  0}, { 0,  0,  0}, {63,  0,  0}, {63,  0, 63}, {63,  0, 63}, {63,  0, 63}, {63,  0, 63}, { 0,  0,  0}
+	{ 4,  0,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, {63,  0, 63},
+	{ 0,  0,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
+	{ 0,  0,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
+	{ 0,  0,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
+	{ 0,  0,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4},
+	{ 0,  0,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
+	{ 0,  0,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
+	{ 0,  0,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
+	{ 0,  0,  0}, {63,  0,  0}, {63,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, {63,  0, 63}, {63,  0, 63}, {63,  0, 63}, {63,  0, 63}, { 0,  0,  0}
 };
 
 static const u8 note_map[BUTTON_COUNT] =
@@ -243,7 +252,7 @@ void draw_color_map() {
 		hal_plot_led(TYPEPAD, i, color_map[i][0], color_map[i][1], color_map[i][2]);
 	}
 }
- 
+
 /**
  * Returns a value indicating whether the specified button index is a pad (as opposed to a util button)
  */
@@ -298,11 +307,11 @@ void octave_up() {
 	
 	if (current_octave == 7) {
 		//Disable octave up button, already at max
-		set_color_map(BTN_OCTAVEUP, color_off);
+		set_color_map(BTN_OCTAVEUP, color_util_off);
 	}
 	
 	//Enable octave down button
-	set_color_map(BTN_OCTAVEDOWN, color_red);
+	set_color_map(BTN_OCTAVEDOWN, color_util_on);
 }
 
 /**
@@ -315,45 +324,11 @@ void octave_down() {
 	
 	if (current_octave == 0) {
 		//Disable octave down button, already at min
-		set_color_map(BTN_OCTAVEDOWN, color_off);
+		set_color_map(BTN_OCTAVEDOWN, color_util_off);
 	}
 	
 	//Enable octave up button
-	set_color_map(BTN_OCTAVEUP, color_red);
-}
-
-/**
- * Increments the current midi channel
- */
-void channel_up() {
-	if (channel_number < 15) {
-		channel_number++;
-	}
-	
-	if (channel_number == 15) {
-		//Disable channel up button, already at max
-		set_color_map(BTN_NEXTINST, color_off);
-	}
-	
-	//Enable channel down button
-	set_color_map(BTN_PREVINST, color_red);
-}
-
-/**
- * Decrements the current midi channel
- */
-void channel_down() {
-	if (channel_number > 0) {
-		channel_number--;
-	}
-	
-	if (channel_number == 0) {
-		//Disable channel down button, already at min
-		set_color_map(BTN_PREVINST, color_off);
-	}
-	
-	//Enable channel up button
-	set_color_map(BTN_NEXTINST, color_red);
+	set_color_map(BTN_OCTAVEUP, color_util_on);
 }
 
 /**
@@ -364,6 +339,52 @@ void toggle_full_velocity() {
 	set_color_map(BTN_TOGGLEFULLVEL, full_velocity ? color_red : color_red_dark);
 }
 
+/**
+ * Sets the current channel number (0-based)
+ */
+void set_channel(u8 channel) {
+	channel_number = channel;
+	
+	//Set the LED to indicate the current channel
+	u8 channel_pad = 0;
+	
+	//Clear all the channel indicators
+	set_color_map(RIGHT1, color_util_off);
+	set_color_map(RIGHT2, color_util_off);
+	set_color_map(RIGHT3, color_util_off);
+	set_color_map(RIGHT4, color_util_off);
+	set_color_map(RIGHT5, color_util_off);
+	set_color_map(RIGHT6, color_util_off);
+	set_color_map(RIGHT7, color_util_off);
+	set_color_map(RIGHT8, color_util_off);
+	
+	switch(channel_number) {
+		case 0:
+			set_color_map(RIGHT1, color_util_on);
+			break;
+		case 1:
+			set_color_map(RIGHT2, color_util_on);
+			break;
+		case 2:
+			set_color_map(RIGHT3, color_util_on);
+			break;
+		case 3:
+			set_color_map(RIGHT4, color_util_on);
+			break;
+		case 4:
+			set_color_map(RIGHT5, color_util_on);
+			break;
+		case 5:
+			set_color_map(RIGHT6, color_util_on);
+			break;
+		case 6:
+			set_color_map(RIGHT7, color_util_on);
+			break;
+		case 7:
+			set_color_map(RIGHT8, color_util_on);
+			break;
+	}
+}
 
 //-----------------------------------------------------------------------------------------
 //                                EVENTS
@@ -445,14 +466,6 @@ void event_util(u8 index, u8 value) {
 			case BTN_TOGGLEFULLVEL:
 				toggle_full_velocity();
 				break;
-			case BTN_PREVINST:
-				//Decrement midi channel
-				channel_down();
-				break;
-			case BTN_NEXTINST:
-				//Increment midi channel
-				channel_up();
-				break;
 			case BTN_PLAY:
 				//Not implemented
 				hal_send_midi(USBMIDI, MIDISTART | channel_number, 0x00, 0x00);
@@ -465,6 +478,39 @@ void event_util(u8 index, u8 value) {
 				//Not implemented
 				hal_send_midi(USBMIDI, 0xBF | channel_number, 0x00, 0x00);
 				break;
+			case RIGHT1:
+				//Set channel 1 (0)
+				set_channel(0);
+				break;
+			case RIGHT2:
+				//Set channel 2
+				set_channel(1);
+				break;
+			case RIGHT3:
+				//Set channel 3
+				set_channel(2);
+				break;
+			case RIGHT4:
+				//Set channel 4
+				set_channel(3);
+				break;
+			case RIGHT5:
+				//Set channel 5
+				set_channel(4);
+				break;
+			case RIGHT6:
+				//Set channel 6
+				set_channel(5);
+				break;
+			case RIGHT7:
+				//Set channel 7
+				set_channel(6);
+				break;
+			case RIGHT8:
+				//Set channel 8
+				set_channel(7);
+				break;
+			
 		}
 	}
 }
