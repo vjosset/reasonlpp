@@ -86,6 +86,65 @@ Map:
 	    +---+---+---+---+---+---+---+---+
 
 */
+//Default color map for "Device" mode
+static const u8 device_color_map[BUTTON_COUNT][3] =
+{  
+	{ 0,  0,  0}, {63,  0, 63}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, {63,  0,  0}, {63,  0,  0}, {63,  0,  0}, { 0,  0,  0},
+	{ 4,  0,  4}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, {63,  0, 63},
+	{63,  0, 63}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
+	{ 4,  0,  4}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
+	{ 4,  0,  4}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
+	{ 4,  0,  4}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4},
+	{ 4,  0,  4}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
+	{ 4,  0,  4}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
+	{ 4,  0,  4}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
+	{ 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 4,  0,  4}, { 4,  0,  4}, {63,  0, 63}, { 4,  0,  4}, { 0,  0,  0}
+};
+
+//Default color map for "Note" mode
+static u8 note_color_map[BUTTON_COUNT][3] =
+{  
+	{ 0,  0,  0}, {63,  0, 63}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, {63,  0,  0}, {63,  0,  0}, {63,  0,  0}, { 0,  0,  0},
+	{ 4,  0,  4}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63,  0, 63},
+	{63,  0, 63}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 4,  0,  4}, 
+	{ 4,  0,  4}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 4,  0,  4}, 
+	{ 4,  0,  4}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 4,  0,  4}, 
+	{ 4,  0,  4}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 4,  0,  4},
+	{ 4,  0,  4}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 4,  0,  4}, 
+	{ 4,  0,  4}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 4,  0,  4}, 
+	{ 4,  0,  4}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 4,  0,  4}, 
+	{ 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 4,  0,  4}, {63,  0, 63}, { 4,  0,  4}, { 4,  0,  4}, { 0,  0,  0}
+};
+
+//Default color map for "Session" mode
+static const u8 session_color_map[BUTTON_COUNT][3] =
+{  
+	{ 0,  0,  0}, {63,  0, 63}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, {63,  0,  0}, {63,  0,  0}, {63,  0,  0}, { 0,  0,  0},
+	{ 4,  0,  4}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, {63,  0, 63},
+	{63,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
+	{ 4,  0,  4}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
+	{ 4,  0,  4}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
+	{ 4,  0,  4}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4},
+	{ 4,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
+	{ 4,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
+	{ 4,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
+	{ 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, {63,  0, 63}, { 4,  0,  4}, { 4,  0,  4}, { 4,  0,  4}, { 0,  0,  0}
+};
+
+//Default color map for "FX" mode
+static const u8 fx_color_map[BUTTON_COUNT][3] =
+{  
+	{ 0,  0,  0}, {63,  0, 63}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, {63,  0,  0}, {63,  0,  0}, {63,  0,  0}, { 0,  0,  0},
+	{ 4,  0,  4}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, {63,  0, 63},
+	{63,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
+	{ 4,  0,  4}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
+	{ 4,  0,  4}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
+	{ 4,  0,  4}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4},
+	{ 4,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
+	{ 4,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
+	{ 4,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
+	{ 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 4,  0,  4}, { 4,  0,  4}, { 4,  0,  4}, {63,  0, 63}, { 0,  0,  0}
+};
 
 // Define bool type
 typedef int bool;
@@ -96,7 +155,7 @@ typedef int bool;
 static u8 current_octave = 1;
 
 //Full velocity toggle
-bool full_velocity = false;
+bool full_velocity = true;
 
 //Midi channel for output
 u8 current_channel = 0;
@@ -147,86 +206,35 @@ static u8 color_toggle_off[3] = {0, 4, 0};
 static u8 color_fader_on[3] = {0, 0, 63};
 static u8 color_fader_off[3] = {0, 0, 4};
 
-//Default map of pad colors (init and returning to default state)
-static u8 default_color_map[BUTTON_COUNT][3] = 
-{  
-	{ 0,  0,  0}, { 4,  0,  4}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, {63,  0,  0}, {63,  0,  0}, {63,  0,  0}, { 0,  0,  0},
-	{ 4,  0,  4}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, {63,  0, 63},
-	{63,  0, 63}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
-	{ 4,  0,  4}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
-	{ 4,  0,  4}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
-	{ 4,  0,  4}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4},
-	{ 4,  0,  4}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
-	{ 4,  0,  4}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
-	{ 4,  0,  4}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
-	{ 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 4,  0,  4}, { 4,  0,  4}, {63,  0, 63}, { 4,  0,  4}, { 0,  0,  0}
-};
-
 //Current map of pad colors
-static u8 color_map[BUTTON_COUNT][3] = 
-{  
-	{ 0,  0,  0}, { 4,  0,  4}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, {63,  0,  0}, {63,  0,  0}, {63,  0,  0}, { 0,  0,  0},
-	{ 4,  0,  4}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, {63,  0, 63},
-	{63,  0, 63}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
-	{ 4,  0,  4}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
-	{ 4,  0,  4}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
-	{ 4,  0,  4}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4},
-	{ 4,  0,  4}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
-	{ 4,  0,  4}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
-	{ 4,  0,  4}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
-	{ 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 4,  0,  4}, { 4,  0,  4}, {63,  0, 63}, { 4,  0,  4}, { 0,  0,  0}
-};
+static u8 color_map[4][8][BUTTON_COUNT][3];
 
 static const u8 note_map[BUTTON_COUNT] =
 {
 	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
-	 0, 24, 25, 26, 27,  0,  0,  0,  0,  0, 
-	 0, 28, 29, 30, 31,  0,  0,  0,  0,  0, 
-	 0, 32, 33, 34, 35,  0,  0,  0,  0,  0, 
-	 0, 36, 37, 38, 39,  0,  0,  0,  0,  0, 
-	 0, 40, 41, 42, 43,  0,  0,  0,  0,  0, 
-	 0, 44, 45, 46, 47,  0,  0,  0,  0,  0, 
-	 0, 48, 49, 50, 51,  0,  0,  0,  0,  0, 
-	 0, 52, 53, 54, 55,  0,  0,  0,  0,  0,
+	 0, 24, 25, 26, 27, 24, 25, 26, 27,  0, 
+	 0, 28, 29, 30, 31, 28, 29, 30, 31,  0, 
+	 0, 32, 33, 34, 35, 32, 33, 34, 35,  0, 
+	 0, 36, 37, 38, 39, 36, 37, 38, 39,  0, 
+	 0, 40, 41, 42, 43, 40, 41, 42, 43,  0, 
+	 0, 44, 45, 46, 47, 44, 45, 46, 47,  0, 
+	 0, 48, 49, 50, 51, 48, 49, 50, 51,  0, 
+	 0, 52, 53, 54, 55, 52, 53, 54, 55,  0,
 	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0
 };
 
-//Maps x-index of fader button to CC number to send
-static const u8 fader_cc_map[10] = { 0, 0, 0, 0, 0, 71, 72, 73, 74, 0 };
+//Maps x-index of fader buttons to CC number to send
+static const u8 session_fader_cc_map[10] = {0, 71, 72, 73, 74, 75, 76, 77, 78, 0 };
+static const u8 device_fader_cc_map[10] = {0, 0, 0, 0, 0, 20, 21, 22, 23, 0 };
+static const u8 fx_fader_cc_map[10] = {0, 110, 111, 112, 113, 114, 115, 116, 117, 0 };
+
+//Maps x-index of toggle buttons to CC number to send
+static const u8 session_toggle_cc_map[10] = {0, 102, 103, 104, 105, 106, 107, 108, 109, 0 };
+static const u8 device_toggle_cc_map[10] = {0, 0, 0, 0, 0, 24, 25, 26, 27, 0 };
+static const u8 fx_toggle_cc_map[10] = {0, 118, 119, 28, 29, 30, 31, 86, 87, 0 };
 
 //Maps y-index of fader button to CC value to send
 static const u8 fader_value_map[10] = { 0, 0, 0, 21, 42, 63, 84, 105, 127, 127 };
-
-//Holds values of the toggles
-static const u8 toggle_cc_map[BUTTON_COUNT] =
-{
-	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
-	 0,  0,  0,  0,  0, 75, 76, 77, 78,  0, 
-	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
-	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
-	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
-	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
-	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
-	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
-	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0
-};
-
-
-//Holds values of the toggles
-static u8 toggle_value_map[BUTTON_COUNT] =
-{
-	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
-	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
-	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
-	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
-	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
-	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
-	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
-	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
-	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0
-};
 
 //-----------------------------------------------------------------------------------------
 //                                HELPER FUNCTIONS
@@ -237,6 +245,16 @@ static u8 toggle_value_map[BUTTON_COUNT] =
  */
 bool is_press(u8 value) {
 	return value != 0;
+}
+
+/**
+ * Returns a value indicating whether the specified toggle is "On"
+ */
+bool is_toggle_on(u8 index) {
+	return
+		color_map[current_mode][current_channel][index][0] == color_toggle_on[0] &&
+		color_map[current_mode][current_channel][index][1] == color_toggle_on[1] &&
+		color_map[current_mode][current_channel][index][2] == color_toggle_on[2];
 }
 
 /**
@@ -252,7 +270,7 @@ bool is_release(u8 value) {
 void draw_color_map() {
 	for (u8 i = 0; i < BUTTON_COUNT; i++) {
 		//Send color_map[i] to the button
-		hal_plot_led(TYPEPAD, i, color_map[i][0], color_map[i][1], color_map[i][2]);
+		hal_plot_led(TYPEPAD, i, color_map[current_mode][current_channel][i][0], color_map[current_mode][current_channel][i][1], color_map[current_mode][current_channel][i][2]);
 	}
 }
 
@@ -267,21 +285,48 @@ bool is_pad(u8 index) {
  * Returns a value indicating whether the specified button index is a note
  */
 bool is_note(u8 index) {
-	return is_pad(index) && (index % 10) < 5;
+	switch(current_mode) {
+		case MODE_DEVICE:
+			return is_pad(index) && (index % 10) < 5;
+		case MODE_NOTE:
+			return is_pad(index);
+		case MODE_SESSION:
+			return false;
+		case MODE_FX:
+			return false;
+	}
 }
 
 /**
  * Returns a value indicating whether the specified button index is a fader
  */
 bool is_fader(u8 index) {
-	return is_pad(index) && (index % 10) > 4 && (index / 10) > 1;
+	switch(current_mode) {
+		case MODE_DEVICE:
+			return is_pad(index) && (index % 10) > 4 && (index / 10) > 1;
+		case MODE_NOTE:
+			return false;
+		case MODE_SESSION:
+			return is_pad(index) && (index / 10) > 1;
+		case MODE_FX:
+			return is_pad(index) && (index / 10) > 1;
+	}
 }
 
 /**
  * Returns a value indicating whether the specified button index is a toggle
  */
 bool is_toggle(u8 index) {
-	return is_pad(index) && (index % 10) > 4 && (index / 10) == 1;
+	switch(current_mode) {
+		case MODE_DEVICE:
+			return is_pad(index) && (index % 10) > 4 && (index / 10) == 1;
+		case MODE_NOTE:
+			return false;
+		case MODE_SESSION:
+			return is_pad(index) && (index / 10) == 1;
+		case MODE_FX:
+			return is_pad(index) && (index / 10) == 1;
+	}
 }
 
 /**
@@ -294,44 +339,20 @@ bool is_util(u8 index) {
 /**
  * Sets the color on color_map for the specified index to the specified color
  */
-void set_color_map(u8 index, u8 color[]) {
-	color_map[index][0] = color[0];
-	color_map[index][1] = color[1];
-	color_map[index][2] = color[2];
+void set_color_map(u8 index, u8 color[], u8 mode) {
+	//Loop through the channels
+	for (u8 i = 0; i < 8; i++) {
+		color_map[mode][i][index][0] = color[0];
+		color_map[mode][i][index][1] = color[1];
+		color_map[mode][i][index][2] = color[2];
+	}
 }
 
-/**
- * Increments the current octave value
- */
-void octave_up() {
-	if (current_octave < 7) {
-		current_octave++;
-	}
-	
-	if (current_octave == 7) {
-		//Disable octave up button, already at max
-		set_color_map(BTN_OCTAVEUP, color_util_off);
-	}
-	
-	//Enable octave down button
-	set_color_map(BTN_OCTAVEDOWN, color_util_on);
-}
-
-/**
- * Decrements the current octave value
- */
-void octave_down() {
-	if (current_octave > 0) {
-		current_octave--;
-	}
-	
-	if (current_octave == 0) {
-		//Disable octave down button, already at min
-		set_color_map(BTN_OCTAVEDOWN, color_util_off);
-	}
-	
-	//Enable octave up button
-	set_color_map(BTN_OCTAVEUP, color_util_on);
+void set_color_map_all_modes(u8 index, u8 color[]) {
+	set_color_map(index, color, MODE_DEVICE);
+	set_color_map(index, color, MODE_NOTE);
+	set_color_map(index, color, MODE_SESSION);
+	set_color_map(index, color, MODE_FX);
 }
 
 /**
@@ -339,7 +360,7 @@ void octave_down() {
  */
 void toggle_full_velocity() {
 	full_velocity = !full_velocity;
-	set_color_map(BTN_TOGGLEFULLVEL, full_velocity ? color_util_on : color_util_off);
+	set_color_map_all_modes(BTN_TOGGLEFULLVEL, full_velocity ? color_util_on : color_util_off);
 }
 
 /**
@@ -349,40 +370,40 @@ void set_channel(u8 channel) {
 	current_channel = channel;
 	
 	//Clear all the channel indicators
-	set_color_map(RIGHT1, color_util_off);
-	set_color_map(RIGHT2, color_util_off);
-	set_color_map(RIGHT3, color_util_off);
-	set_color_map(RIGHT4, color_util_off);
-	set_color_map(RIGHT5, color_util_off);
-	set_color_map(RIGHT6, color_util_off);
-	set_color_map(RIGHT7, color_util_off);
-	set_color_map(RIGHT8, color_util_off);
+	set_color_map_all_modes(RIGHT1, color_util_off);
+	set_color_map_all_modes(RIGHT2, color_util_off);
+	set_color_map_all_modes(RIGHT3, color_util_off);
+	set_color_map_all_modes(RIGHT4, color_util_off);
+	set_color_map_all_modes(RIGHT5, color_util_off);
+	set_color_map_all_modes(RIGHT6, color_util_off);
+	set_color_map_all_modes(RIGHT7, color_util_off);
+	set_color_map_all_modes(RIGHT8, color_util_off);
 	
 	//Set the LED to indicate the current channel
 	switch(current_channel) {
 		case 0:
-			set_color_map(RIGHT1, color_util_on);
+			set_color_map_all_modes(RIGHT1, color_util_on);
 			break;
 		case 1:
-			set_color_map(RIGHT2, color_util_on);
+			set_color_map_all_modes(RIGHT2, color_util_on);
 			break;
 		case 2:
-			set_color_map(RIGHT3, color_util_on);
+			set_color_map_all_modes(RIGHT3, color_util_on);
 			break;
 		case 3:
-			set_color_map(RIGHT4, color_util_on);
+			set_color_map_all_modes(RIGHT4, color_util_on);
 			break;
 		case 4:
-			set_color_map(RIGHT5, color_util_on);
+			set_color_map_all_modes(RIGHT5, color_util_on);
 			break;
 		case 5:
-			set_color_map(RIGHT6, color_util_on);
+			set_color_map_all_modes(RIGHT6, color_util_on);
 			break;
 		case 6:
-			set_color_map(RIGHT7, color_util_on);
+			set_color_map_all_modes(RIGHT7, color_util_on);
 			break;
 		case 7:
-			set_color_map(RIGHT8, color_util_on);
+			set_color_map_all_modes(RIGHT8, color_util_on);
 			break;
 	}
 }
@@ -394,65 +415,68 @@ void set_octave(u8 octave) {
 	current_octave = octave;
 	
 	//Clear all the octave indicators
-	set_color_map(LEFT1, color_util_off);
-	set_color_map(LEFT2, color_util_off);
-	set_color_map(LEFT3, color_util_off);
-	set_color_map(LEFT4, color_util_off);
-	set_color_map(LEFT5, color_util_off);
-	set_color_map(LEFT6, color_util_off);
-	set_color_map(LEFT7, color_util_off);
-	set_color_map(LEFT8, color_util_off);
+	set_color_map_all_modes(LEFT1, color_util_off);
+	set_color_map_all_modes(LEFT2, color_util_off);
+	set_color_map_all_modes(LEFT3, color_util_off);
+	set_color_map_all_modes(LEFT4, color_util_off);
+	set_color_map_all_modes(LEFT5, color_util_off);
+	set_color_map_all_modes(LEFT6, color_util_off);
+	set_color_map_all_modes(LEFT7, color_util_off);
+	set_color_map_all_modes(LEFT8, color_util_off);
 	
 	switch(current_octave) {
 		case 0:
-			set_color_map(LEFT1, color_util_on);
+			set_color_map_all_modes(LEFT1, color_util_on);
 			break;
 		case 1:
-			set_color_map(LEFT2, color_util_on);
+			set_color_map_all_modes(LEFT2, color_util_on);
 			break;
 		case 2:
-			set_color_map(LEFT3, color_util_on);
+			set_color_map_all_modes(LEFT3, color_util_on);
 			break;
 		case 3:
-			set_color_map(LEFT4, color_util_on);
+			set_color_map_all_modes(LEFT4, color_util_on);
 			break;
 		case 4:
-			set_color_map(LEFT5, color_util_on);
+			set_color_map_all_modes(LEFT5, color_util_on);
 			break;
 		case 5:
-			set_color_map(LEFT6, color_util_on);
+			set_color_map_all_modes(LEFT6, color_util_on);
 			break;
 		case 6:
-			set_color_map(LEFT7, color_util_on);
+			set_color_map_all_modes(LEFT7, color_util_on);
 			break;
 		case 7:
-			set_color_map(LEFT8, color_util_on);
+			set_color_map_all_modes(LEFT8, color_util_on);
 			break;
 	}
 }
 
+/**
+ * Sets the current mode
+ */
 void set_mode(u8 mode) {
 	current_mode = mode;
 	
 	//Mark all the mode buttons as off
-	set_color_map(TOP5, color_util_off);
-	set_color_map(TOP6, color_util_off);
-	set_color_map(TOP7, color_util_off);
-	set_color_map(TOP8, color_util_off);
+	set_color_map_all_modes(TOP5, color_util_off);
+	set_color_map_all_modes(TOP6, color_util_off);
+	set_color_map_all_modes(TOP7, color_util_off);
+	set_color_map_all_modes(TOP8, color_util_off);
 	
 	//Set the current mode button on
 	switch(current_mode) {
 		case MODE_SESSION:
-			set_color_map(TOP5, color_util_on);
+			set_color_map_all_modes(TOP5, color_util_on);
 			break;
 		case MODE_NOTE:
-			set_color_map(TOP6, color_util_on);
+			set_color_map_all_modes(TOP6, color_util_on);
 			break;
 		case MODE_DEVICE:
-			set_color_map(TOP7, color_util_on);
+			set_color_map_all_modes(TOP7, color_util_on);
 			break;
 		case MODE_FX:
-			set_color_map(TOP8, color_util_on);
+			set_color_map_all_modes(TOP8, color_util_on);
 			break;
 	}
 }
@@ -467,21 +491,35 @@ void event_note(u8 index, u8 value) {
 		hal_send_midi(USBMIDI, NOTEON | current_channel, note_map[index] + (12 * current_octave), full_velocity ? 127 : value);
 		
 		//Set the pad to its pressed color
-		set_color_map(index, color_pressed);
+		set_color_map(index, color_pressed, current_mode);
 	} else {
 		//Send MIDI note off
 		hal_send_midi(USBMIDI, NOTEON | current_channel, note_map[index] + (12 * current_octave), 0);
 		
 		//Reset the note pad to its default color
-		set_color_map(index, default_color_map[index]);
+		set_color_map(index, note_color_map[index], current_mode);
 	}
 }
 
 void event_toggle(u8 index, u8 value) {
 	if (is_press(value)) {
 		//Send MIDI CC value
-		u8 cc_number = toggle_cc_map[index];
-		u8 cc_value = toggle_value_map[index];
+		u8 x_index = index % 10;
+		
+		u8 cc_number = 0;
+		switch(current_mode) {
+			case MODE_DEVICE:
+				cc_number = device_toggle_cc_map[x_index];
+				break;
+			case MODE_SESSION:
+				cc_number = session_toggle_cc_map[x_index];
+				break;
+			case MODE_FX:
+				cc_number = fx_toggle_cc_map[x_index];
+				break;
+		}
+		
+		u8 cc_value = is_toggle_on(index) ? 127 : 0;
 		
 		//Now negate the value
 		if (cc_value == 127) {
@@ -489,13 +527,12 @@ void event_toggle(u8 index, u8 value) {
 		} else {
 			cc_value = 127;
 		}
-		toggle_value_map[index] = cc_value;
 		
 		//Send MIDI message
 		hal_send_midi(USBMIDI, CC | current_channel, cc_number, cc_value);
 		
 		//Set the color of the toggle
-		set_color_map(index, cc_value == 0 ? color_toggle_off : color_toggle_on);
+		set_color_map(index, cc_value == 0 ? color_toggle_off : color_toggle_on, current_mode);
 	}
 }
 
@@ -505,8 +542,20 @@ void event_fader(u8 index, u8 value) {
 		u8 y_index = index / 10;
 		u8 x_index = index % 10;
 		
+		u8 cc_number = 0;
+		switch(current_mode) {
+			case MODE_DEVICE:
+				cc_number = device_fader_cc_map[x_index];
+				break;
+			case MODE_SESSION:
+				cc_number = session_fader_cc_map[x_index];
+				break;
+			case MODE_FX:
+				cc_number = fx_fader_cc_map[x_index];
+				break;
+		}
+		
 		u8 cc_value = fader_value_map[y_index];
-		u8 cc_number = fader_cc_map[x_index];
 		
 		hal_send_midi(USBMIDI, CC | current_channel, cc_number, cc_value);
 		
@@ -515,10 +564,10 @@ void event_fader(u8 index, u8 value) {
 		//Buttons above will be off (color_fader_off)
 		
 		for (u8 i = index; i > 20; i -= 10) {
-			set_color_map(i, color_fader_on);
+			set_color_map(i, color_fader_on, current_mode);
 		}
 		for (u8 i = index + 10; i < 90; i += 10) {
-			set_color_map(i, color_fader_off);
+			set_color_map(i, color_fader_off, current_mode);
 		}
 	} else {
 		//Release - Reset color
@@ -694,6 +743,36 @@ void app_timer_event() {
 void app_init(const u16 *adc_raw) {
 	//Set up starting octave
 	current_octave = 1;
+	
+	//Set up color maps
+	for (u8 i = 0; i < 8; i++) {
+		for (u8 j = 0; j < BUTTON_COUNT; j++) {
+			for (u8 k = 0; k < 3; k++) {
+				color_map[MODE_DEVICE][i][j][k] = device_color_map[j][k];
+			}
+		}
+	}
+	for (u8 i = 0; i < 8; i++) {
+		for (u8 j = 0; j < BUTTON_COUNT; j++) {
+			for (u8 k = 0; k < 3; k++) {
+				color_map[MODE_NOTE][i][j][k] = note_color_map[j][k];
+			}
+		}
+	}
+	for (u8 i = 0; i < 8; i++) {
+		for (u8 j = 0; j < BUTTON_COUNT; j++) {
+			for (u8 k = 0; k < 3; k++) {
+				color_map[MODE_SESSION][i][j][k] = session_color_map[j][k];
+			}
+		}
+	}
+	for (u8 i = 0; i < 8; i++) {
+		for (u8 j = 0; j < BUTTON_COUNT; j++) {
+			for (u8 k = 0; k < 3; k++) {
+				color_map[MODE_FX][i][j][k] = fx_color_map[j][k];
+			}
+		}
+	}
 	
 	//Draw the default color map
 	draw_color_map();
