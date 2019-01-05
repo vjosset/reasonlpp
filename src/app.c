@@ -98,6 +98,9 @@ static u8 current_octave = 1;
 //Full velocity toggle
 bool full_velocity = false;
 
+//Midi channel for output
+u8 channel_number = 0;
+
 //Button shortcuts
 #define BTN_OCTAVEUP 		TOP1
 #define BTN_OCTAVEDOWN 		TOP2
@@ -135,7 +138,7 @@ static u8 color_fader_off[3] = {0, 0, 4};
 //Default map of pad colors (init and returning to default state)
 static u8 default_color_map[BUTTON_COUNT][3] = 
 {  
-	{ 0,  0,  0}, {63,  0,  0}, {63,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, {63,  0,  0}, {63,  0,  0}, {63,  0,  0}, { 0,  0,  0},
+	{ 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, {63,  0,  0}, {63,  0,  0}, {63,  0,  0}, { 0,  0,  0},
 	{ 4,  0,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  0,  0},
 	{ 0,  0,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0,  0}, 
 	{ 0,  0,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0,  0}, 
@@ -144,13 +147,13 @@ static u8 default_color_map[BUTTON_COUNT][3] =
 	{ 0,  0,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  0}, 
 	{ 0,  0,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  0}, 
 	{ 0,  0,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  0}, 
-	{ 0,  0,  0}, {63,  0,  0}, {63,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0,  0}
+	{ 0,  0,  0}, {63,  0,  0}, {63,  0,  0}, { 0,  0,  0}, {63,  0,  0}, {63,  0, 63}, {63,  0, 63}, {63,  0, 63}, {63,  0, 63}, { 0,  0,  0}
 };
 
 //Current map of pad colors
 static u8 color_map[BUTTON_COUNT][3] = 
 {  
-	{ 0,  0,  0}, {63,  0,  0}, {63,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, {63,  0,  0}, {63,  0,  0}, {63,  0,  0}, { 0,  0,  0},
+	{ 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, {63,  0,  0}, {63,  0,  0}, {63,  0,  0}, { 0,  0,  0},
 	{ 4,  0,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  0,  0},
 	{ 0,  0,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0,  0}, 
 	{ 0,  0,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0,  0}, 
@@ -159,7 +162,7 @@ static u8 color_map[BUTTON_COUNT][3] =
 	{ 0,  0,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  0}, 
 	{ 0,  0,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  0}, 
 	{ 0,  0,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  0}, 
-	{ 0,  0,  0}, {63,  0,  0}, {63,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0,  0}
+	{ 0,  0,  0}, {63,  0,  0}, {63,  0,  0}, { 0,  0,  0}, {63,  0,  0}, {63,  0, 63}, {63,  0, 63}, {63,  0, 63}, {63,  0, 63}, { 0,  0,  0}
 };
 
 static const u8 note_map[BUTTON_COUNT] =
@@ -176,10 +179,10 @@ static const u8 note_map[BUTTON_COUNT] =
 	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0
 };
 
-//Maps x-index of button to CC number to send
+//Maps x-index of fader button to CC number to send
 static const u8 fader_cc_map[10] = { 0, 0, 0, 0, 0, 71, 72, 73, 74, 0 };
 
-//Maps y-index of button to CC value to send
+//Maps y-index of fader button to CC value to send
 static const u8 fader_value_map[10] = { 0, 0, 0, 21, 42, 63, 84, 105, 127, 127 };
 
 //Holds values of the toggles
@@ -320,6 +323,40 @@ void octave_down() {
 }
 
 /**
+ * Increments the current midi channel
+ */
+void channel_up() {
+	if (channel_number < 15) {
+		channel_number++;
+	}
+	
+	if (channel_number == 15) {
+		//Disable channel up button, already at max
+		set_color_map(BTN_NEXTINST, color_off);
+	}
+	
+	//Enable channel down button
+	set_color_map(BTN_PREVINST, color_red);
+}
+
+/**
+ * Decrements the current midi channel
+ */
+void channel_down() {
+	if (channel_number > 0) {
+		channel_number--;
+	}
+	
+	if (channel_number == 0) {
+		//Disable channel down button, already at min
+		set_color_map(BTN_PREVINST, color_off);
+	}
+	
+	//Enable channel up button
+	set_color_map(BTN_NEXTINST, color_red);
+}
+
+/**
  * Toggles full velocity mode
  */
 void toggle_full_velocity() {
@@ -335,13 +372,13 @@ void toggle_full_velocity() {
 void event_note(u8 index, u8 value) {
 	if (is_press(value)) {
 		//Send MIDI note on (with full_velocity check)
-		hal_send_midi(USBMIDI, NOTEON | 0, note_map[index] + (12 * current_octave), full_velocity ? 127 : value);
+		hal_send_midi(USBMIDI, NOTEON | channel_number, note_map[index] + (12 * current_octave), full_velocity ? 127 : value);
 		
 		//Set the pad to its pressed color
 		set_color_map(index, color_pressed);
 	} else {
 		//Send MIDI note off
-		hal_send_midi(USBMIDI, NOTEON | 0, note_map[index] + (12 * current_octave), 0);
+		hal_send_midi(USBMIDI, NOTEON | channel_number, note_map[index] + (12 * current_octave), 0);
 		
 		//Reset the note pad to its default color
 		set_color_map(index, default_color_map[index]);
@@ -363,7 +400,7 @@ void event_toggle(u8 index, u8 value) {
 		toggle_value_map[index] = cc_value;
 		
 		//Send MIDI message
-		hal_send_midi(USBMIDI, CC | 0, cc_number, cc_value);
+		hal_send_midi(USBMIDI, CC | channel_number, cc_number, cc_value);
 		
 		//Set the color of the toggle
 		set_color_map(index, cc_value == 0 ? color_toggle_off : color_toggle_on);
@@ -379,7 +416,7 @@ void event_fader(u8 index, u8 value) {
 		u8 cc_value = fader_value_map[y_index];
 		u8 cc_number = fader_cc_map[x_index];
 		
-		hal_send_midi(USBMIDI, CC | 0, cc_number, cc_value);
+		hal_send_midi(USBMIDI, CC | channel_number, cc_number, cc_value);
 		
 		//Current button will be lit (color_fader_on)
 		//Buttons below will be lit (color_fader_on)
@@ -409,19 +446,24 @@ void event_util(u8 index, u8 value) {
 				toggle_full_velocity();
 				break;
 			case BTN_PREVINST:
-				//Not implemented
+				//Decrement midi channel
+				channel_down();
 				break;
 			case BTN_NEXTINST:
-				//Not implemented
+				//Increment midi channel
+				channel_up();
 				break;
 			case BTN_PLAY:
 				//Not implemented
+				hal_send_midi(USBMIDI, MIDISTART | channel_number, 0x00, 0x00);
 				break;
 			case BTN_STOP:
 				//Not implemented
+				hal_send_midi(USBMIDI, MIDISTOP | channel_number, 0x00, 0x00);
 				break;
 			case BTN_REC:
 				//Not implemented
+				hal_send_midi(USBMIDI, 0xBF | channel_number, 0x00, 0x00);
 				break;
 		}
 	}
@@ -473,7 +515,7 @@ void app_sysex_event(u8 port, u8 * data, u16 count) {
 void app_aftertouch_event(u8 index, u8 value) {
     if (is_note(index)) {
 		//This is a note pad
-		hal_send_midi(USBMIDI, POLYAFTERTOUCH | 0, index, value);
+		hal_send_midi(USBMIDI, POLYAFTERTOUCH | channel_number, index, value);
 	}
 }
 
