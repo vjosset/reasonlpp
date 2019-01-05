@@ -129,6 +129,8 @@ static const u8 ADC_MAP[PAD_COUNT] =
 
 // ____________________________________________________________________________
 
+#define BUTTON_COUNT 100
+
 
 // Button shortcuts
 #define TOP1 		91
@@ -238,7 +240,5 @@ static const u8 ADC_MAP[PAD_COUNT] =
 #define PAD86		86
 #define PAD87		87
 #define PAD88		88
-
-#define BUTTON_COUNT 100
 
 #endif
