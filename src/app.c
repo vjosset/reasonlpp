@@ -99,7 +99,7 @@ static u8 current_octave = 1;
 bool full_velocity = false;
 
 //Midi channel for output
-u8 channel_number = 0;
+u8 current_channel = 0;
 
 //Current page/mode
 u8 mode = 0;
@@ -113,9 +113,12 @@ u8 mode = 0;
 #define BTN_REC				BOTTOM8
 
 //Page/Mode Shortcuts
-#define MODE_NOTES			0
-#define MODE_MIXER			1
-#define MODE_FX				2
+#define MODE_NOTE			0 //Note/keyboard
+#define MODE_DEVICE			1 //Device (split notes and controls/combinator)
+#define MODE_FX				2 //Sliders and toggles
+#define MODE_SESSION		3 //Main mixer
+
+static u8 current_mode		= MODE_NOTE;
 
 static u8 color_util_on[3]	= {63, 0, 63};
 static u8 color_util_off[3]	= { 4, 0,  4};
@@ -156,7 +159,7 @@ static u8 default_color_map[BUTTON_COUNT][3] =
 	{ 0,  0,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
 	{ 0,  0,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
 	{ 0,  0,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
-	{ 0,  0,  0}, {63,  0, 63}, {63,  0, 63}, { 0,  0,  0}, { 0,  0,  0}, {63,  0, 63}, {63,  0, 63}, {63,  0, 63}, {63,  0, 63}, { 0,  0,  0}
+	{ 0,  0,  0}, {63,  0, 63}, {63,  0, 63}, { 0,  0,  0}, { 0,  0,  0}, { 4,  0,  4}, { 4,  0,  4}, {63,  0, 63}, { 4,  0,  4}, { 0,  0,  0}
 };
 
 //Current map of pad colors
@@ -171,7 +174,7 @@ static u8 color_map[BUTTON_COUNT][3] =
 	{ 0,  0,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
 	{ 0,  0,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
 	{ 0,  0,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
-	{ 0,  0,  0}, {63,  0, 63}, {63,  0, 63}, { 0,  0,  0}, { 0,  0,  0}, {63,  0, 63}, {63,  0, 63}, {63,  0, 63}, {63,  0, 63}, { 0,  0,  0}
+	{ 0,  0,  0}, {63,  0, 63}, {63,  0, 63}, { 0,  0,  0}, { 0,  0,  0}, { 4,  0,  4}, { 4,  0,  4}, {63,  0, 63}, { 4,  0,  4}, { 0,  0,  0}
 };
 
 static const u8 note_map[BUTTON_COUNT] =
@@ -343,7 +346,7 @@ void toggle_full_velocity() {
  * Sets the current channel number (0-based)
  */
 void set_channel(u8 channel) {
-	channel_number = channel;
+	current_channel = channel;
 	
 	//Set the LED to indicate the current channel
 	u8 channel_pad = 0;
@@ -358,7 +361,7 @@ void set_channel(u8 channel) {
 	set_color_map(RIGHT7, color_util_off);
 	set_color_map(RIGHT8, color_util_off);
 	
-	switch(channel_number) {
+	switch(current_channel) {
 		case 0:
 			set_color_map(RIGHT1, color_util_on);
 			break;
@@ -386,6 +389,32 @@ void set_channel(u8 channel) {
 	}
 }
 
+void set_mode(u8 mode) {
+	current_mode = mode;
+	
+	//Mark all the mode buttons as off
+	set_color_map(TOP5, color_util_off);
+	set_color_map(TOP6, color_util_off);
+	set_color_map(TOP7, color_util_off);
+	set_color_map(TOP8, color_util_off);
+	
+	//Set the current mode button on
+	switch(current_mode) {
+		case MODE_SESSION:
+			set_color_map(TOP5, color_util_on);
+			break;
+		case MODE_NOTE:
+			set_color_map(TOP6, color_util_on);
+			break;
+		case MODE_DEVICE:
+			set_color_map(TOP7, color_util_on);
+			break;
+		case MODE_FX:
+			set_color_map(TOP8, color_util_on);
+			break;
+	}
+}
+
 //-----------------------------------------------------------------------------------------
 //                                EVENTS
 //-----------------------------------------------------------------------------------------
@@ -393,13 +422,13 @@ void set_channel(u8 channel) {
 void event_note(u8 index, u8 value) {
 	if (is_press(value)) {
 		//Send MIDI note on (with full_velocity check)
-		hal_send_midi(USBMIDI, NOTEON | channel_number, note_map[index] + (12 * current_octave), full_velocity ? 127 : value);
+		hal_send_midi(USBMIDI, NOTEON | current_channel, note_map[index] + (12 * current_octave), full_velocity ? 127 : value);
 		
 		//Set the pad to its pressed color
 		set_color_map(index, color_pressed);
 	} else {
 		//Send MIDI note off
-		hal_send_midi(USBMIDI, NOTEON | channel_number, note_map[index] + (12 * current_octave), 0);
+		hal_send_midi(USBMIDI, NOTEON | current_channel, note_map[index] + (12 * current_octave), 0);
 		
 		//Reset the note pad to its default color
 		set_color_map(index, default_color_map[index]);
@@ -421,7 +450,7 @@ void event_toggle(u8 index, u8 value) {
 		toggle_value_map[index] = cc_value;
 		
 		//Send MIDI message
-		hal_send_midi(USBMIDI, CC | channel_number, cc_number, cc_value);
+		hal_send_midi(USBMIDI, CC | current_channel, cc_number, cc_value);
 		
 		//Set the color of the toggle
 		set_color_map(index, cc_value == 0 ? color_toggle_off : color_toggle_on);
@@ -437,7 +466,7 @@ void event_fader(u8 index, u8 value) {
 		u8 cc_value = fader_value_map[y_index];
 		u8 cc_number = fader_cc_map[x_index];
 		
-		hal_send_midi(USBMIDI, CC | channel_number, cc_number, cc_value);
+		hal_send_midi(USBMIDI, CC | current_channel, cc_number, cc_value);
 		
 		//Current button will be lit (color_fader_on)
 		//Buttons below will be lit (color_fader_on)
@@ -468,16 +497,18 @@ void event_util(u8 index, u8 value) {
 				break;
 			case BTN_PLAY:
 				//Not implemented
-				hal_send_midi(USBMIDI, MIDISTART | channel_number, 0x00, 0x00);
+				hal_send_midi(USBMIDI, MIDISTART | current_channel, 0x00, 0x00);
 				break;
 			case BTN_STOP:
 				//Not implemented
-				hal_send_midi(USBMIDI, MIDISTOP | channel_number, 0x00, 0x00);
+				hal_send_midi(USBMIDI, MIDISTOP | current_channel, 0x00, 0x00);
 				break;
 			case BTN_REC:
 				//Not implemented
-				hal_send_midi(USBMIDI, 0xBF | channel_number, 0x00, 0x00);
+				hal_send_midi(USBMIDI, 0xBF | current_channel, 0x00, 0x00);
 				break;
+			
+			//Channel selector
 			case RIGHT1:
 				//Set channel 1 (0)
 				set_channel(0);
@@ -511,6 +542,19 @@ void event_util(u8 index, u8 value) {
 				set_channel(7);
 				break;
 			
+			//Mode selector
+			case TOP5:
+				set_mode(MODE_SESSION);
+				break;
+			case TOP6:
+				set_mode(MODE_NOTE);
+				break;
+			case TOP7:
+				set_mode(MODE_DEVICE);
+				break;
+			case TOP8:
+				set_mode(MODE_FX);
+				break;
 		}
 	}
 }
@@ -561,7 +605,7 @@ void app_sysex_event(u8 port, u8 * data, u16 count) {
 void app_aftertouch_event(u8 index, u8 value) {
     if (is_note(index)) {
 		//This is a note pad
-		hal_send_midi(USBMIDI, POLYAFTERTOUCH | channel_number, index, value);
+		hal_send_midi(USBMIDI, POLYAFTERTOUCH | current_channel, index, value);
 	}
 }
 
