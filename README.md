@@ -8,7 +8,7 @@ In its current state, this firmware has support for the Reason Combinator.
 - The left most buttons are octave selectors
 - The right most buttons are MIDI channel selectors
 - The bottom row's rightmost pads are combinator toggles
-- The other pads are the combinator's knobs N(as faders)
+- The other pads are the combinator's knobs (as faders)
 - Play/Stop/Record are not implemented (can't find the right MIDI instruction for these)
 
 For instructions on using this firmware with your Launchpad Pro, see Dave's instructions here:
