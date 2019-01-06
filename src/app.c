@@ -341,18 +341,24 @@ bool is_util(u8 index) {
  */
 void set_color_map(u8 index, u8 color[], u8 mode) {
 	//Loop through the channels
-	for (u8 i = 0; i < 8; i++) {
-		color_map[mode][i][index][0] = color[0];
-		color_map[mode][i][index][1] = color[1];
-		color_map[mode][i][index][2] = color[2];
-	}
+	color_map[mode][current_channel][index][0] = color[0];
+	color_map[mode][current_channel][index][1] = color[1];
+	color_map[mode][current_channel][index][2] = color[2];
 }
 
 void set_color_map_all_modes(u8 index, u8 color[]) {
-	set_color_map(index, color, MODE_DEVICE);
-	set_color_map(index, color, MODE_NOTE);
-	set_color_map(index, color, MODE_SESSION);
-	set_color_map(index, color, MODE_FX);
+	u8 temp_channel = current_channel;
+	
+	//Loop through the channels
+	for (u8 i = 0; i < 8; i++) {
+		current_channel = i;
+		set_color_map(index, color, MODE_DEVICE);
+		set_color_map(index, color, MODE_NOTE);
+		set_color_map(index, color, MODE_SESSION);
+		set_color_map(index, color, MODE_FX);
+	}
+	
+	current_channel = temp_channel;
 }
 
 /**
@@ -688,8 +694,6 @@ void event_util(u8 index, u8 value) {
 void app_surface_event(u8 type, u8 index, u8 value) {
 	if (type == TYPEPAD) {
 		//Mark this button as pressed
-		//set_color_map(index, color_pressed);
-		
 		if (is_util(index)) {
 			//This is a utility button
 			event_util(index, value);
