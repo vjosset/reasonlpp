@@ -1,0 +1,268 @@
+Universal MIDI Codec Control Surface Definition File				
+File Format Version	1.0.0			
+Control Surface Manufacturer	<Other>
+Control Surface Model	MIDI Control Surface	
+Codec Version	1.0.4
+
+Setup Info Text Custom controller for LaunchPad Pro (channel-insensitive)
+
+Item Header	Name	Type	Min	Max
+Item	CC 00	value	0	127
+Item	CC 01	value	0	127
+Item	CC 02	value	0	127
+Item	CC 03	value	0	127
+Item	CC 04	value	0	127
+Item	CC 05	value	0	127
+Item	CC 06	value	0	127
+Item	CC 07	value	0	127
+Item	CC 08	value	0	127
+Item	CC 09	value	0	127
+Item	CC 10	value	0	127
+Item	CC 11	value	0	127
+Item	CC 12	value	0	127
+Item	CC 13	value	0	127
+Item	CC 14	value	0	127
+Item	CC 15	value	0	127
+Item	CC 16	value	0	127
+Item	CC 17	value	0	127
+Item	CC 18	value	0	127
+Item	CC 19	value	0	127
+Item	CC 20	value	0	127
+Item	CC 21	value	0	127
+Item	CC 22	value	0	127
+Item	CC 23	value	0	127
+Item	CC 24	value	0	127
+Item	CC 25	value	0	127
+Item	CC 26	value	0	127
+Item	CC 27	value	0	127
+Item	CC 28	value	0	127
+Item	CC 29	value	0	127
+Item	CC 30	value	0	127
+Item	CC 31	value	0	127
+Item	CC 32	value	0	127
+Item	CC 33	value	0	127
+Item	CC 34	value	0	127
+Item	CC 35	value	0	127
+Item	CC 36	value	0	127
+Item	CC 37	value	0	127
+Item	CC 38	value	0	127
+Item	CC 39	value	0	127
+Item	CC 40	value	0	127
+Item	CC 41	value	0	127
+Item	CC 42	value	0	127
+Item	CC 43	value	0	127
+Item	CC 44	value	0	127
+Item	CC 45	value	0	127
+Item	CC 46	value	0	127
+Item	CC 47	value	0	127
+Item	CC 48	value	0	127
+Item	CC 49	value	0	127
+Item	CC 50	value	0	127
+Item	CC 51	value	0	127
+Item	CC 52	value	0	127
+Item	CC 53	value	0	127
+Item	CC 54	value	0	127
+Item	CC 55	value	0	127
+Item	CC 56	value	0	127
+Item	CC 57	value	0	127
+Item	CC 58	value	0	127
+Item	CC 59	value	0	127
+Item	CC 60	value	0	127
+Item	CC 61	value	0	127
+Item	CC 62	value	0	127
+Item	CC 63	value	0	127
+Item	CC 64	value	0	127
+Item	CC 65	value	0	127
+Item	CC 66	value	0	127
+Item	CC 67	value	0	127
+Item	CC 68	value	0	127
+Item	CC 69	value	0	127
+Item	CC 70	value	0	127
+Item	CC 71	value	0	127
+Item	CC 72	value	0	127
+Item	CC 73	value	0	127
+Item	CC 74	value	0	127
+Item	CC 75	value	0	127
+Item	CC 76	value	0	127
+Item	CC 77	value	0	127
+Item	CC 78	value	0	127
+Item	CC 79	value	0	127
+Item	CC 80	value	0	127
+Item	CC 81	value	0	127
+Item	CC 82	value	0	127
+Item	CC 83	value	0	127
+Item	CC 84	value	0	127
+Item	CC 85	value	0	127
+Item	CC 86	value	0	127
+Item	CC 87	value	0	127
+Item	CC 88	value	0	127
+Item	CC 89	value	0	127
+Item	CC 90	value	0	127
+Item	CC 91	value	0	127
+Item	CC 92	value	0	127
+Item	CC 93	value	0	127
+Item	CC 94	value	0	127
+Item	CC 95	value	0	127
+Item	CC 96	value	0	127
+Item	CC 97	value	0	127
+Item	CC 98	value	0	127
+Item	CC 99	value	0	127
+Item	CC 100	value	0	127
+Item	CC 101	value	0	127
+Item	CC 102	value	0	127
+Item	CC 103	value	0	127
+Item	CC 104	value	0	127
+Item	CC 105	value	0	127
+Item	CC 106	value	0	127
+Item	CC 107	value	0	127
+Item	CC 108	value	0	127
+Item	CC 109	value	0	127
+Item	CC 110	value	0	127
+Item	CC 111	value	0	127
+Item	CC 112	value	0	127
+Item	CC 113	value	0	127
+Item	CC 114	value	0	127
+Item	CC 115	value	0	127
+Item	CC 116	value	0	127
+Item	CC 117	value	0	127
+Item	CC 118	value	0	127
+Item	CC 119	value	0	127
+Item	CC 120	value	0	127
+Item	CC 121	value	0	127	
+Item	CC 122	value	0	127	
+Item	CC 123	value	0	127	
+Item	CC 124	value	0	127	
+Item	CC 125	value	0	127	
+Item	CC 126	value	0	127	
+Item	CC 127	value	0	127	
+
+
+Map Header	Pattern	Name	Value1	Value2	Value3
+Map	b? 00 xx	CC 00	x	0	0
+Map	b? 01 xx	CC 01	x	0	0
+Map	b? 02 xx	CC 02	x	0	0
+Map	b? 03 xx	CC 03	x	0	0
+Map	b? 04 xx	CC 04	x	0	0
+Map	b? 05 xx	CC 05	x	0	0
+Map	b? 06 xx	CC 06	x	0	0
+Map	b? 07 xx	CC 07	x	0	0
+Map	b? 08 xx	CC 08	x	0	0
+Map	b? 09 xx	CC 09	x	0	0
+Map	b? 0A xx	CC 10	x	0	0
+Map	b? 0B xx	CC 11	x	0	0
+Map	b? 0C xx	CC 12	x	0	0
+Map	b? 0D xx	CC 13	x	0	0
+Map	b? 0E xx	CC 14	x	0	0
+Map	b? 0F xx	CC 15	x	0	0
+Map	b? 10 xx	CC 16	x	0	0
+Map	b? 11 xx	CC 17	x	0	0
+Map	b? 12 xx	CC 18	x	0	0
+Map	b? 13 xx	CC 19	x	0	0
+Map	b? 14 xx	CC 20	x	0	0
+Map	b? 15 xx	CC 21	x	0	0
+Map	b? 16 xx	CC 22	x	0	0
+Map	b? 17 xx	CC 23	x	0	0
+Map	b? 18 xx	CC 24	x	0	0
+Map	b? 19 xx	CC 25	x	0	0
+Map	b? 1A xx	CC 26	x	0	0
+Map	b? 1B xx	CC 27	x	0	0
+Map	b? 1C xx	CC 28	x	0	0
+Map	b? 1D xx	CC 29	x	0	0
+Map	b? 1E xx	CC 30	x	0	0
+Map	b? 1F xx	CC 31	x	0	0
+Map	b? 20 xx	CC 32	x	0	0
+Map	b? 21 xx	CC 33	x	0	0
+Map	b? 22 xx	CC 34	x	0	0
+Map	b? 23 xx	CC 35	x	0	0
+Map	b? 24 xx	CC 36	x	0	0
+Map	b? 25 xx	CC 37	x	0	0
+Map	b? 26 xx	CC 38	x	0	0
+Map	b? 27 xx	CC 39	x	0	0
+Map	b? 28 xx	CC 40	x	0	0
+Map	b? 29 xx	CC 41	x	0	0
+Map	b? 2A xx	CC 42	x	0	0
+Map	b? 2B xx	CC 43	x	0	0
+Map	b? 2C xx	CC 44	x	0	0
+Map	b? 2D xx	CC 45	x	0	0
+Map	b? 2E xx	CC 46	x	0	0
+Map	b? 2F xx	CC 47	x	0	0
+Map	b? 30 xx	CC 48	x	0	0
+Map	b? 31 xx	CC 49	x	0	0
+Map	b? 32 xx	CC 50	x	0	0
+Map	b? 33 xx	CC 51	x	0	0
+Map	b? 34 xx	CC 52	x	0	0
+Map	b? 35 xx	CC 53	x	0	0
+Map	b? 36 xx	CC 54	x	0	0
+Map	b? 37 xx	CC 55	x	0	0
+Map	b? 38 xx	CC 56	x	0	0
+Map	b? 39 xx	CC 57	x	0	0
+Map	b? 3A xx	CC 58	x	0	0
+Map	b? 3B xx	CC 59	x	0	0
+Map	b? 3C xx	CC 60	x	0	0
+Map	b? 3D xx	CC 61	x	0	0
+Map	b? 3E xx	CC 62	x	0	0
+Map	b? 3F xx	CC 63	x	0	0
+Map	b? 40 xx	CC 64	x	0	0
+Map	b? 41 xx	CC 65	x	0	0
+Map	b? 42 xx	CC 66	x	0	0
+Map	b? 43 xx	CC 67	x	0	0
+Map	b? 44 xx	CC 68	x	0	0
+Map	b? 45 xx	CC 69	x	0	0
+Map	b? 46 xx	CC 70	x	0	0
+Map	b? 47 xx	CC 71	x	0	0
+Map	b? 48 xx	CC 72	x	0	0
+Map	b? 49 xx	CC 73	x	0	0
+Map	b? 4A xx	CC 74	x	0	0
+Map	b? 4B xx	CC 75	x	0	0
+Map	b? 4C xx	CC 76	x	0	0
+Map	b? 4D xx	CC 77	x	0	0
+Map	b? 4E xx	CC 78	x	0	0
+Map	b? 4F xx	CC 79	x	0	0
+Map	b? 50 xx	CC 80	x	0	0
+Map	b? 51 xx	CC 81	x	0	0
+Map	b? 52 xx	CC 82	x	0	0
+Map	b? 53 xx	CC 83	x	0	0
+Map	b? 54 xx	CC 84	x	0	0
+Map	b? 55 xx	CC 85	x	0	0
+Map	b? 56 xx	CC 86	x	0	0
+Map	b? 57 xx	CC 87	x	0	0
+Map	b? 58 xx	CC 88	x	0	0
+Map	b? 59 xx	CC 89	x	0	0
+Map	b? 5A xx	CC 90	x	0	0
+Map	b? 5B xx	CC 91	x	0	0
+Map	b? 5C xx	CC 92	x	0	0
+Map	b? 5D xx	CC 93	x	0	0
+Map	b? 5E xx	CC 94	x	0	0
+Map	b? 5F xx	CC 95	x	0	0
+Map	b? 60 xx	CC 96	x	0	0
+Map	b? 61 xx	CC 97	x	0	0
+Map	b? 62 xx	CC 98	x	0	0
+Map	b? 63 xx	CC 99	x	0	0
+Map	b? 64 xx	CC 100	x	0	0
+Map	b? 65 xx	CC 101	x	0	0
+Map	b? 66 xx	CC 102	x	0	0
+Map	b? 67 xx	CC 103	x	0	0
+Map	b? 68 xx	CC 104	x	0	0
+Map	b? 69 xx	CC 105	x	0	0
+Map	b? 6A xx	CC 106	x	0	0
+Map	b? 6B xx	CC 107	x	0	0
+Map	b? 6C xx	CC 108	x	0	0
+Map	b? 6D xx	CC 109	x	0	0
+Map	b? 6E xx	CC 110	x	0	0
+Map	b? 6F xx	CC 111	x	0	0
+Map	b? 70 xx	CC 112	x	0	0
+Map	b? 71 xx	CC 113	x	0	0
+Map	b? 72 xx	CC 114	x	0	0
+Map	b? 73 xx	CC 115	x	0	0
+Map	b? 74 xx	CC 116	x	0	0
+Map	b? 75 xx	CC 117	x	0	0
+Map	b? 76 xx	CC 118	x	0	0
+Map	b? 77 xx	CC 119	x	0	0
+Map	b? 78 xx	CC 120	x	0	0
+Map	b? 79 xx	CC 121	x	0	0
+Map	b? 7A xx	CC 122	x	0	0
+Map	b? 7B xx	CC 123	x	0	0
+Map	b? 7C xx	CC 124	x	0	0
+Map	b? 7D xx	CC 125	x	0	0
+Map	b? 7E xx	CC 126	x	0	0
+Map	b? 7F xx	CC 127	x	0	0

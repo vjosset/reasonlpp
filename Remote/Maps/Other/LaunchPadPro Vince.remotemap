@@ -1,0 +1,106 @@
+Propellerhead Remote Mapping File
+File Format Version	1.0.0
+Control Surface Manufacturer	<Other>
+Control Surface Model	MIDI Control Surface
+Map Version	1.4.9
+
+
+Scope	Propellerheads	Master Keyboard
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+
+Scope	Propellerheads	Combinator
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+Map	CC 20		Rotary 1
+Map	CC 21		Rotary 2
+Map	CC 22		Rotary 3
+Map	CC 23		Rotary 4
+Map	CC 24		Button 1
+Map	CC 25		Button 2
+Map	CC 26		Button 3
+Map	CC 27		Button 4
+
+//<	20110628
+Scope	Propellerheads	Reason Master Section
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+//Map	CC 07		Master Level
+//Map	CC 12		Threshold
+//Map	CC 13		Attack
+//Map	CC 14		Release
+//Map	CC 16		Ratio
+//Map	CC 18		Make-Up Gain
+Map	CC 71		Channel 1 Level
+Map	CC 72		Channel 2 Level
+Map	CC 73		Channel 3 Level
+Map	CC 74		Channel 4 Level
+Map	CC 75		Channel 5 Level
+Map	CC 76		Channel 6 Level
+Map	CC 77		Channel 7 Level
+Map	CC 78		Channel 8 Level
+Map	CC 110		FX1 Return Level
+Map	CC 111		FX2 Return Level
+Map	CC 112		FX3 Return Level
+Map	CC 113		FX4 Return Level
+Map	CC 114		FX5 Return Level
+Map	CC 115		FX6 Return Level
+Map	CC 116		FX7 Return Level
+Map	CC 117		FX8 Return Level
+//Map	CC ??		Channel 1 Pan
+//Map	CC ??		Channel 2 Pan
+//Map	CC ??		Channel 3 Pan
+//Map	CC ??		Channel 4 Pan
+//Map	CC ??		Channel 5 Pan
+//Map	CC ??		Channel 6 Pan
+//Map	CC ??		Channel 7 Pan
+//Map	CC ??		Channel 8 Pan
+//Map	CC 71		Rotary 1
+//Map	CC 72		Rotary 2
+//Map	CC 73		Rotary 3
+//Map	CC 74		Rotary 4
+
+
+//<	20110628
+Scope	Propellerheads	Reason Main Mixer Channel
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+Map	CC 07		Level
+Map	CC 08		Width
+Map	CC 10		Pan
+Map	CC 15		FX1 Send Level
+Map	CC 18		FX2 Send Level
+Map	CC 21		FX3 Send Level
+Map	CC 24		FX4 Send Level
+Map	CC 27		FX5 Send Level
+Map	CC 30		FX6 Send Level
+Map	CC 40		FX7 Send Level
+Map	CC 43		FX8 Send Level
+Map	CC 47		C Threshold
+Map	CC 48		C Release
+Map	CC 49		C Ratio
+Map	CC 54		G Threshold
+Map	CC 55		G Hold
+Map	CC 56		G Release
+Map	CC 57		G Range
+Map	CC 71		Rotary 1
+Map	CC 72		Rotary 2
+Map	CC 73		Rotary 3
+Map	CC 74		Rotary 4
+Map	CC 82		HF Gain
+Map	CC 83		HF Frequency
+Map	CC 85		HMF Gain
+Map	CC 86		HMF Frequency
+Map	CC 88		LMF Gain
+Map	CC 89		LMF Frequency
+Map	CC 91		LF Gain
+Map	CC 92		LF Frequency
+Map	CC 103		LPF Frequency
+Map	CC 105		HPF Frequency
+Map	CC 107		Input Gain
+
+
+//<	20110319
+Scope	Propellerheads	Reason Document
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+// The following will only be available if no device has Master Keyboard Input
+// (e.g. MKI is set to the Transport Track)
+Map	CC 07		Click Level
+
