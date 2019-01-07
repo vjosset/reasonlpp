@@ -38,6 +38,31 @@
 #include "app.h"
 
 /*
+	CC VALUES
+		Device Mode:
+			Faders:		20	21	22	23
+			Toggles:	24	25	26	27
+		Session Mode:
+			Faders:		71	72	73	74	75	76	77
+			Toggles:	102	103	104	105	106	107	108
+		User (FX) Mode:
+			Faders:		110	111	112	113	114	115	116	117
+			Toggles:	118	119	28	29	30	31	86	87
+		
+		Global:
+			LOOP		14
+			STOP		17
+			PLAY		18
+			RECORD		19
+			FF			16
+			RW			15
+			
+			PREVTRACK	38
+			NEXTTRACK	39
+
+*/
+
+/*
 Map:
 	
 		+---+---+---+---+---+---+---+---+
