@@ -98,7 +98,7 @@ static const u8 device_color_map[BUTTON_COUNT][3] =
 	{ 4,  0,  4}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
 	{ 4,  0,  4}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
 	{ 4,  0,  4}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
-	{ 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 4,  0,  4}, { 4,  0,  4}, {63,  0, 63}, { 4,  0,  4}, { 0,  0,  0}
+	{ 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 4,  0,  4}, {63,  0, 63}, { 4,  0,  4}, { 4,  0,  4}, {63,  0, 63}, { 4,  0,  4}, { 0,  0,  0}
 };
 
 //Default color map for "Note" mode
@@ -113,7 +113,7 @@ static u8 note_color_map[BUTTON_COUNT][3] =
 	{ 4,  0,  4}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 4,  0,  4}, 
 	{ 4,  0,  4}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 4,  0,  4}, 
 	{ 4,  0,  4}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 4,  0,  4}, 
-	{ 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 4,  0,  4}, {63,  0, 63}, { 4,  0,  4}, { 4,  0,  4}, { 0,  0,  0}
+	{ 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 4,  0,  4}, {63,  0, 63}, { 4,  0,  4}, {63,  0, 63}, { 4,  0,  4}, { 4,  0,  4}, { 0,  0,  0}
 };
 
 //Default color map for "Session" mode
@@ -128,7 +128,7 @@ static const u8 session_color_map[BUTTON_COUNT][3] =
 	{ 4,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
 	{ 4,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
 	{ 4,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
-	{ 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, {63,  0, 63}, { 4,  0,  4}, { 4,  0,  4}, { 4,  0,  4}, { 0,  0,  0}
+	{ 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 4,  0,  4}, {63,  0, 63}, {63,  0, 63}, { 4,  0,  4}, { 4,  0,  4}, { 4,  0,  4}, { 0,  0,  0}
 };
 
 //Default color map for "FX" mode
@@ -143,7 +143,7 @@ static const u8 fx_color_map[BUTTON_COUNT][3] =
 	{ 4,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
 	{ 4,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
 	{ 4,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
-	{ 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 4,  0,  4}, { 4,  0,  4}, { 4,  0,  4}, {63,  0, 63}, { 0,  0,  0}
+	{ 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 4,  0,  4}, {63,  0, 63}, { 4,  0,  4}, { 4,  0,  4}, { 4,  0,  4}, {63,  0, 63}, { 0,  0,  0}
 };
 
 // Define bool type
@@ -170,8 +170,8 @@ u8 mode = 0;
 #define BTN_PLAY			BOTTOM6
 #define BTN_STOP			BOTTOM7
 #define BTN_REC				BOTTOM8
-#define BTN_PREVINST		TOP3
-#define BTN_NEXTINST		TOP4
+#define BTN_PREVTRACK		TOP3
+#define BTN_NEXTTRACK		TOP4
 
 //Page/Mode Shortcuts
 #define MODE_NOTE			0 //Note/keyboard
@@ -421,43 +421,43 @@ void set_channel(u8 channel) {
 	switch(current_channel) {
 		case 0:
 			set_color_map_all_modes(RIGHT1, color_util_on);
-			set_color_map_all_modes(BTN_PREVINST, color_util_off);
-			set_color_map_all_modes(BTN_NEXTINST, color_util_on);
+			set_color_map_all_modes(BTN_PREVTRACK, color_util_off);
+			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
 			break;
 		case 1:
 			set_color_map_all_modes(RIGHT2, color_util_on);
-			set_color_map_all_modes(BTN_PREVINST, color_util_on);
-			set_color_map_all_modes(BTN_NEXTINST, color_util_on);
+			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
+			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
 			break;
 		case 2:
 			set_color_map_all_modes(RIGHT3, color_util_on);
-			set_color_map_all_modes(BTN_PREVINST, color_util_on);
-			set_color_map_all_modes(BTN_NEXTINST, color_util_on);
+			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
+			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
 			break;
 		case 3:
 			set_color_map_all_modes(RIGHT4, color_util_on);
-			set_color_map_all_modes(BTN_PREVINST, color_util_on);
-			set_color_map_all_modes(BTN_NEXTINST, color_util_on);
+			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
+			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
 			break;
 		case 4:
 			set_color_map_all_modes(RIGHT5, color_util_on);
-			set_color_map_all_modes(BTN_PREVINST, color_util_on);
-			set_color_map_all_modes(BTN_NEXTINST, color_util_on);
+			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
+			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
 			break;
 		case 5:
 			set_color_map_all_modes(RIGHT6, color_util_on);
-			set_color_map_all_modes(BTN_PREVINST, color_util_on);
-			set_color_map_all_modes(BTN_NEXTINST, color_util_on);
+			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
+			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
 			break;
 		case 6:
 			set_color_map_all_modes(RIGHT7, color_util_on);
-			set_color_map_all_modes(BTN_PREVINST, color_util_on);
-			set_color_map_all_modes(BTN_NEXTINST, color_util_on);
+			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
+			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
 			break;
 		case 7:
 			set_color_map_all_modes(RIGHT8, color_util_on);
-			set_color_map_all_modes(BTN_PREVINST, color_util_on);
-			set_color_map_all_modes(BTN_NEXTINST, color_util_off);
+			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
+			set_color_map_all_modes(BTN_NEXTTRACK, color_util_off);
 			break;
 	}
 }
@@ -682,10 +682,10 @@ void event_util(u8 index, u8 value) {
 				break;
 			
 			//Track selector
-			case BTN_PREVINST:
+			case BTN_PREVTRACK:
 				prev_track();
 				break;
-			case BTN_NEXTINST:
+			case BTN_NEXTTRACK:
 				next_track();
 				break;
 			
