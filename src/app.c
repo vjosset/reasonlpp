@@ -114,7 +114,7 @@ Map:
 //Default color map for "Device" mode
 static const u8 device_color_map[BUTTON_COUNT][3] =
 {  
-	{ 0,  0,  0}, {63,  0, 63}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, {63,  0,  0}, {63,  0,  0}, {63,  0,  0}, { 0,  0,  0},
+	{ 0,  0,  0}, {63,  0, 63}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 8,  8,  8}, {48, 48, 48}, {48,  0,  0}, { 0,  0,  0},
 	{ 4,  0,  4}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, {63,  0, 63},
 	{63,  0, 63}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
 	{ 4,  0,  4}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
@@ -129,7 +129,7 @@ static const u8 device_color_map[BUTTON_COUNT][3] =
 //Default color map for "Note" mode
 static u8 note_color_map[BUTTON_COUNT][3] =
 {  
-	{ 0,  0,  0}, {63,  0, 63}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, {63,  0,  0}, {63,  0,  0}, {63,  0,  0}, { 0,  0,  0},
+	{ 0,  0,  0}, {63,  0, 63}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 8,  8,  8}, {48, 48, 48}, {48,  0,  0}, { 0,  0,  0},
 	{ 4,  0,  4}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63,  0, 63},
 	{63,  0, 63}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 4,  0,  4}, 
 	{ 4,  0,  4}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 4,  0,  4}, 
@@ -144,7 +144,7 @@ static u8 note_color_map[BUTTON_COUNT][3] =
 //Default color map for "Session" mode
 static const u8 session_color_map[BUTTON_COUNT][3] =
 {  
-	{ 0,  0,  0}, {63,  0, 63}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, {63,  0,  0}, {63,  0,  0}, {63,  0,  0}, { 0,  0,  0},
+	{ 0,  0,  0}, {63,  0, 63}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 8,  8,  8}, {48, 48, 48}, {48,  0,  0}, { 0,  0,  0},
 	{ 4,  0,  4}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, {63,  0, 63},
 	{63,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
 	{ 4,  0,  4}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
@@ -159,7 +159,7 @@ static const u8 session_color_map[BUTTON_COUNT][3] =
 //Default color map for "FX" mode
 static const u8 fx_color_map[BUTTON_COUNT][3] =
 {  
-	{ 0,  0,  0}, {63,  0, 63}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, {63,  0,  0}, {63,  0,  0}, {63,  0,  0}, { 0,  0,  0},
+	{ 0,  0,  0}, {63,  0, 63}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 8,  8,  8}, {48, 48, 48}, {48,  0,  0}, { 0,  0,  0},
 	{ 4,  0,  4}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, {63,  0, 63},
 	{63,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
 	{ 4,  0,  4}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
@@ -192,9 +192,9 @@ u8 mode = 0;
 #define BTN_OCTAVEUP 		TOP1
 #define BTN_OCTAVEDOWN 		TOP2
 #define BTN_TOGGLEFULLVEL 	BOTTOM1
-#define BTN_PLAY			BOTTOM6
-#define BTN_STOP			BOTTOM7
-#define BTN_REC				BOTTOM8
+#define BTN_STOP			BOTTOM6		//Grey
+#define BTN_PLAY			BOTTOM7		//White
+#define BTN_REC				BOTTOM8		//Red
 #define BTN_PREVTRACK		TOP3
 #define BTN_NEXTTRACK		TOP4
 
@@ -203,6 +203,17 @@ u8 mode = 0;
 #define MODE_DEVICE			1 //Device (split notes and controls/combinator)
 #define MODE_FX				2 //Sliders and toggles
 #define MODE_SESSION		3 //Main mixer
+
+//CC Numbers
+#define MIDI_CC_PREVTRACK		38
+#define MIDI_CC_NEXTTRACK		39
+
+#define MIDI_TRANSPORT_LOOP		14
+#define MIDI_TRANSPORT_STOP		17
+#define MIDI_TRANSPORT_PLAY		18
+#define MIDI_TRANSPORT_REC		19
+#define MIDI_TRANSPORT_FF		16
+#define MIDI_TRANSPORT_RW		15
 
 static u8 current_mode		= MODE_DEVICE;
 
@@ -396,23 +407,10 @@ void toggle_full_velocity() {
 	set_color_map_all_modes(BTN_TOGGLEFULLVEL, full_velocity ? color_util_on : color_util_off);
 }
 
-static const u8 MIDI_CC_PREVTRACK = 38;
-static const u8 MIDI_CC_NEXTTRACK = 39;
-
-static const u8 MIDI_TRANSPORT_LOOP	= 14;
-static const u8 MIDI_TRANSPORT_STOP	= 17;
-static const u8 MIDI_TRANSPORT_PLAY	= 18;
-static const u8 MIDI_TRANSPORT_REC	= 19;
-static const u8 MIDI_TRANSPORT_FF	= 16;
-static const u8 MIDI_TRANSPORT_RW	= 15;
-
 void prev_track() {
 	if (current_channel > 0) {
 		current_channel--;
 		set_channel(current_channel);
-		
-		//Send MIDI message for previous track
-		hal_send_midi(USBMIDI, CC | current_channel, MIDI_CC_PREVTRACK, 127);
 	}
 }
 
@@ -420,9 +418,6 @@ void next_track() {
 	if (current_channel < 7) {
 		current_channel++;
 		set_channel(current_channel);
-	
-		//Send MIDI message for previous track
-		hal_send_midi(USBMIDI, CC | current_channel, MIDI_CC_NEXTTRACK, 127);
 	}
 }
 
@@ -431,6 +426,16 @@ void next_track() {
  */
 void set_channel(u8 channel) {
 	current_channel = channel;
+	
+	//Send a bunch of PREVTRACK to reset to the first track
+	for (u8 i = 0; i < 32; i++) {
+		hal_send_midi(USBMIDI, CC | current_channel, MIDI_CC_PREVTRACK, 127);
+	}
+	
+	//Send enough NEXTTRACK to get to the requested track
+	for (u8 i = 0; i < current_channel; i++) {
+		hal_send_midi(USBMIDI, CC | current_channel, MIDI_CC_NEXTTRACK, 127);
+	}
 	
 	//Clear all the channel indicators
 	set_color_map_all_modes(RIGHT1, color_util_off);
@@ -660,16 +665,15 @@ void event_util(u8 index, u8 value) {
 				toggle_full_velocity();
 				break;
 			case BTN_PLAY:
-				//Not implemented
-				hal_send_midi(USBMIDI, MIDISTART | current_channel, 0x00, 0x00);
+				hal_send_midi(USBMIDI, CC | current_channel, MIDI_TRANSPORT_PLAY, 127);
 				break;
 			case BTN_STOP:
 				//Not implemented
-				hal_send_midi(USBMIDI, MIDISTOP | current_channel, 0x00, 0x00);
+				hal_send_midi(USBMIDI, CC | current_channel, MIDI_TRANSPORT_STOP, 127);
 				break;
 			case BTN_REC:
 				//Not implemented
-				hal_send_midi(USBMIDI, 0xBF | current_channel, 0x00, 0x00);
+				hal_send_midi(USBMIDI, CC | current_channel, MIDI_TRANSPORT_REC, 127);
 				break;
 			
 			//Octave selector
