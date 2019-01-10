@@ -179,11 +179,16 @@ typedef int bool;
 // Current octave
 static u8 current_octave = 1;
 
-//Full velocity toggle
+#define MAX_MIDI_CHANNELS	8
+
+// Full velocity toggle
 bool full_velocity = true;
 
-//Midi channel for output
+// Midi channel for output
 u8 current_channel = 0;
+
+// Tracks whether we are currently recording or not
+bool is_recording = 0;
 
 //Current page/mode
 u8 mode = 0;
@@ -245,7 +250,7 @@ static u8 color_fader_on[3] = {0, 0, 63};
 static u8 color_fader_off[3] = {0, 0, 4};
 
 //Current map of pad colors
-static u8 color_map[4][8][BUTTON_COUNT][3];
+static u8 color_map[4][MAX_MIDI_CHANNELS][BUTTON_COUNT][3];
 
 static const u8 note_map[BUTTON_COUNT] =
 {
@@ -388,7 +393,7 @@ void set_color_map_all_modes(u8 index, u8 color[]) {
 	u8 temp_channel = current_channel;
 	
 	//Loop through the channels
-	for (u8 i = 0; i < 8; i++) {
+	for (u8 i = 0; i < MAX_MIDI_CHANNELS; i++) {
 		current_channel = i;
 		set_color_map(index, color, MODE_DEVICE);
 		set_color_map(index, color, MODE_NOTE);
@@ -415,7 +420,7 @@ void prev_track() {
 }
 
 void next_track() {
-	if (current_channel < 7) {
+	if (current_channel < MAX_MIDI_CHANNELS) {
 		current_channel++;
 		set_channel(current_channel);
 	}
@@ -427,6 +432,7 @@ void next_track() {
 void set_channel(u8 channel) {
 	current_channel = channel;
 	
+	/*
 	//Send a bunch of PREVTRACK to reset to the first track
 	for (u8 i = 0; i < 32; i++) {
 		hal_send_midi(USBMIDI, CC | current_channel, MIDI_CC_PREVTRACK, 127);
@@ -436,56 +442,118 @@ void set_channel(u8 channel) {
 	for (u8 i = 0; i < current_channel; i++) {
 		hal_send_midi(USBMIDI, CC | current_channel, MIDI_CC_NEXTTRACK, 127);
 	}
+	*/
+	
+	u8 channel_off[3];
+	u8 channel_on[3];
+	if (current_channel > 7) {
+		channel_off[0] = color_util_on[0];
+		channel_off[1] = color_util_on[1];
+		channel_off[2] = color_util_on[2];
+		
+		channel_on[0] = color_util_off[0];
+		channel_on[1] = color_util_off[1];
+		channel_on[2] = color_util_off[2];
+	} else {
+		channel_off[0] = color_util_off[0];
+		channel_off[1] = color_util_off[1];
+		channel_off[2] = color_util_off[2];
+		
+		channel_on[0] = color_util_on[0];
+		channel_on[1] = color_util_on[1];
+		channel_on[2] = color_util_on[2];
+	}
 	
 	//Clear all the channel indicators
-	set_color_map_all_modes(RIGHT1, color_util_off);
-	set_color_map_all_modes(RIGHT2, color_util_off);
-	set_color_map_all_modes(RIGHT3, color_util_off);
-	set_color_map_all_modes(RIGHT4, color_util_off);
-	set_color_map_all_modes(RIGHT5, color_util_off);
-	set_color_map_all_modes(RIGHT6, color_util_off);
-	set_color_map_all_modes(RIGHT7, color_util_off);
-	set_color_map_all_modes(RIGHT8, color_util_off);
+	set_color_map_all_modes(RIGHT1, channel_off);
+	set_color_map_all_modes(RIGHT2, channel_off);
+	set_color_map_all_modes(RIGHT3, channel_off);
+	set_color_map_all_modes(RIGHT4, channel_off);
+	set_color_map_all_modes(RIGHT5, channel_off);
+	set_color_map_all_modes(RIGHT6, channel_off);
+	set_color_map_all_modes(RIGHT7, channel_off);
+	set_color_map_all_modes(RIGHT8, channel_off);
 	
 	//Set the LED to indicate the current channel
 	switch(current_channel) {
 		case 0:
-			set_color_map_all_modes(RIGHT1, color_util_on);
+			set_color_map_all_modes(RIGHT1, channel_on);
 			set_color_map_all_modes(BTN_PREVTRACK, color_util_off);
-			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
+			set_color_map_all_modes(BTN_NEXTTRACK, channel_on);
 			break;
 		case 1:
-			set_color_map_all_modes(RIGHT2, color_util_on);
+			set_color_map_all_modes(RIGHT2, channel_on);
 			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
 			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
 			break;
 		case 2:
-			set_color_map_all_modes(RIGHT3, color_util_on);
+			set_color_map_all_modes(RIGHT3, channel_on);
 			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
 			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
 			break;
 		case 3:
-			set_color_map_all_modes(RIGHT4, color_util_on);
+			set_color_map_all_modes(RIGHT4, channel_on);
 			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
 			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
 			break;
 		case 4:
-			set_color_map_all_modes(RIGHT5, color_util_on);
+			set_color_map_all_modes(RIGHT5, channel_on);
 			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
 			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
 			break;
 		case 5:
-			set_color_map_all_modes(RIGHT6, color_util_on);
+			set_color_map_all_modes(RIGHT6, channel_on);
 			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
 			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
 			break;
 		case 6:
-			set_color_map_all_modes(RIGHT7, color_util_on);
+			set_color_map_all_modes(RIGHT7, channel_on);
 			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
 			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
 			break;
 		case 7:
-			set_color_map_all_modes(RIGHT8, color_util_on);
+			set_color_map_all_modes(RIGHT8, channel_on);
+			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
+			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
+			break;
+			
+		case 8:
+			set_color_map_all_modes(RIGHT1, channel_on);
+			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
+			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
+			break;
+		case 9:
+			set_color_map_all_modes(RIGHT2, channel_on);
+			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
+			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
+			break;
+		case 10:
+			set_color_map_all_modes(RIGHT3, channel_on);
+			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
+			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
+			break;
+		case 11:
+			set_color_map_all_modes(RIGHT4, channel_on);
+			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
+			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
+			break;
+		case 12:
+			set_color_map_all_modes(RIGHT5, channel_on);
+			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
+			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
+			break;
+		case 13:
+			set_color_map_all_modes(RIGHT6, channel_on);
+			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
+			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
+			break;
+		case 14:
+			set_color_map_all_modes(RIGHT7, channel_on);
+			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
+			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
+			break;
+		case 15:
+			set_color_map_all_modes(RIGHT8, channel_on);
 			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
 			set_color_map_all_modes(BTN_NEXTTRACK, color_util_off);
 			break;
@@ -662,18 +730,21 @@ void event_util(u8 index, u8 value) {
 	if (is_press(value)) {
 		switch (index) {
 			case BTN_TOGGLEFULLVEL:
+				//Toggle full velocity on note pads
 				toggle_full_velocity();
 				break;
 			case BTN_PLAY:
+				//Midi play
 				hal_send_midi(USBMIDI, CC | current_channel, MIDI_TRANSPORT_PLAY, 127);
 				break;
 			case BTN_STOP:
-				//Not implemented
+				//Midi stop
 				hal_send_midi(USBMIDI, CC | current_channel, MIDI_TRANSPORT_STOP, 127);
 				break;
 			case BTN_REC:
-				//Not implemented
-				hal_send_midi(USBMIDI, CC | current_channel, MIDI_TRANSPORT_REC, 127);
+				//Toggle record
+				is_recording = !is_recording;
+				hal_send_midi(USBMIDI, CC | current_channel, MIDI_TRANSPORT_REC, is_recording ? 0 : 127);
 				break;
 			
 			//Octave selector
@@ -721,35 +792,83 @@ void event_util(u8 index, u8 value) {
 			//Channel selector
 			case RIGHT1:
 				//Set channel 1 (0)
-				set_channel(0);
+				if (current_channel == 0) {
+					//Double tap
+					set_channel(8);
+				} else {
+					//Single tap
+					set_channel(0);
+				}
 				break;
 			case RIGHT2:
 				//Set channel 2
-				set_channel(1);
+				if (current_channel == 1) {
+					//Double tap
+					set_channel(9);
+				} else {
+					//Single tap
+					set_channel(1);
+				}
 				break;
 			case RIGHT3:
 				//Set channel 3
-				set_channel(2);
+				if (current_channel == 2) {
+					//Double tap
+					set_channel(10);
+				} else {
+					//Single tap
+					set_channel(2);
+				}
 				break;
 			case RIGHT4:
 				//Set channel 4
-				set_channel(3);
+				if (current_channel == 3) {
+					//Double tap
+					set_channel(11);
+				} else {
+					//Single tap
+					set_channel(3);
+				}
 				break;
 			case RIGHT5:
 				//Set channel 5
-				set_channel(4);
+				if (current_channel == 4) {
+					//Double tap
+					set_channel(12);
+				} else {
+					//Single tap
+					set_channel(4);
+				}
 				break;
 			case RIGHT6:
 				//Set channel 6
-				set_channel(5);
+				if (current_channel == 5) {
+					//Double tap
+					set_channel(13);
+				} else {
+					//Single tap
+					set_channel(5);
+				}
 				break;
 			case RIGHT7:
 				//Set channel 7
-				set_channel(6);
+				if (current_channel == 6) {
+					//Double tap
+					set_channel(14);
+				} else {
+					//Single tap
+					set_channel(6);
+				}
 				break;
 			case RIGHT8:
 				//Set channel 8
-				set_channel(7);
+				if (current_channel == 7) {
+					//Double tap
+					set_channel(15);
+				} else {
+					//Single tap
+					set_channel(7);
+				}
 				break;
 			
 			//Mode selector
@@ -834,28 +953,28 @@ void app_init(const u16 *adc_raw) {
 	current_octave = 1;
 	
 	//Set up color maps
-	for (u8 i = 0; i < 8; i++) {
+	for (u8 i = 0; i < MAX_MIDI_CHANNELS; i++) {
 		for (u8 j = 0; j < BUTTON_COUNT; j++) {
 			for (u8 k = 0; k < 3; k++) {
 				color_map[MODE_DEVICE][i][j][k] = device_color_map[j][k];
 			}
 		}
 	}
-	for (u8 i = 0; i < 8; i++) {
+	for (u8 i = 0; i < MAX_MIDI_CHANNELS; i++) {
 		for (u8 j = 0; j < BUTTON_COUNT; j++) {
 			for (u8 k = 0; k < 3; k++) {
 				color_map[MODE_NOTE][i][j][k] = note_color_map[j][k];
 			}
 		}
 	}
-	for (u8 i = 0; i < 8; i++) {
+	for (u8 i = 0; i < MAX_MIDI_CHANNELS; i++) {
 		for (u8 j = 0; j < BUTTON_COUNT; j++) {
 			for (u8 k = 0; k < 3; k++) {
 				color_map[MODE_SESSION][i][j][k] = session_color_map[j][k];
 			}
 		}
 	}
-	for (u8 i = 0; i < 8; i++) {
+	for (u8 i = 0; i < MAX_MIDI_CHANNELS; i++) {
 		for (u8 j = 0; j < BUTTON_COUNT; j++) {
 			for (u8 k = 0; k < 3; k++) {
 				color_map[MODE_FX][i][j][k] = fx_color_map[j][k];
