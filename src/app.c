@@ -111,103 +111,46 @@ Map:
 	    +---+---+---+---+---+---+---+---+
 
 */
-//Default color map for "Device" mode
-static const u8 device_color_map[BUTTON_COUNT][3] =
-{  
-	{ 0,  0,  0}, {63,  0, 63}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 8,  8,  8}, {48, 48, 48}, {48,  0,  0}, { 0,  0,  0},
-	{ 4,  0,  4}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, {63,  0, 63},
-	{63,  0, 63}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
-	{ 4,  0,  4}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
-	{ 4,  0,  4}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
-	{ 4,  0,  4}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4},
-	{ 4,  0,  4}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
-	{ 4,  0,  4}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
-	{ 4,  0,  4}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
-	{ 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 4,  0,  4}, {63,  0, 63}, { 4,  0,  4}, { 4,  0,  4}, {63,  0, 63}, { 4,  0,  4}, { 0,  0,  0}
-};
 
-//Default color map for "Note" mode
-static u8 note_color_map[BUTTON_COUNT][3] =
-{  
-	{ 0,  0,  0}, {63,  0, 63}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 8,  8,  8}, {48, 48, 48}, {48,  0,  0}, { 0,  0,  0},
-	{ 4,  0,  4}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63,  0, 63},
-	{63,  0, 63}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 4,  0,  4}, 
-	{ 4,  0,  4}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, {63, 63,  0}, { 4,  0,  4}, 
-	{ 4,  0,  4}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 4,  0,  4}, 
-	{ 4,  0,  4}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 4,  0,  4},
-	{ 4,  0,  4}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, {63, 32,  0}, { 4,  0,  4}, 
-	{ 4,  0,  4}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 4,  0,  4}, 
-	{ 4,  0,  4}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, {63, 16,  0}, { 4,  0,  4}, 
-	{ 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 4,  0,  4}, {63,  0, 63}, { 4,  0,  4}, {63,  0, 63}, { 4,  0,  4}, { 4,  0,  4}, { 0,  0,  0}
-};
-
-//Default color map for "Session" mode
-static const u8 session_color_map[BUTTON_COUNT][3] =
-{  
-	{ 0,  0,  0}, {63,  0, 63}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 8,  8,  8}, {48, 48, 48}, {48,  0,  0}, { 0,  0,  0},
-	{ 4,  0,  4}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, {63,  0, 63},
-	{63,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
-	{ 4,  0,  4}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
-	{ 4,  0,  4}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
-	{ 4,  0,  4}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4},
-	{ 4,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
-	{ 4,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
-	{ 4,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
-	{ 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 4,  0,  4}, {63,  0, 63}, {63,  0, 63}, { 4,  0,  4}, { 4,  0,  4}, { 4,  0,  4}, { 0,  0,  0}
-};
-
-//Default color map for "FX" mode
-static const u8 fx_color_map[BUTTON_COUNT][3] =
-{  
-	{ 0,  0,  0}, {63,  0, 63}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 8,  8,  8}, {48, 48, 48}, {48,  0,  0}, { 0,  0,  0},
-	{ 4,  0,  4}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, { 0,  4,  0}, {63,  0, 63},
-	{63,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
-	{ 4,  0,  4}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
-	{ 4,  0,  4}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4}, 
-	{ 4,  0,  4}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 0,  0, 63}, { 4,  0,  4},
-	{ 4,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
-	{ 4,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
-	{ 4,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 0,  0,  4}, { 4,  0,  4}, 
-	{ 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 4,  0,  4}, {63,  0, 63}, { 4,  0,  4}, { 4,  0,  4}, { 4,  0,  4}, {63,  0, 63}, { 0,  0,  0}
-};
-
-// Define bool type
+//Define bool type
 typedef int bool;
 #define true 1
 #define false 0
 
-// Current octave
-static u8 current_octave = 1;
-
-#define MAX_MIDI_CHANNELS	8
-
-// Full velocity toggle
-bool full_velocity = true;
-
-// Midi channel for output
-u8 current_channel = 0;
-
-// Tracks whether we are currently recording or not
-bool is_recording = 0;
-
-//Current page/mode
-u8 mode = 0;
-
 //Button shortcuts
-#define BTN_OCTAVEUP 		TOP1
-#define BTN_OCTAVEDOWN 		TOP2
-#define BTN_TOGGLEFULLVEL 	BOTTOM1
-#define BTN_STOP			BOTTOM6		//Grey
-#define BTN_PLAY			BOTTOM7		//White
-#define BTN_REC				BOTTOM8		//Red
-#define BTN_PREVTRACK		TOP3
-#define BTN_NEXTTRACK		TOP4
+#define BTN_OCTAVEUP 			TOP1
+#define BTN_OCTAVEDOWN 			TOP2
+#define BTN_TOGGLEFULLVEL 		BOTTOM1
+#define BTN_STOP				BOTTOM6		//Grey
+#define BTN_PLAY				BOTTOM7		//White
+#define BTN_RECORD				BOTTOM8		//Red
+#define BTN_PREVTRACK			TOP3
+#define BTN_NEXTTRACK			TOP4
+#define BTN_MODE_SESSION		TOP5
+#define BTN_MODE_NOTE			TOP6
+#define BTN_MODE_DEVICE			TOP7
+#define BTN_MODE_USER			TOP8
+#define BTN_FULL_VELOCITY		BOTTOM1
 
-//Page/Mode Shortcuts
-#define MODE_NOTE			0 //Note/keyboard
-#define MODE_DEVICE			1 //Device (split notes and controls/combinator)
-#define MODE_FX				2 //Sliders and toggles
-#define MODE_SESSION		3 //Main mixer
+//Channel selectors
+#define BTN_CHANNEL_1			RIGHT1
+#define BTN_CHANNEL_2			RIGHT2
+#define BTN_CHANNEL_3			RIGHT3
+#define BTN_CHANNEL_4			RIGHT4
+#define BTN_CHANNEL_5			RIGHT5
+#define BTN_CHANNEL_6			RIGHT6
+#define BTN_CHANNEL_7			RIGHT7
+#define BTN_CHANNEL_8			RIGHT8
+
+//Octave selectors
+#define BTN_OCTAVE_1			LEFT1
+#define BTN_OCTAVE_2			LEFT2
+#define BTN_OCTAVE_3			LEFT3
+#define BTN_OCTAVE_4			LEFT4
+#define BTN_OCTAVE_5			LEFT5
+#define BTN_OCTAVE_6			LEFT6
+#define BTN_OCTAVE_7			LEFT7
+#define BTN_OCTAVE_8			LEFT8
 
 //CC Numbers
 #define MIDI_CC_PREVTRACK		38
@@ -220,673 +163,366 @@ u8 mode = 0;
 #define MIDI_TRANSPORT_FF		16
 #define MIDI_TRANSPORT_RW		15
 
-static u8 current_mode		= MODE_DEVICE;
+//Constants
+#define MAX_MIDI_CHANNELS		16
 
-static u8 color_util_on[3]	= {63, 0, 63};
-static u8 color_util_off[3]	= { 4, 0,  4};
+//Page/Mode Shortcuts
+#define MODE_NOTE				0 //Note/keyboard
+#define MODE_DEVICE				1 //Device (split notes and controls/combinator)
+#define MODE_USER				2 //Sliders and toggles
+#define MODE_SESSION			3 //Main mixer
 
-//Color constants
-static u8 color_off[3] 		= { 0,  0,  0};
-static u8 color_wht[3] 		= {63, 63, 63};
+//Current octave
+static u8 current_octave = 1;
 
-static u8 color_red[3] 		= {63,  0,  0};
-static u8 color_red_dark[3]	= { 4,  0,  0};
-static u8 color_grn[3] 		= { 0, 63,  0};
-static u8 color_blu[3] 		= { 0,  0, 63};
+//Full velocity toggle
+bool full_velocity = true;
 
-static u8 color_ylw[3] 		= {63, 63,  0};
-static u8 color_org[3] 		= {63, 32,  0};
-static u8 color_dor[3] 		= {63, 16,  0};
+//Current midi channel for output
+u8 current_channel = 0;
 
-//Color for button presses
-static u8 color_pressed[3]	= {63, 63, 63};
+//Tracks whether we are currently recording or not
+bool is_recording = 0;
 
-//Colors for toggles
-static u8 color_toggle_on[3] = {0, 63, 0};
-static u8 color_toggle_off[3] = {0, 4, 0};
+static u8 channel_modes[MAX_MIDI_CHANNELS];
 
-//Colors for faders
-static u8 color_fader_on[3] = {0, 0, 63};
-static u8 color_fader_off[3] = {0, 0, 4};
+//Color lookup constants
+#define COLOR_OFF				 0
+#define COLOR_UTIL_OFF			 1
+#define COLOR_UTIL_ON			 2
+#define COLOR_FADER_OFF			 3
+#define COLOR_FADER_ON			 4
+#define COLOR_TOGGLE_OFF		 5
+#define COLOR_TOGGLE_ON			 6
+#define COLOR_NOTE_OFF_1		 7
+#define COLOR_NOTE_OFF_2		 8
+#define COLOR_NOTE_OFF_3		 9
+#define COLOR_NOTE_ON			10
+#define COLOR_PLAY				11
+#define COLOR_STOP				12
+#define COLOR_RECORD_OFF		13
+#define COLOR_RECORD_ON			14
 
-//Current map of pad colors
-static u8 color_map[4][MAX_MIDI_CHANNELS][BUTTON_COUNT][3];
-
-static const u8 note_map[BUTTON_COUNT] =
+//Standard colors lookup
+static u8 colors[15][3] = 
 {
-	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
-	 0, 24, 25, 26, 27, 24, 25, 26, 27,  0, 
-	 0, 28, 29, 30, 31, 28, 29, 30, 31,  0, 
-	 0, 32, 33, 34, 35, 32, 33, 34, 35,  0, 
-	 0, 36, 37, 38, 39, 36, 37, 38, 39,  0, 
-	 0, 40, 41, 42, 43, 40, 41, 42, 43,  0, 
-	 0, 44, 45, 46, 47, 44, 45, 46, 47,  0, 
-	 0, 48, 49, 50, 51, 48, 49, 50, 51,  0, 
-	 0, 52, 53, 54, 55, 52, 53, 54, 55,  0,
-	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0
+	{ 0,  0,  0}, //COLOR_OFF
+	{ 4,  0,  8}, //COLOR_UTIL_OFF
+	{63,  0, 63}, //COLOR_UTIL_ON
+	{ 0,  0,  8}, //COLOR_FADER_OFF
+	{ 0,  0, 63}, //COLOR_FADER_ON
+	{ 0,  8,  0}, //COLOR_TOGGLE_OFF
+	{ 0, 63,  0}, //COLOR_TOGGLE_ON
+	{63, 63,  0}, //COLOR_NOTE_OFF_1
+	{63, 31,  0}, //COLOR_NOTE_OFF_2
+	{63,  7,  0}, //COLOR_NOTE_OFF_3
+	{63, 63, 63}, //COLOR_NOTE_ON
+	{63, 63, 63}, //COLOR_PLAY
+	{ 8,  8,  8}, //COLOR_STOP
+	{ 8,  0,  0}, //COLOR_RECORD_OFF
+	{63,  0,  0}  //COLOR_RECORD_ON
 };
 
-//Maps x-index of fader buttons to CC number to send
-static const u8 session_fader_cc_map[10] = {0, 71, 72, 73, 74, 75, 76, 77, 78, 0 };
-static const u8 device_fader_cc_map[10] = {0, 0, 0, 0, 0, 20, 21, 22, 23, 0 };
-static const u8 fx_fader_cc_map[10] = {0, 110, 111, 112, 113, 114, 115, 116, 117, 0 };
-
-//Maps x-index of toggle buttons to CC number to send
-static const u8 session_toggle_cc_map[10] = {0, 102, 103, 104, 105, 106, 107, 108, 109, 0 };
-static const u8 device_toggle_cc_map[10] = {0, 0, 0, 0, 0, 24, 25, 26, 27, 0 };
-static const u8 fx_toggle_cc_map[10] = {0, 118, 119, 28, 29, 30, 31, 86, 87, 0 };
-
-//Maps y-index of fader button to CC value to send
-static const u8 fader_value_map[10] = { 0, 0, 0, 21, 42, 63, 84, 105, 127, 127 };
+//Lookup of current CC values per channel
+static u8 cc_values[MAX_MIDI_CHANNELS][128];
 
 //-----------------------------------------------------------------------------------------
-//                                HELPER FUNCTIONS
+//                                HELPER METHODS
 //-----------------------------------------------------------------------------------------
 
-/**
- * Returns a value indicating whether the specified button value indicates a press event
- */
-bool is_press(u8 value) {
-	return value != 0;
-}
-
-/**
- * Returns a value indicating whether the specified toggle is "On"
- */
-bool is_toggle_on(u8 index) {
-	return
-		color_map[current_mode][current_channel][index][0] == color_toggle_on[0] &&
-		color_map[current_mode][current_channel][index][1] == color_toggle_on[1] &&
-		color_map[current_mode][current_channel][index][2] == color_toggle_on[2];
-}
-
-/**
- * Returns a value indicating whether the specified button value indicates a release event
- */
-bool is_release(u8 value) {
-	return value == 0;
-}
-
-/**
- * Draws the current color map to the hardward layer
- */
-void draw_color_map() {
-	for (u8 i = 0; i < BUTTON_COUNT; i++) {
-		//Send color_map[i] to the button
-		hal_plot_led(TYPEPAD, i, color_map[current_mode][current_channel][i][0], color_map[current_mode][current_channel][i][1], color_map[current_mode][current_channel][i][2]);
-	}
-}
-
-/**
- * Returns a value indicating whether the specified button index is a pad (as opposed to a util button)
- */
-bool is_pad(u8 index) {
-	return index > 10 && index < 89 && index % 10 != 0 && index % 10 != 9;
-}
-
-/**
- * Returns a value indicating whether the specified button index is a note
- */
-bool is_note(u8 index) {
-	switch(current_mode) {
-		case MODE_DEVICE:
-			return is_pad(index) && (index % 10) < 5;
-		case MODE_NOTE:
-			return is_pad(index);
-		case MODE_SESSION:
-			return false;
-		case MODE_FX:
-			return false;
-	}
-}
-
-/**
- * Returns a value indicating whether the specified button index is a fader
- */
-bool is_fader(u8 index) {
-	switch(current_mode) {
-		case MODE_DEVICE:
-			return is_pad(index) && (index % 10) > 4 && (index / 10) > 1;
-		case MODE_NOTE:
-			return false;
-		case MODE_SESSION:
-			return is_pad(index) && (index / 10) > 1;
-		case MODE_FX:
-			return is_pad(index) && (index / 10) > 1;
-	}
-}
-
-/**
- * Returns a value indicating whether the specified button index is a toggle
- */
-bool is_toggle(u8 index) {
-	switch(current_mode) {
-		case MODE_DEVICE:
-			return is_pad(index) && (index % 10) > 4 && (index / 10) == 1;
-		case MODE_NOTE:
-			return false;
-		case MODE_SESSION:
-			return is_pad(index) && (index / 10) == 1;
-		case MODE_FX:
-			return is_pad(index) && (index / 10) == 1;
-	}
-}
-
-/**
- * Returns a value indicating whether the specified button index is a utility button
- */
-bool is_util(u8 index) {
-	return !is_pad(index);
-}
-
-/**
- * Sets the color on color_map for the specified index to the specified color
- */
-void set_color_map(u8 index, u8 color[], u8 mode) {
-	//Loop through the channels
-	color_map[mode][current_channel][index][0] = color[0];
-	color_map[mode][current_channel][index][1] = color[1];
-	color_map[mode][current_channel][index][2] = color[2];
-}
-
-void set_color_map_all_modes(u8 index, u8 color[]) {
-	u8 temp_channel = current_channel;
+u8 get_pad_note(u8 index) {
+	//Get the Midi note number to play for the specified pad
+	u8 x_index = index % 10;
+	u8 y_index = index / 10;
 	
-	//Loop through the channels
-	for (u8 i = 0; i < MAX_MIDI_CHANNELS; i++) {
-		current_channel = i;
-		set_color_map(index, color, MODE_DEVICE);
-		set_color_map(index, color, MODE_NOTE);
-		set_color_map(index, color, MODE_SESSION);
-		set_color_map(index, color, MODE_FX);
+	if (x_index > 4) {
+		//Right half of pads have same note as left half
+		x_index -= 4;
 	}
 	
-	current_channel = temp_channel;
-}
-
-/**
- * Toggles full velocity mode
- */
-void toggle_full_velocity() {
-	full_velocity = !full_velocity;
-	set_color_map_all_modes(BTN_TOGGLEFULLVEL, full_velocity ? color_util_on : color_util_off);
-}
-
-void prev_track() {
-	if (current_channel > 0) {
-		current_channel--;
-		set_channel(current_channel);
-	}
-}
-
-void next_track() {
-	if (current_channel < MAX_MIDI_CHANNELS) {
-		current_channel++;
-		set_channel(current_channel);
-	}
-}
-
-/**
- * Sets the current channel number (0-based)
- */
-void set_channel(u8 channel) {
-	current_channel = channel;
+	//Adjust for 1-based pad numbers
+	x_index--;
+	y_index--;
 	
+	return 24 + x_index + (4 * y_index) + (12 * current_octave);
+}
+
+u8 get_pad_fader_value(u8 index) {
+	//Map pad row to Midi CC value
+	u8 y_index = index / 10;
+	
+	if (y_index < 2) {
+		return 0;
+	}
+	
+	y_index -= 2;
+	
+	return y_index * 21;
+}
+
+u8 get_pad_fader_cc_number(u8 index) {
+	//Map pad column to Midi CC number
 	/*
-	//Send a bunch of PREVTRACK to reset to the first track
-	for (u8 i = 0; i < 32; i++) {
-		hal_send_midi(USBMIDI, CC | current_channel, MIDI_CC_PREVTRACK, 127);
-	}
+	u8 x_index = index % 10;
 	
-	//Send enough NEXTTRACK to get to the requested track
-	for (u8 i = 0; i < current_channel; i++) {
-		hal_send_midi(USBMIDI, CC | current_channel, MIDI_CC_NEXTTRACK, 127);
-	}
+	x_index--;
+	
+	return 70 + x_index;
 	*/
 	
-	u8 channel_off[3];
-	u8 channel_on[3];
-	if (current_channel > 7) {
-		channel_off[0] = color_util_on[0];
-		channel_off[1] = color_util_on[1];
-		channel_off[2] = color_util_on[2];
-		
-		channel_on[0] = color_util_off[0];
-		channel_on[1] = color_util_off[1];
-		channel_on[2] = color_util_off[2];
-	} else {
-		channel_off[0] = color_util_off[0];
-		channel_off[1] = color_util_off[1];
-		channel_off[2] = color_util_off[2];
-		
-		channel_on[0] = color_util_on[0];
-		channel_on[1] = color_util_on[1];
-		channel_on[2] = color_util_on[2];
+	return 69 + (index % 10);
+}
+
+u8 get_pad_toggle_cc_number(u8 index) {
+	//Map pad column to Midi CC number
+	/*
+	u8 x_index = index % 10;
+	
+	x_index--;
+	
+	return 80 + x_index;
+	*/
+	
+	return 79 + (index % 10);
+}
+
+bool pad_is_util(u8 index) {
+	u8 x_index = index % 10;
+	u8 y_index = index / 10;
+	
+	return x_index == 0 || x_index == 9 || y_index == 0 || y_index == 9;
+}
+
+bool pad_is_note(u8 index) {
+	if (pad_is_util(index)) {
+		return false;
 	}
 	
-	//Clear all the channel indicators
-	set_color_map_all_modes(RIGHT1, channel_off);
-	set_color_map_all_modes(RIGHT2, channel_off);
-	set_color_map_all_modes(RIGHT3, channel_off);
-	set_color_map_all_modes(RIGHT4, channel_off);
-	set_color_map_all_modes(RIGHT5, channel_off);
-	set_color_map_all_modes(RIGHT6, channel_off);
-	set_color_map_all_modes(RIGHT7, channel_off);
-	set_color_map_all_modes(RIGHT8, channel_off);
-	
-	//Set the LED to indicate the current channel
-	switch(current_channel) {
-		case 0:
-			set_color_map_all_modes(RIGHT1, channel_on);
-			set_color_map_all_modes(BTN_PREVTRACK, color_util_off);
-			set_color_map_all_modes(BTN_NEXTTRACK, channel_on);
-			break;
-		case 1:
-			set_color_map_all_modes(RIGHT2, channel_on);
-			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
-			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
-			break;
-		case 2:
-			set_color_map_all_modes(RIGHT3, channel_on);
-			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
-			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
-			break;
-		case 3:
-			set_color_map_all_modes(RIGHT4, channel_on);
-			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
-			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
-			break;
-		case 4:
-			set_color_map_all_modes(RIGHT5, channel_on);
-			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
-			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
-			break;
-		case 5:
-			set_color_map_all_modes(RIGHT6, channel_on);
-			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
-			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
-			break;
-		case 6:
-			set_color_map_all_modes(RIGHT7, channel_on);
-			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
-			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
-			break;
-		case 7:
-			set_color_map_all_modes(RIGHT8, channel_on);
-			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
-			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
-			break;
-			
-		case 8:
-			set_color_map_all_modes(RIGHT1, channel_on);
-			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
-			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
-			break;
-		case 9:
-			set_color_map_all_modes(RIGHT2, channel_on);
-			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
-			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
-			break;
-		case 10:
-			set_color_map_all_modes(RIGHT3, channel_on);
-			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
-			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
-			break;
-		case 11:
-			set_color_map_all_modes(RIGHT4, channel_on);
-			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
-			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
-			break;
-		case 12:
-			set_color_map_all_modes(RIGHT5, channel_on);
-			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
-			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
-			break;
-		case 13:
-			set_color_map_all_modes(RIGHT6, channel_on);
-			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
-			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
-			break;
-		case 14:
-			set_color_map_all_modes(RIGHT7, channel_on);
-			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
-			set_color_map_all_modes(BTN_NEXTTRACK, color_util_on);
-			break;
-		case 15:
-			set_color_map_all_modes(RIGHT8, channel_on);
-			set_color_map_all_modes(BTN_PREVTRACK, color_util_on);
-			set_color_map_all_modes(BTN_NEXTTRACK, color_util_off);
-			break;
+	switch (channel_modes[current_channel]) {
+		case MODE_NOTE:
+			return true;
+		case MODE_DEVICE:
+			return index % 10 < 5;
+		default:
+			return false;
 	}
 }
 
-/**
- * Sets the current octave
- */
+bool pad_is_fader(u8 index) {
+	if (pad_is_util(index)) {
+		return false;
+	}
+	
+	u8 x_index = index % 10;
+	u8 y_index = index / 10;
+	
+	switch (channel_modes[current_channel]) {
+		case MODE_SESSION:
+			return y_index > 1;
+		case MODE_DEVICE:
+			return x_index > 4 && y_index > 1;
+		default:
+			return false;
+	}
+}
+
+bool pad_is_toggle(u8 index) {
+	if (pad_is_util(index)) {
+		return false;
+	}
+	
+	u8 x_index = index % 10;
+	u8 y_index = index / 10;
+	
+	switch (channel_modes[current_channel]) {
+		case MODE_SESSION:
+			return y_index == 1;
+		case MODE_DEVICE:
+			return y_index == 1 && x_index > 4;
+		default:
+			return false;
+	}
+}
+
+void set_channel(u8 channel) {
+	current_channel = channel;
+}
+
 void set_octave(u8 octave) {
 	current_octave = octave;
+}
+
+void set_color(u8 index, u8 color_index) {
+	hal_plot_led(TYPEPAD, index, colors[color_index][0], colors[color_index][1], colors[color_index][2]);
+}
+
+void draw_util_buttons() {
+	//Draw the play/stop/record buttons
+	set_color(BTN_STOP, COLOR_STOP);
+	set_color(BTN_PLAY, COLOR_PLAY);
+	set_color(BTN_RECORD, is_recording ? COLOR_RECORD_ON : COLOR_RECORD_OFF);
 	
-	//Clear all the octave indicators
-	set_color_map_all_modes(LEFT1, color_util_off);
-	set_color_map_all_modes(LEFT2, color_util_off);
-	set_color_map_all_modes(LEFT3, color_util_off);
-	set_color_map_all_modes(LEFT4, color_util_off);
-	set_color_map_all_modes(LEFT5, color_util_off);
-	set_color_map_all_modes(LEFT6, color_util_off);
-	set_color_map_all_modes(LEFT7, color_util_off);
-	set_color_map_all_modes(LEFT8, color_util_off);
+	//Draw the channel selectors
+	u8 color_channel_off = COLOR_UTIL_OFF;
+	u8 color_channel_on = COLOR_UTIL_ON;
+	u8 channel_index = current_channel;
+	if (channel_index > 8) {
+		channel_index -= 8;
+		color_channel_off = COLOR_UTIL_ON;
+		color_channel_on = COLOR_UTIL_OFF;
+	}
 	
-	switch(current_octave) {
-		case 0:
-			set_color_map_all_modes(LEFT1, color_util_on);
-			break;
-		case 1:
-			set_color_map_all_modes(LEFT2, color_util_on);
-			break;
-		case 2:
-			set_color_map_all_modes(LEFT3, color_util_on);
-			break;
-		case 3:
-			set_color_map_all_modes(LEFT4, color_util_on);
-			break;
-		case 4:
-			set_color_map_all_modes(LEFT5, color_util_on);
-			break;
-		case 5:
-			set_color_map_all_modes(LEFT6, color_util_on);
-			break;
-		case 6:
-			set_color_map_all_modes(LEFT7, color_util_on);
-			break;
-		case 7:
-			set_color_map_all_modes(LEFT8, color_util_on);
-			break;
+	for (u8 i = 1; i < 9; i++) {
+		if (i == channel_index + 1) {
+			set_color((i * 10) + 9, color_channel_on);
+		} else {
+			set_color((i * 10) + 9, color_channel_off);
+		}
+	}
+	
+	//Draw the octave selectors
+	for (u8 y_index = 1; y_index < 9; y_index++) {
+		if (y_index == (current_octave + 1)) {
+			set_color((y_index * 10), COLOR_UTIL_ON);
+		} else {
+			set_color((y_index * 10), COLOR_UTIL_OFF);
+		}
+	}
+	
+	//Draw the mode selectors
+	set_color(BTN_MODE_SESSION, channel_modes[current_channel] == MODE_SESSION ? COLOR_UTIL_ON : COLOR_UTIL_OFF);
+	set_color(BTN_MODE_NOTE, channel_modes[current_channel] == MODE_NOTE ? COLOR_UTIL_ON : COLOR_UTIL_OFF);
+	set_color(BTN_MODE_DEVICE, channel_modes[current_channel] == MODE_DEVICE ? COLOR_UTIL_ON : COLOR_UTIL_OFF);
+	//set_color(BTN_MODE_USER, channel_modes[current_channel] == MODE_USER ? COLOR_UTIL_ON : COLOR_UTIL_OFF);
+	set_color(BTN_MODE_USER, COLOR_OFF);
+	
+	//Draw the transport buttons
+	set_color(BTN_PLAY, COLOR_PLAY);
+	set_color(BTN_STOP, COLOR_STOP);
+	set_color(BTN_RECORD, is_recording ? COLOR_RECORD_ON : COLOR_RECORD_OFF);
+	
+	//Draw the full velocity button
+	set_color(BTN_FULL_VELOCITY, full_velocity ? COLOR_UTIL_ON : COLOR_UTIL_OFF);
+}
+
+void draw_session_pads() {
+	//Draw faders
+	for (u8 x = 1; x < 9; x++) {
+		for (u8 y = 2; y < 9; y++) {
+			if (cc_values[current_channel][get_pad_fader_cc_number((y * 10) + x)] >= get_pad_fader_value((y * 10) + x)) {
+				//Set this fader button to "on"
+				set_color((y * 10) + x, COLOR_FADER_ON);
+			} else {
+				//Set this fader button to "off"
+				set_color((y * 10) + x, COLOR_FADER_OFF);
+			}
+		}
+	}
+	
+	//Draw toggles
+	for (u8 x = 1; x < 9; x++) {
+		u8 y = 1;
+		
+		if (cc_values[current_channel][get_pad_toggle_cc_number((y * 10) + x)] > 0) {
+			//Set this toggle button to "on"
+			set_color((y * 10) + x, COLOR_TOGGLE_ON);
+		} else {
+			//Set this toggle button to "off"
+			set_color((y * 10) + x, COLOR_TOGGLE_OFF);
+		}
 	}
 }
 
-/**
- * Sets the current mode
- */
-void set_mode(u8 mode) {
-	current_mode = mode;
-	
-	//Mark all the mode buttons as off
-	set_color_map_all_modes(TOP5, color_util_off);
-	set_color_map_all_modes(TOP6, color_util_off);
-	set_color_map_all_modes(TOP7, color_util_off);
-	set_color_map_all_modes(TOP8, color_util_off);
-	
-	//Set the current mode button on
-	switch(current_mode) {
-		case MODE_SESSION:
-			set_color_map_all_modes(TOP5, color_util_on);
-			break;
-		case MODE_NOTE:
-			set_color_map_all_modes(TOP6, color_util_on);
-			break;
-		case MODE_DEVICE:
-			set_color_map_all_modes(TOP7, color_util_on);
-			break;
-		case MODE_FX:
-			set_color_map_all_modes(TOP8, color_util_on);
-			break;
+void draw_note_pads() {
+	//Draw notes
+	for (u8 x = 1; x < 9; x++) {
+		for (u8 y = 1; y < 9; y++) {
+			//Draw this note pad
+			if (y < 4) {
+				set_color((y * 10) + x, COLOR_NOTE_OFF_1);
+			} else if (y < 7) {
+				set_color((y * 10) + x, COLOR_NOTE_OFF_2);
+			} else {
+				set_color((y * 10) + x, COLOR_NOTE_OFF_3);
+			}
+		}
 	}
 }
+
+void draw_device_pads() {
+	//Draw notes
+	for (u8 x = 1; x < 5; x++) {
+		for (u8 y = 1; y < 9; y++) {
+			//Draw this note pad
+			if (y < 4) {
+				set_color((y * 10) + x, COLOR_NOTE_OFF_1);
+			} else if (y < 7) {
+				set_color((y * 10) + x, COLOR_NOTE_OFF_2);
+			} else {
+				set_color((y * 10) + x, COLOR_NOTE_OFF_3);
+			}
+		}
+	}
+	
+	//Draw faders
+	for (u8 x = 5; x < 9; x++) {
+		for (u8 y = 2; y < 9; y++) {
+			if (cc_values[current_channel][get_pad_fader_cc_number((y * 10) + x)] >= get_pad_fader_value((y * 10) + x)) {
+				//Set this fader button to "on"
+				set_color((y * 10) + x, COLOR_FADER_ON);
+			} else {
+				//Set this fader button to "off"
+				set_color((y * 10) + x, COLOR_FADER_OFF);
+			}
+		}
+	}
+	
+	//Draw toggles
+	for (u8 x = 5; x < 9; x++) {
+		u8 y = 1;
+		
+		if (cc_values[current_channel][get_pad_toggle_cc_number((y * 10) + x)] > 0) {
+			//Set this toggle button to "on"
+			set_color((y * 10) + x, COLOR_TOGGLE_ON);
+		} else {
+			//Set this toggle button to "off"
+			set_color((y * 10) + x, COLOR_TOGGLE_OFF);
+		}
+	}
+}
+
+void draw_user_pads() {
+	//Draw faders
+	//[TBD]
+	
+	//Draw toggles
+	//[TBD]
+}
+
+void draw_color_map() {
+	switch(channel_modes[current_channel]) {
+		case MODE_SESSION:
+			draw_session_pads();
+			break;
+		case MODE_NOTE:
+			draw_note_pads();
+			break;
+		case MODE_DEVICE:
+			draw_device_pads();
+			break;
+		case MODE_USER:
+			draw_user_pads();
+			break;
+	}
+	
+	//Draw util buttons
+	draw_util_buttons();
+}
+
 
 //-----------------------------------------------------------------------------------------
 //                                EVENTS
 //-----------------------------------------------------------------------------------------
-
-void event_note(u8 index, u8 value) {
-	if (is_press(value)) {
-		//Send MIDI note on (with full_velocity check)
-		hal_send_midi(USBMIDI, NOTEON | current_channel, note_map[index] + (12 * current_octave), full_velocity ? 127 : value);
-		
-		//Set the pad to its pressed color
-		set_color_map(index, color_pressed, current_mode);
-	} else {
-		//Send MIDI note off
-		hal_send_midi(USBMIDI, NOTEON | current_channel, note_map[index] + (12 * current_octave), 0);
-		
-		//Reset the note pad to its default color
-		set_color_map(index, note_color_map[index], current_mode);
-	}
-}
-
-void event_toggle(u8 index, u8 value) {
-	if (is_press(value)) {
-		//Send MIDI CC value
-		u8 x_index = index % 10;
-		
-		u8 cc_number = 0;
-		switch(current_mode) {
-			case MODE_DEVICE:
-				cc_number = device_toggle_cc_map[x_index];
-				break;
-			case MODE_SESSION:
-				cc_number = session_toggle_cc_map[x_index];
-				break;
-			case MODE_FX:
-				cc_number = fx_toggle_cc_map[x_index];
-				break;
-		}
-		
-		u8 cc_value = is_toggle_on(index) ? 127 : 0;
-		
-		//Now negate the value
-		if (cc_value == 127) {
-			cc_value = 0;
-		} else {
-			cc_value = 127;
-		}
-		
-		//Send MIDI message
-		hal_send_midi(USBMIDI, CC | current_channel, cc_number, cc_value);
-		
-		//Set the color of the toggle
-		set_color_map(index, cc_value == 0 ? color_toggle_off : color_toggle_on, current_mode);
-	}
-}
-
-void event_fader(u8 index, u8 value) {
-	if (is_press(value)) {
-		//Send MIDI CC value
-		u8 y_index = index / 10;
-		u8 x_index = index % 10;
-		
-		u8 cc_number = 0;
-		switch(current_mode) {
-			case MODE_DEVICE:
-				cc_number = device_fader_cc_map[x_index];
-				break;
-			case MODE_SESSION:
-				cc_number = session_fader_cc_map[x_index];
-				break;
-			case MODE_FX:
-				cc_number = fx_fader_cc_map[x_index];
-				break;
-		}
-		
-		u8 cc_value = fader_value_map[y_index];
-		
-		hal_send_midi(USBMIDI, CC | current_channel, cc_number, cc_value);
-		
-		//Current button will be lit (color_fader_on)
-		//Buttons below will be lit (color_fader_on)
-		//Buttons above will be off (color_fader_off)
-		
-		for (u8 i = index; i > 20; i -= 10) {
-			set_color_map(i, color_fader_on, current_mode);
-		}
-		for (u8 i = index + 10; i < 90; i += 10) {
-			set_color_map(i, color_fader_off, current_mode);
-		}
-	} else {
-		//Release - Reset color
-	}
-}
-
-void event_util(u8 index, u8 value) {
-	if (is_press(value)) {
-		switch (index) {
-			case BTN_TOGGLEFULLVEL:
-				//Toggle full velocity on note pads
-				toggle_full_velocity();
-				break;
-			case BTN_PLAY:
-				//Midi play
-				hal_send_midi(USBMIDI, CC | current_channel, MIDI_TRANSPORT_PLAY, 127);
-				break;
-			case BTN_STOP:
-				//Midi stop
-				hal_send_midi(USBMIDI, CC | current_channel, MIDI_TRANSPORT_STOP, 127);
-				break;
-			case BTN_REC:
-				//Toggle record
-				is_recording = !is_recording;
-				hal_send_midi(USBMIDI, CC | current_channel, MIDI_TRANSPORT_REC, is_recording ? 0 : 127);
-				break;
-			
-			//Octave selector
-			case LEFT1:
-				//Set octave 0
-				set_octave(0);
-				break;
-			case LEFT2:
-				//Set octave 1
-				set_octave(1);
-				break;
-			case LEFT3:
-				//Set octave 2
-				set_octave(2);
-				break;
-			case LEFT4:
-				//Set octave 3
-				set_octave(3);
-				break;
-			case LEFT5:
-				//Set octave 4
-				set_octave(4);
-				break;
-			case LEFT6:
-				//Set octave 5
-				set_octave(5);
-				break;
-			case LEFT7:
-				//Set octave 6
-				set_octave(6);
-				break;
-			case LEFT8:
-				//Set octave 7
-				set_octave(7);
-				break;
-			
-			//Track selector
-			case BTN_PREVTRACK:
-				prev_track();
-				break;
-			case BTN_NEXTTRACK:
-				next_track();
-				break;
-			
-			//Channel selector
-			case RIGHT1:
-				//Set channel 1 (0)
-				if (current_channel == 0) {
-					//Double tap
-					set_channel(8);
-				} else {
-					//Single tap
-					set_channel(0);
-				}
-				break;
-			case RIGHT2:
-				//Set channel 2
-				if (current_channel == 1) {
-					//Double tap
-					set_channel(9);
-				} else {
-					//Single tap
-					set_channel(1);
-				}
-				break;
-			case RIGHT3:
-				//Set channel 3
-				if (current_channel == 2) {
-					//Double tap
-					set_channel(10);
-				} else {
-					//Single tap
-					set_channel(2);
-				}
-				break;
-			case RIGHT4:
-				//Set channel 4
-				if (current_channel == 3) {
-					//Double tap
-					set_channel(11);
-				} else {
-					//Single tap
-					set_channel(3);
-				}
-				break;
-			case RIGHT5:
-				//Set channel 5
-				if (current_channel == 4) {
-					//Double tap
-					set_channel(12);
-				} else {
-					//Single tap
-					set_channel(4);
-				}
-				break;
-			case RIGHT6:
-				//Set channel 6
-				if (current_channel == 5) {
-					//Double tap
-					set_channel(13);
-				} else {
-					//Single tap
-					set_channel(5);
-				}
-				break;
-			case RIGHT7:
-				//Set channel 7
-				if (current_channel == 6) {
-					//Double tap
-					set_channel(14);
-				} else {
-					//Single tap
-					set_channel(6);
-				}
-				break;
-			case RIGHT8:
-				//Set channel 8
-				if (current_channel == 7) {
-					//Double tap
-					set_channel(15);
-				} else {
-					//Single tap
-					set_channel(7);
-				}
-				break;
-			
-			//Mode selector
-			case TOP5:
-				set_mode(MODE_SESSION);
-				break;
-			case TOP6:
-				set_mode(MODE_NOTE);
-				break;
-			case TOP7:
-				set_mode(MODE_DEVICE);
-				break;
-			case TOP8:
-				set_mode(MODE_FX);
-				break;
-		}
-	}
-}
 
 /**
  * Called when the user presses or releases any button or pad on the control surface.
@@ -896,21 +532,125 @@ void event_util(u8 index, u8 value) {
  * @param value - 0 for release, nonzero for press.
  */
 void app_surface_event(u8 type, u8 index, u8 value) {
+	//Only care about pads, not "setup" button
 	if (type == TYPEPAD) {
-		//Mark this button as pressed
-		if (is_util(index)) {
-			//This is a utility button
-			event_util(index, value);
-		} else if (is_fader(index)) {
-			//This is a fader button
-			event_fader(index, value);
-		} else if (is_note(index)) {
-			//This is a note button
-			event_note(index, value);
-		} else if (is_toggle(index)) {
-			//This is a toggle button
-			event_toggle(index, value);
+		bool is_press = value > 0;
+		
+		u8 x_index = index % 10;
+		u8 y_index = index / 10;
+		
+		u8 channel = 0;
+		
+		if (pad_is_fader(index)) {
+			//FADER
+			if (is_press) {
+				//Set the fader value
+				cc_values[current_channel][get_pad_fader_cc_number(index)] = get_pad_fader_value(index);
+				//Send the midi message
+				hal_send_midi(USBMIDI, CC | current_channel, get_pad_fader_cc_number(index), cc_values[current_channel][get_pad_fader_cc_number(index)]);
+			}
+		} else if (pad_is_toggle(index)) {
+			//TOGGLE
+			if (is_press) {
+				//Set the toggle value
+				//Get the current value
+				u8 cc_value = cc_values[current_channel][get_pad_toggle_cc_number(index)];
+				//Set the new value
+				if (cc_value > 0) {
+					cc_value = 0;
+				} else {
+					cc_value = 127;
+				}
+				cc_values[current_channel][get_pad_toggle_cc_number(index)] = cc_value;
+				
+				//Send the midi message
+				hal_send_midi(USBMIDI, CC | current_channel, get_pad_toggle_cc_number(index), cc_value);
+			}
+		} else if (pad_is_note(index)) {
+			//NOTE
+			if (is_press) {
+				//Note press - Set the "NOTE ON" color, send the midi NOTEON message
+				hal_send_midi(USBMIDI, NOTEON | current_channel, get_pad_note(index), full_velocity ? 127 : value);
+			} else {
+				//Note release - Set the "NOTE OFF" color, send the midi NOTEOFF message
+				hal_send_midi(USBMIDI, NOTEOFF | current_channel, get_pad_note(index), 0);
+			}
+		} else {
+			//Util buttons
+			if (is_press) {
+				switch(index) {
+					//MODES
+					case BTN_MODE_SESSION:
+						channel_modes[current_channel] = MODE_SESSION;
+						break;
+					case BTN_MODE_NOTE:
+						channel_modes[current_channel] = MODE_NOTE;
+						break;
+					case BTN_MODE_DEVICE:
+						channel_modes[current_channel] = MODE_DEVICE;
+						break;
+					/*
+					//Disabled for now
+					case BTN_MODE_USER:
+						channel_modes[current_channel] = MODE_USER;
+						break;
+					*/
+					
+					//TRANSPORT
+					case BTN_RECORD:
+						//Toggle the record mode
+						is_recording = !is_recording;
+						hal_send_midi(USBMIDI, CC | current_channel, MIDI_TRANSPORT_REC, is_recording ? 0 : 127);
+						break;
+					case BTN_PLAY:
+						//Midi play
+						hal_send_midi(USBMIDI, CC | current_channel, MIDI_TRANSPORT_PLAY, 127);
+						break;
+					case BTN_STOP:
+						//Midi stop
+						is_recording = false;
+						hal_send_midi(USBMIDI, CC | current_channel, MIDI_TRANSPORT_STOP, 127);
+						break;
+					
+					//FULL VELOCITY TOGGLE
+					case BTN_FULL_VELOCITY:
+						full_velocity = !full_velocity;
+						break;
+					
+					//CHANNEL SELECTOR
+					case BTN_CHANNEL_1:
+					case BTN_CHANNEL_2:
+					case BTN_CHANNEL_3:
+					case BTN_CHANNEL_4:
+					case BTN_CHANNEL_5:
+					case BTN_CHANNEL_6:
+					case BTN_CHANNEL_7:
+					case BTN_CHANNEL_8:
+						channel = y_index - 1;
+						if (channel == current_channel) {
+							channel += 8;
+						}
+						set_channel(channel);
+						break;
+					
+					//OCTAVE SELECTOR
+					case BTN_OCTAVE_1:
+					case BTN_OCTAVE_2:
+					case BTN_OCTAVE_3:
+					case BTN_OCTAVE_4:
+					case BTN_OCTAVE_5:
+					case BTN_OCTAVE_6:
+					case BTN_OCTAVE_7:
+					case BTN_OCTAVE_8:
+						set_octave(y_index - 1);
+						break;
+					
+					default:
+						break;
+				}
+			}
 		}
+		
 		
 		//Draw color_map
 		draw_color_map();
@@ -930,7 +670,7 @@ void app_sysex_event(u8 port, u8 * data, u16 count) {
 //______________________________________________________________________________
 
 void app_aftertouch_event(u8 index, u8 value) {
-    if (is_note(index)) {
+    if (pad_is_note(index)) {
 		//This is a note pad
 		hal_send_midi(USBMIDI, POLYAFTERTOUCH | current_channel, index, value);
 	}
@@ -952,33 +692,18 @@ void app_init(const u16 *adc_raw) {
 	//Set up starting octave
 	current_octave = 1;
 	
-	//Set up color maps
+	//Set up starting channel
+	current_channel = 1;
+	
+	//Set up starting mode
 	for (u8 i = 0; i < MAX_MIDI_CHANNELS; i++) {
-		for (u8 j = 0; j < BUTTON_COUNT; j++) {
-			for (u8 k = 0; k < 3; k++) {
-				color_map[MODE_DEVICE][i][j][k] = device_color_map[j][k];
-			}
-		}
+		channel_modes[i] = MODE_DEVICE;
 	}
+	
+	//Set up default values for CC
 	for (u8 i = 0; i < MAX_MIDI_CHANNELS; i++) {
-		for (u8 j = 0; j < BUTTON_COUNT; j++) {
-			for (u8 k = 0; k < 3; k++) {
-				color_map[MODE_NOTE][i][j][k] = note_color_map[j][k];
-			}
-		}
-	}
-	for (u8 i = 0; i < MAX_MIDI_CHANNELS; i++) {
-		for (u8 j = 0; j < BUTTON_COUNT; j++) {
-			for (u8 k = 0; k < 3; k++) {
-				color_map[MODE_SESSION][i][j][k] = session_color_map[j][k];
-			}
-		}
-	}
-	for (u8 i = 0; i < MAX_MIDI_CHANNELS; i++) {
-		for (u8 j = 0; j < BUTTON_COUNT; j++) {
-			for (u8 k = 0; k < 3; k++) {
-				color_map[MODE_FX][i][j][k] = fx_color_map[j][k];
-			}
+		for (u8 j = 0; j < 128; j++) {
+			cc_values[i][j] = 63;
 		}
 	}
 	
