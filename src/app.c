@@ -182,7 +182,7 @@ bool full_velocity = true;
 u8 current_channel = 0;
 
 //Tracks whether we are currently recording or not
-bool is_recording = 0;
+bool is_recording = false;
 
 static u8 channel_modes[MAX_MIDI_CHANNELS];
 
@@ -366,7 +366,7 @@ void draw_util_buttons() {
 	u8 color_channel_off = COLOR_UTIL_OFF;
 	u8 color_channel_on = COLOR_UTIL_ON;
 	u8 channel_index = current_channel;
-	if (channel_index > 8) {
+	if (channel_index > 7) {
 		channel_index -= 8;
 		color_channel_off = COLOR_UTIL_ON;
 		color_channel_on = COLOR_UTIL_OFF;
@@ -600,7 +600,7 @@ void app_surface_event(u8 type, u8 index, u8 value) {
 					case BTN_RECORD:
 						//Toggle the record mode
 						is_recording = !is_recording;
-						hal_send_midi(USBMIDI, CC | current_channel, MIDI_TRANSPORT_REC, is_recording ? 0 : 127);
+						hal_send_midi(USBMIDI, CC | current_channel, MIDI_TRANSPORT_REC, is_recording ? 127 : 0);
 						break;
 					case BTN_PLAY:
 						//Midi play
@@ -651,9 +651,13 @@ void app_surface_event(u8 type, u8 index, u8 value) {
 			}
 		}
 		
-		
 		//Draw color_map
 		draw_color_map();
+	
+		//Show note buttons when pressed
+		if (is_press && pad_is_note(index)) {
+			set_color(index, COLOR_NOTE_ON);
+		}
 	}
 }
 
@@ -693,7 +697,7 @@ void app_init(const u16 *adc_raw) {
 	current_octave = 1;
 	
 	//Set up starting channel
-	current_channel = 1;
+	current_channel = 0;
 	
 	//Set up starting mode
 	for (u8 i = 0; i < MAX_MIDI_CHANNELS; i++) {
@@ -705,6 +709,12 @@ void app_init(const u16 *adc_raw) {
 		for (u8 j = 0; j < 128; j++) {
 			cc_values[i][j] = 63;
 		}
+	}
+	
+	//Set up default values for toggles (off)
+	for (u8 i = 0; i < MAX_MIDI_CHANNELS; i++) {
+		for (u8 j = 1; j <= 8; j++)
+		cc_values[i][79 + j] = 0;
 	}
 	
 	//Draw the default color map
