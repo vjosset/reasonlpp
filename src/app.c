@@ -132,15 +132,15 @@ typedef int bool;
 #define BTN_MODE_USER			TOP8
 #define BTN_FULL_VELOCITY		BOTTOM1
 
-//Channel selectors
-#define BTN_CHANNEL_1			RIGHT1
-#define BTN_CHANNEL_2			RIGHT2
-#define BTN_CHANNEL_3			RIGHT3
-#define BTN_CHANNEL_4			RIGHT4
-#define BTN_CHANNEL_5			RIGHT5
-#define BTN_CHANNEL_6			RIGHT6
-#define BTN_CHANNEL_7			RIGHT7
-#define BTN_CHANNEL_8			RIGHT8
+//Track selectors
+#define BTN_TRACK_1				RIGHT1
+#define BTN_TRACK_2				RIGHT2
+#define BTN_TRACK_3				RIGHT3
+#define BTN_TRACK_4				RIGHT4
+#define BTN_TRACK_5				RIGHT5
+#define BTN_TRACK_6				RIGHT6
+#define BTN_TRACK_7				RIGHT7
+#define BTN_TRACK_8				RIGHT8
 
 //Octave selectors
 #define BTN_OCTAVE_1			LEFT1
@@ -164,7 +164,8 @@ typedef int bool;
 #define MIDI_TRANSPORT_RW		15
 
 //Constants
-#define MAX_MIDI_CHANNELS		16
+#define MAX_TRACKS				16
+#define MIDI_CHANNEL			1
 
 //Page/Mode Shortcuts
 #define MODE_NOTE				0 //Note/keyboard
@@ -178,13 +179,14 @@ static u8 current_octave = 1;
 //Full velocity toggle
 bool full_velocity = true;
 
-//Current midi channel for output
-u8 current_channel = 0;
+//Current midi track for output
+u8 current_track = 0;
 
 //Tracks whether we are currently recording or not
 bool is_recording = false;
 
-static u8 channel_modes[MAX_MIDI_CHANNELS];
+//Holds the mode for each track
+static u8 track_modes[MAX_TRACKS];
 
 //Color lookup constants
 #define COLOR_OFF				 0
@@ -223,8 +225,8 @@ static u8 colors[15][3] =
 	{63,  0,  0}  //COLOR_RECORD_ON
 };
 
-//Lookup of current CC values per channel
-static u8 cc_values[MAX_MIDI_CHANNELS][128];
+//Lookup of current CC values per track
+static u8 cc_values[MAX_TRACKS][128];
 
 //-----------------------------------------------------------------------------------------
 //                                HELPER METHODS
@@ -298,7 +300,7 @@ bool pad_is_note(u8 index) {
 		return false;
 	}
 	
-	switch (channel_modes[current_channel]) {
+	switch (track_modes[current_track]) {
 		case MODE_NOTE:
 			return true;
 		case MODE_DEVICE:
@@ -316,7 +318,7 @@ bool pad_is_fader(u8 index) {
 	u8 x_index = index % 10;
 	u8 y_index = index / 10;
 	
-	switch (channel_modes[current_channel]) {
+	switch (track_modes[current_track]) {
 		case MODE_SESSION:
 			return y_index > 1;
 		case MODE_DEVICE:
@@ -334,7 +336,7 @@ bool pad_is_toggle(u8 index) {
 	u8 x_index = index % 10;
 	u8 y_index = index / 10;
 	
-	switch (channel_modes[current_channel]) {
+	switch (track_modes[current_track]) {
 		case MODE_SESSION:
 			return y_index == 1;
 		case MODE_DEVICE:
@@ -344,8 +346,18 @@ bool pad_is_toggle(u8 index) {
 	}
 }
 
-void set_channel(u8 channel) {
-	current_channel = channel;
+void set_track(u8 track) {
+	current_track = track;
+	
+	//Send "PREVTRACK" messages to get to 0
+	for (u8 i = 0; i < MAX_TRACKS; i++) {
+		hal_send_midi(USBMIDI, CC | MIDI_CHANNEL, MIDI_CC_PREVTRACK, 127);
+	}
+	
+	//Sent "NEXTTRACK" messages to get to the selected track
+	for (u8 i = 0; i < current_track; i++) {
+		hal_send_midi(USBMIDI, CC | MIDI_CHANNEL, MIDI_CC_NEXTTRACK, 127);
+	}
 }
 
 void set_octave(u8 octave) {
@@ -362,21 +374,21 @@ void draw_util_buttons() {
 	set_color(BTN_PLAY, COLOR_PLAY);
 	set_color(BTN_RECORD, is_recording ? COLOR_RECORD_ON : COLOR_RECORD_OFF);
 	
-	//Draw the channel selectors
-	u8 color_channel_off = COLOR_UTIL_OFF;
-	u8 color_channel_on = COLOR_UTIL_ON;
-	u8 channel_index = current_channel;
-	if (channel_index > 7) {
-		channel_index -= 8;
-		color_channel_off = COLOR_UTIL_ON;
-		color_channel_on = COLOR_UTIL_OFF;
+	//Draw the track selectors
+	u8 color_track_off = COLOR_UTIL_OFF;
+	u8 color_track_on = COLOR_UTIL_ON;
+	u8 track_index = current_track;
+	if (track_index > 7) {
+		track_index -= 8;
+		color_track_off = COLOR_UTIL_ON;
+		color_track_on = COLOR_UTIL_OFF;
 	}
 	
 	for (u8 i = 1; i < 9; i++) {
-		if (i == channel_index + 1) {
-			set_color((i * 10) + 9, color_channel_on);
+		if (i == track_index + 1) {
+			set_color((i * 10) + 9, color_track_on);
 		} else {
-			set_color((i * 10) + 9, color_channel_off);
+			set_color((i * 10) + 9, color_track_off);
 		}
 	}
 	
@@ -390,10 +402,10 @@ void draw_util_buttons() {
 	}
 	
 	//Draw the mode selectors
-	set_color(BTN_MODE_SESSION, channel_modes[current_channel] == MODE_SESSION ? COLOR_UTIL_ON : COLOR_UTIL_OFF);
-	set_color(BTN_MODE_NOTE, channel_modes[current_channel] == MODE_NOTE ? COLOR_UTIL_ON : COLOR_UTIL_OFF);
-	set_color(BTN_MODE_DEVICE, channel_modes[current_channel] == MODE_DEVICE ? COLOR_UTIL_ON : COLOR_UTIL_OFF);
-	//set_color(BTN_MODE_USER, channel_modes[current_channel] == MODE_USER ? COLOR_UTIL_ON : COLOR_UTIL_OFF);
+	set_color(BTN_MODE_SESSION, track_modes[current_track] == MODE_SESSION ? COLOR_UTIL_ON : COLOR_UTIL_OFF);
+	set_color(BTN_MODE_NOTE, track_modes[current_track] == MODE_NOTE ? COLOR_UTIL_ON : COLOR_UTIL_OFF);
+	set_color(BTN_MODE_DEVICE, track_modes[current_track] == MODE_DEVICE ? COLOR_UTIL_ON : COLOR_UTIL_OFF);
+	//set_color(BTN_MODE_USER, track_modes[current_track] == MODE_USER ? COLOR_UTIL_ON : COLOR_UTIL_OFF);
 	set_color(BTN_MODE_USER, COLOR_OFF);
 	
 	//Draw the transport buttons
@@ -409,7 +421,7 @@ void draw_session_pads() {
 	//Draw faders
 	for (u8 x = 1; x < 9; x++) {
 		for (u8 y = 2; y < 9; y++) {
-			if (cc_values[current_channel][get_pad_fader_cc_number((y * 10) + x)] >= get_pad_fader_value((y * 10) + x)) {
+			if (cc_values[current_track][get_pad_fader_cc_number((y * 10) + x)] >= get_pad_fader_value((y * 10) + x)) {
 				//Set this fader button to "on"
 				set_color((y * 10) + x, COLOR_FADER_ON);
 			} else {
@@ -423,7 +435,7 @@ void draw_session_pads() {
 	for (u8 x = 1; x < 9; x++) {
 		u8 y = 1;
 		
-		if (cc_values[current_channel][get_pad_toggle_cc_number((y * 10) + x)] > 0) {
+		if (cc_values[current_track][get_pad_toggle_cc_number((y * 10) + x)] > 0) {
 			//Set this toggle button to "on"
 			set_color((y * 10) + x, COLOR_TOGGLE_ON);
 		} else {
@@ -467,7 +479,7 @@ void draw_device_pads() {
 	//Draw faders
 	for (u8 x = 5; x < 9; x++) {
 		for (u8 y = 2; y < 9; y++) {
-			if (cc_values[current_channel][get_pad_fader_cc_number((y * 10) + x)] >= get_pad_fader_value((y * 10) + x)) {
+			if (cc_values[current_track][get_pad_fader_cc_number((y * 10) + x)] >= get_pad_fader_value((y * 10) + x)) {
 				//Set this fader button to "on"
 				set_color((y * 10) + x, COLOR_FADER_ON);
 			} else {
@@ -481,7 +493,7 @@ void draw_device_pads() {
 	for (u8 x = 5; x < 9; x++) {
 		u8 y = 1;
 		
-		if (cc_values[current_channel][get_pad_toggle_cc_number((y * 10) + x)] > 0) {
+		if (cc_values[current_track][get_pad_toggle_cc_number((y * 10) + x)] > 0) {
 			//Set this toggle button to "on"
 			set_color((y * 10) + x, COLOR_TOGGLE_ON);
 		} else {
@@ -500,7 +512,7 @@ void draw_user_pads() {
 }
 
 void draw_color_map() {
-	switch(channel_modes[current_channel]) {
+	switch(track_modes[current_track]) {
 		case MODE_SESSION:
 			draw_session_pads();
 			break;
@@ -539,41 +551,41 @@ void app_surface_event(u8 type, u8 index, u8 value) {
 		u8 x_index = index % 10;
 		u8 y_index = index / 10;
 		
-		u8 channel = 0;
+		u8 track = 0;
 		
 		if (pad_is_fader(index)) {
 			//FADER
 			if (is_press) {
 				//Set the fader value
-				cc_values[current_channel][get_pad_fader_cc_number(index)] = get_pad_fader_value(index);
+				cc_values[current_track][get_pad_fader_cc_number(index)] = get_pad_fader_value(index);
 				//Send the midi message
-				hal_send_midi(USBMIDI, CC | current_channel, get_pad_fader_cc_number(index), cc_values[current_channel][get_pad_fader_cc_number(index)]);
+				hal_send_midi(USBMIDI, CC | MIDI_CHANNEL, get_pad_fader_cc_number(index), cc_values[current_track][get_pad_fader_cc_number(index)]);
 			}
 		} else if (pad_is_toggle(index)) {
 			//TOGGLE
 			if (is_press) {
 				//Set the toggle value
 				//Get the current value
-				u8 cc_value = cc_values[current_channel][get_pad_toggle_cc_number(index)];
+				u8 cc_value = cc_values[current_track][get_pad_toggle_cc_number(index)];
 				//Set the new value
 				if (cc_value > 0) {
 					cc_value = 0;
 				} else {
 					cc_value = 127;
 				}
-				cc_values[current_channel][get_pad_toggle_cc_number(index)] = cc_value;
+				cc_values[current_track][get_pad_toggle_cc_number(index)] = cc_value;
 				
 				//Send the midi message
-				hal_send_midi(USBMIDI, CC | current_channel, get_pad_toggle_cc_number(index), cc_value);
+				hal_send_midi(USBMIDI, CC | MIDI_CHANNEL, get_pad_toggle_cc_number(index), cc_value);
 			}
 		} else if (pad_is_note(index)) {
 			//NOTE
 			if (is_press) {
 				//Note press - Set the "NOTE ON" color, send the midi NOTEON message
-				hal_send_midi(USBMIDI, NOTEON | current_channel, get_pad_note(index), full_velocity ? 127 : value);
+				hal_send_midi(USBMIDI, NOTEON | MIDI_CHANNEL, get_pad_note(index), full_velocity ? 127 : value);
 			} else {
 				//Note release - Set the "NOTE OFF" color, send the midi NOTEOFF message
-				hal_send_midi(USBMIDI, NOTEOFF | current_channel, get_pad_note(index), 0);
+				hal_send_midi(USBMIDI, NOTEOFF | MIDI_CHANNEL, get_pad_note(index), 0);
 			}
 		} else {
 			//Util buttons
@@ -581,18 +593,18 @@ void app_surface_event(u8 type, u8 index, u8 value) {
 				switch(index) {
 					//MODES
 					case BTN_MODE_SESSION:
-						channel_modes[current_channel] = MODE_SESSION;
+						track_modes[current_track] = MODE_SESSION;
 						break;
 					case BTN_MODE_NOTE:
-						channel_modes[current_channel] = MODE_NOTE;
+						track_modes[current_track] = MODE_NOTE;
 						break;
 					case BTN_MODE_DEVICE:
-						channel_modes[current_channel] = MODE_DEVICE;
+						track_modes[current_track] = MODE_DEVICE;
 						break;
 					/*
 					//Disabled for now
 					case BTN_MODE_USER:
-						channel_modes[current_channel] = MODE_USER;
+						track_modes[current_track] = MODE_USER;
 						break;
 					*/
 					
@@ -600,16 +612,16 @@ void app_surface_event(u8 type, u8 index, u8 value) {
 					case BTN_RECORD:
 						//Toggle the record mode
 						is_recording = !is_recording;
-						hal_send_midi(USBMIDI, CC | current_channel, MIDI_TRANSPORT_REC, is_recording ? 127 : 0);
+						hal_send_midi(USBMIDI, CC | MIDI_CHANNEL, MIDI_TRANSPORT_REC, is_recording ? 127 : 0);
 						break;
 					case BTN_PLAY:
 						//Midi play
-						hal_send_midi(USBMIDI, CC | current_channel, MIDI_TRANSPORT_PLAY, 127);
+						hal_send_midi(USBMIDI, CC | MIDI_CHANNEL, MIDI_TRANSPORT_PLAY, 127);
 						break;
 					case BTN_STOP:
 						//Midi stop
 						is_recording = false;
-						hal_send_midi(USBMIDI, CC | current_channel, MIDI_TRANSPORT_STOP, 127);
+						hal_send_midi(USBMIDI, CC | MIDI_CHANNEL, MIDI_TRANSPORT_STOP, 127);
 						break;
 					
 					//FULL VELOCITY TOGGLE
@@ -617,20 +629,20 @@ void app_surface_event(u8 type, u8 index, u8 value) {
 						full_velocity = !full_velocity;
 						break;
 					
-					//CHANNEL SELECTOR
-					case BTN_CHANNEL_1:
-					case BTN_CHANNEL_2:
-					case BTN_CHANNEL_3:
-					case BTN_CHANNEL_4:
-					case BTN_CHANNEL_5:
-					case BTN_CHANNEL_6:
-					case BTN_CHANNEL_7:
-					case BTN_CHANNEL_8:
-						channel = y_index - 1;
-						if (channel == current_channel) {
-							channel += 8;
+					//TRACK SELECTOR
+					case BTN_TRACK_1:
+					case BTN_TRACK_2:
+					case BTN_TRACK_3:
+					case BTN_TRACK_4:
+					case BTN_TRACK_5:
+					case BTN_TRACK_6:
+					case BTN_TRACK_7:
+					case BTN_TRACK_8:
+						track = y_index - 1;
+						if (track == current_track) {
+							track += 8;
 						}
-						set_channel(channel);
+						set_track(track);
 						break;
 					
 					//OCTAVE SELECTOR
@@ -676,7 +688,7 @@ void app_sysex_event(u8 port, u8 * data, u16 count) {
 void app_aftertouch_event(u8 index, u8 value) {
     if (pad_is_note(index)) {
 		//This is a note pad
-		hal_send_midi(USBMIDI, POLYAFTERTOUCH | current_channel, index, value);
+		hal_send_midi(USBMIDI, POLYAFTERTOUCH | MIDI_CHANNEL, index, value);
 	}
 }
 
@@ -696,23 +708,23 @@ void app_init(const u16 *adc_raw) {
 	//Set up starting octave
 	current_octave = 1;
 	
-	//Set up starting channel
-	current_channel = 0;
+	//Set up starting track
+	current_track = 0;
 	
 	//Set up starting mode
-	for (u8 i = 0; i < MAX_MIDI_CHANNELS; i++) {
-		channel_modes[i] = MODE_DEVICE;
+	for (u8 i = 0; i < MAX_TRACKS; i++) {
+		track_modes[i] = MODE_DEVICE;
 	}
 	
 	//Set up default values for CC
-	for (u8 i = 0; i < MAX_MIDI_CHANNELS; i++) {
+	for (u8 i = 0; i < MAX_TRACKS; i++) {
 		for (u8 j = 0; j < 128; j++) {
 			cc_values[i][j] = 63;
 		}
 	}
 	
 	//Set up default values for toggles (off)
-	for (u8 i = 0; i < MAX_MIDI_CHANNELS; i++) {
+	for (u8 i = 0; i < MAX_TRACKS; i++) {
 		for (u8 j = 1; j <= 8; j++)
 		cc_values[i][79 + j] = 0;
 	}
