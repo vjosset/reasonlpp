@@ -655,7 +655,7 @@ void app_surface_event(u8 type, u8 index, u8 value) {
 		draw_color_map();
 	
 		//Show note buttons when pressed
-		if (is_press && pad_is_note(index)) {
+		if (is_press) {
 			set_color(index, COLOR_NOTE_ON);
 		}
 	}
