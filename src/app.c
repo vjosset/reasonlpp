@@ -197,16 +197,23 @@ static u8 track_modes[MAX_TRACKS];
 #define COLOR_TOGGLE_OFF		 5
 #define COLOR_TOGGLE_ON			 6
 #define COLOR_NOTE_OFF_1		 7
-#define COLOR_NOTE_OFF_2		 8
-#define COLOR_NOTE_OFF_3		 9
-#define COLOR_NOTE_ON			10
-#define COLOR_PLAY				11
-#define COLOR_STOP				12
-#define COLOR_RECORD_OFF		13
-#define COLOR_RECORD_ON			14
+#define COLOR_NOTE_OFF_1_ALT	 8
+#define COLOR_NOTE_OFF_2		 9
+#define COLOR_NOTE_OFF_2_ALT	10
+#define COLOR_NOTE_OFF_3		11
+#define COLOR_NOTE_OFF_3_ALT	12
+#define COLOR_NOTE_OFF_4		13
+#define COLOR_NOTE_OFF_4_ALT	14
+#define COLOR_NOTE_OFF_5		15
+#define COLOR_NOTE_OFF_5_ALT	16
+#define COLOR_PRESS				17
+#define COLOR_PLAY				18
+#define COLOR_STOP				19
+#define COLOR_RECORD_OFF		20
+#define COLOR_RECORD_ON			21
 
 //Standard colors lookup
-static u8 colors[15][3] = 
+static u8 colors[22][3] = 
 {
 	{ 0,  0,  0}, //COLOR_OFF
 	{ 4,  0,  8}, //COLOR_UTIL_OFF
@@ -216,37 +223,96 @@ static u8 colors[15][3] =
 	{ 0,  8,  0}, //COLOR_TOGGLE_OFF
 	{ 0, 63,  0}, //COLOR_TOGGLE_ON
 	{63, 63,  0}, //COLOR_NOTE_OFF_1
+	{ 4,  4,  0}, //COLOR_NOTE_OFF_1_ALT
 	{63, 31,  0}, //COLOR_NOTE_OFF_2
-	{63,  7,  0}, //COLOR_NOTE_OFF_3
-	{63, 63, 63}, //COLOR_NOTE_ON
+	{ 4,  2,  0}, //COLOR_NOTE_OFF_2_ALT
+	{63, 15,  0}, //COLOR_NOTE_OFF_3
+	{ 4,  1,  0}, //COLOR_NOTE_OFF_3_ALT
+	{63,  7,  0}, //COLOR_NOTE_OFF_4
+	{63,  0,  0}, //COLOR_NOTE_OFF_4_ALT
+	{63,  0,  0}, //COLOR_NOTE_OFF_5
+	{63,  0,  0}, //COLOR_NOTE_OFF_5_ALT
+	{63, 63, 63}, //COLOR_PRESS
 	{63, 63, 63}, //COLOR_PLAY
 	{ 8,  8,  8}, //COLOR_STOP
 	{ 8,  0,  0}, //COLOR_RECORD_OFF
 	{63,  0,  0}  //COLOR_RECORD_ON
 };
 
+static u8 note_default_values[100] = 
+{
+	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	0, 24, 25, 26, 27, 56, 57, 58, 59,  0,
+	0, 28, 29, 30, 31, 60, 61, 62, 63,  0,
+	0, 32, 33, 34, 35, 64, 65, 66, 67,  0,
+	0, 36, 37, 38, 39, 68, 69, 70, 71,  0,
+	0, 40, 41, 42, 43, 72, 73, 74, 75,  0,
+	0, 44, 45, 46, 47, 76, 77, 78, 79,  0,
+	0, 48, 49, 50, 51, 80, 81, 82, 83,  0,
+	0, 52, 53, 54, 55, 84, 85, 86, 87,  0,
+	0,  0,  0,  0,  0,  0,  0,  0,  0,  0
+};
+
+static u8 note_kong_values[100] = 
+{
+	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	0, 24, 25, 26, 27, 48, 49, 50, 51,  0,
+	0, 28, 29, 30, 31, 52, 53, 54, 55,  0,
+	0, 32, 33, 34, 35, 56, 57, 58, 59,  0,
+	0, 36, 37, 38, 39, 60, 61, 62, 63,  0,
+	0, 40, 41, 42, 43, 64, 65, 66, 67,  0,
+	0, 44, 45, 46, 47, 68, 69, 70, 71,  0,
+	0, 48, 49, 50, 51, 72, 73, 74, 75,  0,
+	0, 52, 53, 54, 55, 76, 77, 78, 79,  0,
+	0,  0,  0,  0,  0,  0,  0,  0,  0,  0
+};
+
+static u8 note_default_colors[100] =
+{
+	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	0, COLOR_NOTE_OFF_1, COLOR_NOTE_OFF_1, COLOR_NOTE_OFF_1, COLOR_NOTE_OFF_1, COLOR_NOTE_OFF_3, COLOR_NOTE_OFF_3, COLOR_NOTE_OFF_3, COLOR_NOTE_OFF_3,  0,
+	0, COLOR_NOTE_OFF_1, COLOR_NOTE_OFF_1, COLOR_NOTE_OFF_1, COLOR_NOTE_OFF_1, COLOR_NOTE_OFF_3, COLOR_NOTE_OFF_3, COLOR_NOTE_OFF_3, COLOR_NOTE_OFF_3,  0,
+	0, COLOR_NOTE_OFF_1, COLOR_NOTE_OFF_1, COLOR_NOTE_OFF_1, COLOR_NOTE_OFF_1, COLOR_NOTE_OFF_3, COLOR_NOTE_OFF_3, COLOR_NOTE_OFF_3, COLOR_NOTE_OFF_3,  0,
+	0, COLOR_NOTE_OFF_2, COLOR_NOTE_OFF_2, COLOR_NOTE_OFF_2, COLOR_NOTE_OFF_2, COLOR_NOTE_OFF_4, COLOR_NOTE_OFF_4, COLOR_NOTE_OFF_4, COLOR_NOTE_OFF_4,  0,
+	0, COLOR_NOTE_OFF_2, COLOR_NOTE_OFF_2, COLOR_NOTE_OFF_2, COLOR_NOTE_OFF_2, COLOR_NOTE_OFF_4, COLOR_NOTE_OFF_4, COLOR_NOTE_OFF_4, COLOR_NOTE_OFF_4,  0,
+	0, COLOR_NOTE_OFF_2, COLOR_NOTE_OFF_2, COLOR_NOTE_OFF_2, COLOR_NOTE_OFF_2, COLOR_NOTE_OFF_4, COLOR_NOTE_OFF_4, COLOR_NOTE_OFF_4, COLOR_NOTE_OFF_4,  0,
+	0, COLOR_NOTE_OFF_3, COLOR_NOTE_OFF_3, COLOR_NOTE_OFF_3, COLOR_NOTE_OFF_3, COLOR_NOTE_OFF_5, COLOR_NOTE_OFF_5, COLOR_NOTE_OFF_5, COLOR_NOTE_OFF_5,  0,
+    0, COLOR_NOTE_OFF_3, COLOR_NOTE_OFF_3, COLOR_NOTE_OFF_3, COLOR_NOTE_OFF_3, COLOR_NOTE_OFF_5, COLOR_NOTE_OFF_5, COLOR_NOTE_OFF_5, COLOR_NOTE_OFF_5,  0,
+	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+};
+
+static u8 note_kong_colors[100] =
+{
+	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	0, COLOR_NOTE_OFF_1, COLOR_NOTE_OFF_1, COLOR_NOTE_OFF_1, COLOR_NOTE_OFF_1, COLOR_NOTE_OFF_3, COLOR_NOTE_OFF_3, COLOR_NOTE_OFF_3, COLOR_NOTE_OFF_3,  0,
+	0, COLOR_NOTE_OFF_1, COLOR_NOTE_OFF_1, COLOR_NOTE_OFF_1, COLOR_NOTE_OFF_1, COLOR_NOTE_OFF_3, COLOR_NOTE_OFF_3, COLOR_NOTE_OFF_3, COLOR_NOTE_OFF_3,  0,
+	0, COLOR_NOTE_OFF_1, COLOR_NOTE_OFF_1, COLOR_NOTE_OFF_1, COLOR_NOTE_OFF_1, COLOR_NOTE_OFF_3, COLOR_NOTE_OFF_3, COLOR_NOTE_OFF_3, COLOR_NOTE_OFF_3,  0,
+	0, COLOR_NOTE_OFF_1, COLOR_NOTE_OFF_1, COLOR_NOTE_OFF_1, COLOR_NOTE_OFF_1, COLOR_NOTE_OFF_3, COLOR_NOTE_OFF_3, COLOR_NOTE_OFF_3, COLOR_NOTE_OFF_3,  0,
+	0, COLOR_NOTE_OFF_2, COLOR_NOTE_OFF_2, COLOR_NOTE_OFF_2, COLOR_NOTE_OFF_2, COLOR_NOTE_OFF_4, COLOR_NOTE_OFF_4, COLOR_NOTE_OFF_4, COLOR_NOTE_OFF_4,  0,
+	0, COLOR_NOTE_OFF_2, COLOR_NOTE_OFF_2, COLOR_NOTE_OFF_2, COLOR_NOTE_OFF_2, COLOR_NOTE_OFF_4, COLOR_NOTE_OFF_4, COLOR_NOTE_OFF_4, COLOR_NOTE_OFF_4,  0,
+	0, COLOR_NOTE_OFF_2, COLOR_NOTE_OFF_2, COLOR_NOTE_OFF_2, COLOR_NOTE_OFF_2, COLOR_NOTE_OFF_4, COLOR_NOTE_OFF_4, COLOR_NOTE_OFF_4, COLOR_NOTE_OFF_4,  0,
+	0, COLOR_NOTE_OFF_2, COLOR_NOTE_OFF_2, COLOR_NOTE_OFF_2, COLOR_NOTE_OFF_2, COLOR_NOTE_OFF_4, COLOR_NOTE_OFF_4, COLOR_NOTE_OFF_4, COLOR_NOTE_OFF_4,  0,
+	0,  0,  0,  0,  0,  0,  0,  0,  0,  0
+};
+
 //Lookup of current CC values per track
 static u8 cc_values[MAX_TRACKS][128];
+
+//Note modes - Full keyboard vs Kong mode
+#define NOTE_MODE_DEFAULT		0
+#define NOTE_MODE_KONG			1
+static u8 note_mode = NOTE_MODE_DEFAULT;
 
 //-----------------------------------------------------------------------------------------
 //                                HELPER METHODS
 //-----------------------------------------------------------------------------------------
 
 u8 get_pad_note(u8 index) {
-	//Get the Midi note number to play for the specified pad
-	u8 x_index = index % 10;
-	u8 y_index = index / 10;
-	
-	if (x_index > 4) {
-		//Right half of pads have same note as left half
-		x_index -= 4;
+	if (note_mode == NOTE_MODE_DEFAULT) {
+		return note_default_values[index] + (12 * current_octave);
+	} else {
+		return note_kong_values[index] + (12 * current_octave);
 	}
-	
-	//Adjust for 1-based pad numbers
-	x_index--;
-	y_index--;
-	
-	return 24 + x_index + (4 * y_index) + (12 * current_octave);
 }
 
 u8 get_pad_fader_value(u8 index) {
@@ -449,13 +515,10 @@ void draw_note_pads() {
 	//Draw notes
 	for (u8 x = 1; x < 9; x++) {
 		for (u8 y = 1; y < 9; y++) {
-			//Draw this note pad
-			if (y < 4) {
-				set_color((y * 10) + x, COLOR_NOTE_OFF_1);
-			} else if (y < 7) {
-				set_color((y * 10) + x, COLOR_NOTE_OFF_2);
+			if (note_mode == NOTE_MODE_DEFAULT) {
+				set_color((y * 10) + x, note_default_colors[(y * 10) + x]);
 			} else {
-				set_color((y * 10) + x, COLOR_NOTE_OFF_3);
+				set_color((y * 10) + x, note_kong_colors[(y * 10) + x]);
 			}
 		}
 	}
@@ -465,13 +528,10 @@ void draw_device_pads() {
 	//Draw notes
 	for (u8 x = 1; x < 5; x++) {
 		for (u8 y = 1; y < 9; y++) {
-			//Draw this note pad
-			if (y < 4) {
-				set_color((y * 10) + x, COLOR_NOTE_OFF_1);
-			} else if (y < 7) {
-				set_color((y * 10) + x, COLOR_NOTE_OFF_2);
+			if (note_mode == NOTE_MODE_DEFAULT) {
+				set_color((y * 10) + x, note_default_colors[(y * 10) + x]);
 			} else {
-				set_color((y * 10) + x, COLOR_NOTE_OFF_3);
+				set_color((y * 10) + x, note_kong_colors[(y * 10) + x]);
 			}
 		}
 	}
@@ -596,9 +656,25 @@ void app_surface_event(u8 type, u8 index, u8 value) {
 						track_modes[current_track] = MODE_SESSION;
 						break;
 					case BTN_MODE_NOTE:
+						if (track_modes[current_track] == MODE_NOTE) {
+							//Toggle the note mode
+							if (note_mode == NOTE_MODE_DEFAULT) {
+								note_mode = NOTE_MODE_KONG;
+							} else {
+								note_mode = NOTE_MODE_DEFAULT;
+							}
+						}
 						track_modes[current_track] = MODE_NOTE;
 						break;
 					case BTN_MODE_DEVICE:
+						if (track_modes[current_track] == MODE_DEVICE) {
+							//Toggle the note mode
+							if (note_mode == NOTE_MODE_DEFAULT) {
+								note_mode = NOTE_MODE_KONG;
+							} else {
+								note_mode = NOTE_MODE_DEFAULT;
+							}
+						}
 						track_modes[current_track] = MODE_DEVICE;
 						break;
 					/*
@@ -668,7 +744,7 @@ void app_surface_event(u8 type, u8 index, u8 value) {
 	
 		//Show note buttons when pressed
 		if (is_press) {
-			set_color(index, COLOR_NOTE_ON);
+			set_color(index, COLOR_PRESS);
 		}
 	}
 }
@@ -710,6 +786,9 @@ void app_init(const u16 *adc_raw) {
 	
 	//Set up starting track
 	current_track = 0;
+	
+	//Set up default note mode
+	note_mode = NOTE_MODE_DEFAULT;
 	
 	//Set up starting mode
 	for (u8 i = 0; i < MAX_TRACKS; i++) {
