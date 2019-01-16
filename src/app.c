@@ -239,7 +239,7 @@ static u8 colors[22][3] =
 	{63,  0,  0}  //COLOR_RECORD_ON
 };
 
-static u8 note_default_values[100] = 
+static u8 note_kong_values[100] = 
 {
 	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	0, 24, 25, 26, 27, 56, 57, 58, 59,  0,
@@ -253,7 +253,7 @@ static u8 note_default_values[100] =
 	0,  0,  0,  0,  0,  0,  0,  0,  0,  0
 };
 
-static u8 note_kong_values[100] = 
+static u8 note_default_values[100] = 
 {
 	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	0, 24, 25, 26, 27, 48, 49, 50, 51,  0,
