@@ -1,103 +1,5 @@
-Vars:
-	* color_map[] -> current color map
-	* default_color_map[] -> Default color map (to be used in init, and on note pad release)
-	* full_velocity -> bool (intialize as true)
-	* BTN_OCTAVEUP -> TOP1
-	* BTN_OCTAVEDOWN -> TOP2
-	* BTN_PREVINST -> TOP3
-	* BTN_NEXTINST -> TOP4
-	* BTN_STOP -> BOTTOM6
-	* BTN_PLAY -> BOTTOM7
-	* BTN_RECORD -> BOTTOM8
-	* BTN_TOGGLEVEL -> LEFT1
-	
-	* toggle_values[] - Holds current value of the toggles (initialize at zero)
-	
-	* fader_value_map[] - Maps y-index of button to CC value to send
-		0 -> 0
-		1 -> 0
-		2 -> 0
-		3 -> 21
-		4 -> 42
-		5 -> 63
-		6 -> 84
-		7 -> 105
-		8 -> 127
-		9 -> 127
-	* fader_cc_map[] - Maps x-index of button to CC number to send
-		0 -> 0
-		1 -> 0
-		2 -> 0
-		3 -> 0
-		4 -> 0
-		5 -> 71
-		6 -> 72
-		7 -> 73
-		8 -> 74
-		9 -> 0
-	* note_map[] - Maps pads to notes
-	
-Methods:
-	* set_color_map(index, color)
-	* is_pad(index)
-	* is_util(index)
-	* is_note(index)
-	* is_fader(index)
-	* is_toggle(index)
-	
-	* octave_up()
-	* octave_down()
+Button Map:
 
-Colors:
-	* Pressed: white
-	* Note: yellow -> orange
-		Oct1 yellow
-		Oct2 orange
-		Oct3 dark orange
-	* Util: Red
-		color_util
-		color_util_dark
-	* Toggle: Green
-		color_toggle_on
-		color_toggle_off
-	* Fader: Blue
-		color_fader_on_0    (0)
-		color_fader_on_1   (21)
-		color_fader_on_2   (42)
-		color_fader_on_3   (63)
-		color_fader_on_4   (84)
-		color_fader_on_5  (105)
-		color_fader_on_6  (127)
-		color_fader_off_0   (0)
-		color_fader_off_1  (21)
-		color_fader_off_2  (42)
-		color_fader_off_3  (63)
-		color_fader_off_4  (84)
-		color_fader_off_5 (105)
-		color_fader_off_6 (127)
-Map:
-	    +---+---+---+---+---+---+---+---+
-	    | UP|DWN|LFT|RGT|   |   |   |   |
-	+---+---+---+---+---+---+---+---+---+---+
-	|   | E3| F3|F#3| G3| F1| F2| F3| F4|   +
-	+---+---+---+---+---+---+---+---+---+---+
-	|   | C3|C#3| D3|D#3| F1| F2| F3| F4|   +
-	+---+---+---+---+---+---+---+---+---+---+
-	|   |G#2| A2|A#2| B2| F1| F2| F3| F4|   +
-	+---+---+---+---+---+---+---+---+---+---+
-	|   | E2| F2|F#2| G2| F1| F2| F3| F4|   +
-	+---+---+---+---+---+---+---+---+---+---+
-	|   | C2|C#2| D2|D#2| F1| F2| F3| F4|   +
-	+---+---+---+---+---+---+---+---+---+---+
-	|   |G#1| A1|A#1| B1| F1| F2| F3| F4|   +
-	+---+---+---+---+---+---+---+---+---+---+
-	|   | E1| F1|F#1| G1| F1| F2| F3| F4|   +
-	+---+---+---+---+---+---+---+---+---+---+
-	|VEL| C1|C#1| D1|D#1| T1| T2| T3| T4|   +
-	+---+---+---+---+---+---+---+---+---+---+
-	    |   |   |   |   |   |STP|PLY|REC|
-	    +---+---+---+---+---+---+---+---+
-	
 		+---+---+---+---+---+---+---+---+
 	    | 91| 92| 93| 94| 95| 96| 97| 98|
 	+---+---+---+---+---+---+---+---+---+---+
@@ -119,159 +21,355 @@ Map:
 	+---+---+---+---+---+---+---+---+---+---+
 	    | 01| 02| 03| 04| 05| 06| 07| 08|
 	    +---+---+---+---+---+---+---+---+
+CC Map:
+	000
+	001
+	002 [RESERVED FOR BREATH CONTROL]
+	003
+	004
+	005
+	006
+	007
+	008
+	009
+	010	Stop
+	011 [RESERVED FOR EXPRESSION]
+	012	Record
+	013	Loop
+	014	FF
+	015	RW
+	016	Play
+	017
+	018
+	019
+	020	Prev Track
+	021	Next Track
+	022
+	023
+	024
+	025
+	026
+	027
+	028
+	029
+	030
+	031
+	032
+	033
+	034
+	035
+	036
+	037
+	038
+	039
+	040 Mixer Channel 1 / Combinator Fader 1 / X
+	041 Mixer Channel 2 / Combinator Fader 2 / Y
+	042 Mixer Channel 3 / Combinator Fader 3
+	043 Mixer Channel 4 / Combinator Fader 4
+	044 Mixer Channel 5
+	045 Mixer Channel 6
+	046 Mixer Channel 7
+	047 Mixer Channel 8
+	048
+	049
+	050 Mixer Toggle 1
+	051 Mixer Toggle 2
+	052 Mixer Toggle 3
+	053 Mixer Toggle 4
+	054 Mixer Toggle 5 / Combinator Toggle 1
+	055 Mixer Toggle 6 / Combinator Toggle 2
+	056 Mixer Toggle 7 / Combinator Toggle 3
+	057 Mixer Toggle 8 / Combinator Toggle 4
+	058
+	059
+	060
+	061
+	062
+	063
+	064
+	065
+	066
+	067
+	068
+	069
+	070
+	071
+	072
+	073
+	074
+	075
+	076
+	077
+	078
+	079
+	080
+	081
+	082
+	083
+	084
+	085
+	086
+	087
+	088
+	089
+	090
+	091
+	092
+	093
+	094
+	095
+	096
+	097
+	098
+	099
+	100
+	101
+	102
+	103
+	104
+	105
+	106
+	107
+	108
+	109
+	110
+	111
+	112
+	113
+	114
+	115
+	116
+	117
+	118
+	119
+	120
+	121
+	122
+	123
+	124
+	125
+	126
+	127
 	
-	VEL: Toggle full velocity on/off
-	
-	UP:  Octave++
-	DWN: Octave--
-	LFT: Prev instrument (TBD)
-	RGT: Next instrument (TBD)
-	
-	F1-4: Rotaries for combinator (CC 71-74)
-		Values: 0, 21, 42, 63, 84, 105, 127
-	T1-4: Toggles for combinator (CC 75-78)
-		Values: 0, 127
-	
-	U:   Config mode (TBD)
-	N:   Switch between note modes (drum pads vs. keyboard) (TBD)
+	PAD MAPS:
+		NM: Note Mode
+		MS: Mode Switch
 
-event(index, value) {
-	set_color_map(index, color_pressed);
-	if (is_util(index)) {
-		event_util(index);
-	} else if (is_fader(index)) {
-		event_fader(index);
-	} else if (is_note(index)) {
-		event_note(index);
-	} else if {is_toggle(index)) {
-		event_toggle(index);
-	}
-	
-	//Draw color_map
-	draw_color_map();
-}
-
-bool is_press(u8 value) {
-	return value != 0;
-}
-
-bool is_release(u8 value) {
-	return value == 0;
-}
-
-void draw_color_map() {
-	for (u8 i = 0; i < BUTTONCOUNT; i++) {
-		//Send color_map[i] to the button
-		hal_plot_led(TYPEPAD, i, color_map[i][0], color_map[i][1], color_map[i][2]);
-	}
-}
-
-void event_note(index, value) {
-	if (is_press) {
-		//Send MIDI note on (with full_velocity check)
-		hal_send_midi(USBMIDI, NOTEON | 0, note_map[index] + (12 * current_octave), full_velocity ? 127 : value);
-	} else {
-		//Send MIDI note off
-		hal_send_midi(USBMIDI, NOTEON | 0, note_map[index] + (12 * current_octave), 0);
+		COMBINATOR:
+			+---+---+---+---+---+---+---+---+
+			| UP|DWN|LFT|RGT|   | NM|   | MS|
+		+---+---+---+---+---+---+---+---+---+---+
+		|SHF| E3| F3|F#3| G3| F1| F2| F3| F4|   |
+		+---+---+---+---+---+---+---+---+---+---+
+		|   | C3|C#3| D3|D#3| F1| F2| F3| F4|   |
+		+---+---+---+---+---+---+---+---+---+---+
+		|   |G#2| A2|A#2| B2| F1| F2| F3| F4|   |
+		+---+---+---+---+---+---+---+---+---+---+
+		|   | E2| F2|F#2| G2| F1| F2| F3| F4|   |
+		+---+---+---+---+---+---+---+---+---+---+
+		|   | C2|C#2| D2|D#2| F1| F2| F3| F4|   |
+		+---+---+---+---+---+---+---+---+---+---+
+		|   |G#1| A1|A#1| B1| F1| F2| F3| F4|   |
+		+---+---+---+---+---+---+---+---+---+---+
+		|   | E1| F1|F#1| G1| F1| F2| F3| F4|   |
+		+---+---+---+---+---+---+---+---+---+---+
+		|   | C1|C#1| D1|D#1| T1| T2| T3| T4|   |
+		+---+---+---+---+---+---+---+---+---+---+
+			|VEL|   | LP| RW| FF|STP|PLY|REC|
+			+---+---+---+---+---+---+---+---+
 		
-		//Reset the note pad to its default color
-		set_color_map(index, default_color_map[index]);
-	}
-}
-
-void event_toggle(index) {
-	if (is_press) {
-		//Send MIDI CC value
-		u8 cc_number = toggle_cc_map[index];
-		u8 cc_value = toggle_value_map[index];
+		NOTE:
+			+---+---+---+---+---+---+---+---+
+			| UP|DWN|LFT|RGT|   | NM|   | MS|
+		+---+---+---+---+---+---+---+---+---+---+
+		|SHF| E3| F3|F#3| G3| E5| F5|F#5| G5|   |
+		+---+---+---+---+---+---+---+---+---+---+
+		|   | C3|C#3| D3|D#3| C5|C#5| D5|D#5|   |
+		+---+---+---+---+---+---+---+---+---+---+
+		|   |G#2| A2|A#2| B2|G#4| A4|A#4| B4|   |
+		+---+---+---+---+---+---+---+---+---+---+
+		|   | E2| F2|F#2| G2| E4| F4|F#4| G4|   |
+		+---+---+---+---+---+---+---+---+---+---+
+		|   | C2|C#2| D2|D#2| C4|C#4| D4|D#4|   |
+		+---+---+---+---+---+---+---+---+---+---+
+		|   |G#1| A1|A#1| B1|G#3| A3|A#3| B3|   |
+		+---+---+---+---+---+---+---+---+---+---+
+		|   | E1| F1|F#1| G1| E3| F3|F#3| G3|   |
+		+---+---+---+---+---+---+---+---+---+---+
+		|   | C1|C#1| D1|D#1| C3|C#3| D3|D#3|   |
+		+---+---+---+---+---+---+---+---+---+---+
+			|VEL|   | LP| RW| FF|STP|PLY|REC|
+			+---+---+---+---+---+---+---+---+
+			
+		X/Y:
+			+---+---+---+---+---+---+---+---+
+			| UP|DWN|LFT|RGT|   | NM|   | MS|
+		+---+---+---+---+---+---+---+---+---+---+
+		|SHF|   |   |   |   |   |   |   |   |   |
+		+---+---+---+---+---+---+---+---+---+---+
+		|   |   |   |   |   |   |   |   |   |   |
+		+---+---+---+---+---+---+---+---+---+---+
+		|   |   |   |   |   |   |   |   |   |   |
+		+---+---+---+---+---+---+---+---+---+---+
+		|   |   |   |   |   |   |   |   |   |   |
+		+---+---+---+---+---+---+---+---+---+---+
+		|   |   |   |   |   |   |   |   |   |   |
+		+---+---+---+---+---+---+---+---+---+---+
+		|   |   |   |   |   |   |   |   |   |   |
+		+---+---+---+---+---+---+---+---+---+---+
+		|   |   |   |   |   |   |   |   |   |   |
+		+---+---+---+---+---+---+---+---+---+---+
+		|   |   |   |   |   |   |   |   |   |   |
+		+---+---+---+---+---+---+---+---+---+---+
+			|VEL|   | LP| RW| FF|STP|PLY|REC|
+			+---+---+---+---+---+---+---+---+
 		
-		//Send MIDI message
-		hal_send_midi(USBMIDI, CC | 0, cc_number, cc_value);
-		
-		//Set the color of the toggle
-		set_color_map(index, cc_value == 0 ? color_toggle_off : color_toggle_on);
-	}
-}
-
-void event_fader(index, value) {
-	if (is_press(value)) {
-		//Send MIDI CC value
-		u8 y_index = index / 10;
-		u8 x_index = index % 10;
-		
-		u8 cc_value = fader_value_map[y_index];
-		u8 cc_number = fader_cc_map[x_index];
-		
-		hal_send_midi(USBMIDI, CC | 0, cc_number, cc_value);
-		
-		//Current button will be lit (color_fader_on)
-		//Buttons below will be lit (color_fader_on)
-		//Buttons above will be off (color_fader_off)
-		
-		for (u8 i = index; i < 90; i += 10) {
-			set_color_map(i, color_fader_on);
-		}
-		for (u8 i = index - 10; i > 10; i -= 10) {
-			set_color_map(i, color_fader_off);
-		}
-	}
-}
-
-void event_util(index, value) {
-	if (is_press(value)) {
-		switch (index) {
-			case BTN_OCTAVEUP:
-				octave_up();
-				break;
-			case BTN_OCTAVEDOWN:
-				octave_down();
-				break;
-			case BTN_TOGGLEVEL:
-				toggle_full_velocity();
-				break;
-			case BTN_PREVINST:
-				break;
-			case BTN_NEXTINST:
-				break;
-			case BTN_PLAY:
-				break;
-			case BTN_STOP:
-				break;
-			case BTN_REC:
-				break;
-		}
-	}
-}
-
-void octave_up() {
-	if (current_octave < 7) {
-		current_octave++;
-	}
+		4KONG:
+			+---+---+---+---+---+---+---+---+
+			| UP|DWN|LFT|RGT|   | NM|   | MS|
+		+---+---+---+---+---+---+---+---+---+---+
+		|SHF| E3| F3|F#3| G3| C6|C#6| D6|D#6|   |
+		+---+---+---+---+---+---+---+---+---+---+
+		|   | C3|C#3| D3|D#3|G#5| A5|A#5| B5|   |
+		+---+---+---+---+---+---+---+---+---+---+
+		|   |G#2| A2|A#2| B2| E5| F5|F#5| G5|   |
+		+---+---+---+---+---+---+---+---+---+---+
+		|   | E2| F2|F#2| G2| C5|C#5| D5|D#5|   |
+		+---+---+---+---+---+---+---+---+---+---+
+		|   | C2|C#2| D2|D#2|G#4| A4|A#4| B4|   |
+		+---+---+---+---+---+---+---+---+---+---+
+		|   |G#1| A1|A#1| B1| E4| F4|F#4| G4|   |
+		+---+---+---+---+---+---+---+---+---+---+
+		|   | E1| F1|F#1| G1| C4|C#4| D4|D#4|   |
+		+---+---+---+---+---+---+---+---+---+---+
+		|   | C1|C#1| D1|D#1|G#3| A3|A#3| B3|   |
+		+---+---+---+---+---+---+---+---+---+---+
+			|VEL|   | LP| RW| FF|STP|PLY|REC|
+			+---+---+---+---+---+---+---+---+
 	
-	if (current_octave == 7) {
-		//Disable octave up button, already at max
-		set_color_map(BTN_OCTAVEUP, color_off);
-	}
-	
-	//Enable octave down button
-	set_color_map(BTN_OCTAVEDOWN, color_red);
-}
+	Midi note map:
+		C-2:   0		0x00
+		C-1:  12		0x0C
+		C 0:  24		0x18
+		C 1:  36		0x24
+		C 2:  48		0x30
+		C 3:  60		0x3C
+		C 4:  72		0x48
+		C 5:  84		0x54
+		C 6:  96		0x60
+		C 7: 108		0x6C
+		C 8: 120		0x78
 
-void octave_down() {
-	if (current_octave > 0) {
-		current_octave--;
-	}
+	GLOBAL CC
+		STOP: 				10
+		PLAY: 				11
+		REC: 				12
+		LOOP:				13
+		FF:					14
+		RW:					15
+		PREV TRACK: 		20
+		NEXT TRACK:			21
+		PREV PATCH:			22
+		NEXT PATCH:			23
 	
-	if (current_octave == 0) {
-		//Disable octave down button, already at min
-		set_color_map(BTN_OCTAVEDOWN, color_off);
-	}
+	GLOBAL VARS
+		Note mode
+			Kong or Keyboard
+		Current octave offset (applies to bottom-left pad)
+			0 - 6
+		Current transpose offset (-11 -> 11, default 0)
+			-11: Transpose - 11
+			  0: Transpose 0
+			 11: Transpose + 11
+		Global midi channel
+		Color defs
+			Pressed: White
+			Util: Purple
+			Notes: Yellow - Orange - Red
+			Faders: Blue (Dark when lower than)
+			Toggles: Green
+			Transport:
+				Play: White
+				Stop: Grey (Black)
+				Record: Red (Dark when not recording)
+				Loop: ???
+				FF: ???
+				RW: ???
+			X/Y map:
+				Not selected: Dark Green
+				Selected: Bright Green
+				
+		Color map per mode and note mode (array of arrays)
+		Is shift pressed
+		Is full velocity on
+		Is recording
+		CC values (array of current values of CC controls)
+		Pressed keys (array of pressed pads to be highlighted while pressed)
 	
-	//Enable octave up button
-	set_color_map(BTN_OCTAVEUP, color_red);
-}
-
-void toggle_full_velocity() {
-	full_velocity = !full_velocity;
-	set_color_map(BTN_TOGGLEVEL, full_velocity ? color_red : color_red_dark);
-}
+	Helper Methods
+		Toggle full velocity
+		Toggle recording
+			Press once: On
+			Press twice: Off
+		Stop
+			Stop playback
+			Is recording = false
+		Toggle shift
+			"On" on press, "Off" on release
+		Toggle note mode
+			Notes or Kongs
+		Get pad note
+			Returns MIDI note number from pad position, mode, note mode, octave offset, and transpose offset
+		Pad is Note
+			Returns whether the pressed pad should be interpreted as a note (based on mode)
+		Pad is fader
+			Returns whether the pressed pad should be interpreted as a fader (based on mode)
+		Pad is toggle
+			Returns whether the pressed pad should be interpreted as a toggle (based on mode)
+		Get fader value
+			Returns the CC value for the pressed pad based on y coordinate
+		Get X/Y value
+			Returns the CC value for the pressed pad's x or y coordinate (18 * pos - 0 -> 126)
+		Transpose Up
+			Transpose Offset + 1
+		Transpose Down
+			Transpose Offset - 1
+		Octave Up
+			Octave offset + 1
+		Octave Down
+			Octave offset - 1
+		Prev Track
+		Next Track
+		Prev Patch
+		Next Patch
+		
+	
+	MODES
+		1. NOTES
+			1.a. Keyboard - C1 -> G5
+			1.b. 4 Kongs - C1 -> G3
+		2. COMBINATOR
+			2.a. Keyboard
+				32 Notes - C1 -> G3 (Split colors in three octaves)
+				4 faders  - CC 30 - 33
+				4 toggles - CC 34 - 37
+			2.b. 2 Kongs
+				32 Notes - C1 -> G3 (Split colors in two sections/kongs)
+				4 faders  - CC 30 - 33
+				4 toggles - CC 34 - 37
+		3. X/Y CV
+			64 X/Y values for two CCs (X: 60, Y: 61)
+				Pad 0 = CC value   0
+				Pad 1 = CC value  18
+				Pad 2 = CC value  36
+				Pad 3 = CC value  54
+				Pad 4 = CC value  72
+				Pad 5 = CC value  90
+				Pad 6 = CC value 108
+				Pad 7 = CC value 126
+		4. Mixer
+			8 Faders (CC 40 - 47)
+			8 Toggles (CC 50 - 57)
+	
+			
+			
