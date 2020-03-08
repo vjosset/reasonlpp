@@ -58,7 +58,7 @@ MIDI transport buttons are defined on the very bottom row.
 
 ### Velocity Toggle
 
-The bottom-left button (labeled `Record Arm` on the LPP) toggles between full-velocity and velocity-sensitive modeds for MIDI notes sent from the LPP.
+The bottom-left button (labeled `Record Arm` on the LPP) toggles between full-velocity and velocity-sensitive modes for MIDI notes sent from the LPP.
 
 ### Transpose
 
