@@ -2,14 +2,13 @@
 
 # Launchpad Pro
 
-Open-source firmware for the Novation Launchpad Pro grid controller! This project is based on dvhdr's launchpad-prod project here:
-https://github.com/dvhdr/launchpad-pro
+Open-source firmware for the Novation Launchpad Pro grid controller! This project is based on [dvhdr's launchpad-pro project](https://github.com/dvhdr/launchpad-pro).
 
 This firmware was developed for use with Reason Studio's Reason DAW.
 
 # Installing the Firmware
 
-If you can't (or don't want to) build the project from source, you can simply send the launchpad_pro.syx file (in the build directory) to your Launchpad Pro.
+If you can't (or don't want to) build the project from source, you can simply send the `launchpad_pro.syx` file (in the build directory) to your Launchpad Pro.
 I use [MIDI-OX](http://www.midiox.com/) to send the firmware through, but there are other tools that can do that too.
 
 1. Turn off your Launchpad Pro
@@ -34,14 +33,15 @@ On Windows, these are the paths where to install those files:
 # Usage
 
 For a visual example and explanation of this firmware's feature, see the demo video here:
+
 [TBD]
 
 ## Global Utilities
 
 ### Modes
 
-Cycle through the modes by pressing the "Mode Switch" button (labeled "User" on the LPP).
-Toggle keyboard/kong note mode by pressing the "Note Switch" button (labeled "Note" on the LPP).
+Cycle through the modes by pressing the `Mode Switch` button (labeled `User` on the LPP).
+Toggle keyboard/kong note mode by pressing the `Note Switch` button (labeled `Note` on the LPP).
 
 ### MIDI Transport Controls
 
@@ -56,19 +56,19 @@ MIDI transport buttons are defined on the very bottom row.
 
 ### Velocity Toggle
 
-The bottom-left button (labeled "Record Arm" on the LPP) toggles between full-velocity and velocity-sensitive modeds for MIDI notes sent from the LPP.
+The bottom-left button (labeled `Record Arm` on the LPP) toggles between full-velocity and velocity-sensitive modeds for MIDI notes sent from the LPP.
 
 ### Transpose
 
-To transpose the notes sent by the LPP, use the "Up" and "Down" buttons (top-left of the LPP).
-- "Up": Transpose one full octave up
-- "Down": Transpose one full octave down
-- "Shift" + "Up": Transpose one semi-tone up
-- "Shift" + "Down": Transpose one semi-tone down
+To transpose the notes sent by the LPP, use the `Up` and `Down` buttons (top-left of the LPP).
+- `Up`: Transpose one full octave up
+- `Down`: Transpose one full octave down
+- `Shift Up`: Transpose one semi-tone up
+- `Shift Down`: Transpose one semi-tone down
 
 ### Track Selection
 
-To switch target tracks in Reason, use the "Left" and "Right" buttons (top row of the LPP).
+To switch target tracks in Reason, use the `Left` and `Right` buttons (top row of the LPP).
 
 ## Modes
 
