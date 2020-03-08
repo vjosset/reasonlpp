@@ -248,17 +248,17 @@ CC Map:
 			+---+---+---+---+---+---+---+---+
 	
 	Midi note map:
-		C-2:   0		0x00
+		C-2:   0		0x00 (Min Axiom)
 		C-1:  12		0x0C
 		C 0:  24		0x18
-		C 1:  36		0x24
+		C 1:  36		0x24 (Kong Pad 1)
 		C 2:  48		0x30
 		C 3:  60		0x3C
 		C 4:  72		0x48
 		C 5:  84		0x54
 		C 6:  96		0x60
 		C 7: 108		0x6C
-		C 8: 120		0x78
+		C 8: 120		0x78 (Max Axiom)
 
 	GLOBAL CC
 		STOP: 				10
