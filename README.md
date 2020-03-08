@@ -158,4 +158,4 @@ Each note pad is aftertouch-sensitive, sending MIDI aftertouch based on pad pres
 ## Dithering
 
 Since the fader/rotary controls have a limited resolution, I implemented progressive CC changes where appropriate.
-This means that moving a fader between 0 and 100% will not happen instantaneously, but smoothly. This avoids unintended glitchy parameter changes.
+This means that moving a fader between 0% and 100% will not happen instantaneously, but smoothly. This avoids unintended glitchy parameter changes.
