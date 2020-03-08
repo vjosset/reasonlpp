@@ -114,3 +114,38 @@ When targeting a Mixer 14:2, the blue buttons represent the first eight channel 
 
 When targetting a Line Mixer 6:2, columns 1-6 of blue buttons represent the first fix channel volumes, column 7 controls the main Aux return level, and column 8 controls the master volume on the mixer.
 The first six green buttons control each channel's "Solo". Green buttons 6 and 7 do nothing.
+
+# MIDI Implementation
+
+## CC Values
+
+### MIDI Transport
+
+MIDI transport use the following CCs:
+- Play: 16
+- Stop: 10
+- Record: 12
+- Loop: 13
+- Rewind: 15
+- Fast Forward: 14
+- Previous Track: 20
+- Next Track: 21
+
+### Combinator Mode
+
+In Combinator mode:
+- Faders (blue pads) control CCs 40 through 43
+- Toggles (green pads) control CCs 50 through 57
+
+### Mixer Mode
+
+In Mixer mode:
+- Faders (blue pads) control CCs 44 through 47
+- Toggles (green pads) control CCs 54 through 57
+
+### X/Y Mode
+
+In X/Y mode:
+- X controls CC 44
+- Y controls CC 45
+
