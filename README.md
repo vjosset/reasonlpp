@@ -82,7 +82,12 @@ In this mode, each square pad is a note.
 In "Keyboard" note mode, each color represents one full octave.
 In "Kong" note mode, each color is a set of 16 MIDI notes, allowing you to set up one combinator with four Kongs, each responding to a set of 16 square buttons.
 
+#### Keyboard Note Mode
+
 ![Keyboard Note Map](ReasonLPPNoteMap.png "Keyboard Note Map")
+
+#### Kong Note Mode
+
 ![Kong Note Map](ReasonLPPKongMap.png "Kong Note Map")
 
 ### Combinator
