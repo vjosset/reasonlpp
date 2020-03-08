@@ -8,7 +8,7 @@ This firmware was developed for use with Reason Studio's Reason DAW.
 
 # Installing the Firmware
 
-If you can't (or don't want to) build the project from source, you can simply send the `launchpad_pro.syx` file (in the build directory) to your Launchpad Pro.
+If you can't (or don't want to) build the project from source, you can simply send the `launchpad_pro.syx` file (in the `build` directory) to your Launchpad Pro.
 I use [MIDI-OX](http://www.midiox.com/) to send the firmware through, but there are other tools that can do that too.
 
 1. Turn off your Launchpad Pro
@@ -23,16 +23,16 @@ I use [MIDI-OX](http://www.midiox.com/) to send the firmware through, but there 
 # Installing the Reason Remote Map
 
 For use with Reason, you will also need to install the Remote mapping files:
-- `vincelpp.midicodec`
-- `vincelpp.remotemap`
+- `reasonlpp.midicodec`
+- `reasonlpp.remotemap`
 
 On Windows, these are the paths where to install those files:
-- C:\ProgramData\Propellerhead Software\Remote\Codecs\MIDI Codecs\vincelpp.midicodec
-- C:\ProgramData\Propellerhead Software\Remote\Maps\Other\vincelpp.remotemap
+- C:\ProgramData\Propellerhead Software\Remote\Codecs\MIDI Codecs\reasonlpp.midicodec
+- C:\ProgramData\Propellerhead Software\Remote\Maps\Other\reasonlpp.remotemap
 
 # Usage
 
-For a visual example and explanation of this firmware's feature, see the demo video here:
+For a quick visual example and explanation of this firmware's feature, see the demo video here:
 
 [TBD]
 
@@ -47,12 +47,12 @@ Toggle keyboard/kong note mode by pressing the `Note Switch` button (labeled `No
 
 MIDI transport buttons are defined on the very bottom row.
 
-- Toggle Loop: "Mute" button on the LPP
-- Rewind: "Solo" button on the LPP
-- Fast Forward: "Volume" button on the LPP
-- Stop: "Pan" button on the LPP
-- Play: "Sends" button on the LPP
-- Record: "Stop Clip" button on the LPP
+- Toggle Loop: `Mute` button on the LPP
+- Rewind: `Solo` button on the LPP
+- Fast Forward: `Volume` button on the LPP
+- Stop: `Pan` button on the LPP
+- Play: `Sends` button on the LPP
+- Record: `Stop Clip` button on the LPP
 
 ### Velocity Toggle
 
