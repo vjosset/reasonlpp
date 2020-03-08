@@ -16,7 +16,7 @@ I use [MIDI-OX](http://www.midiox.com/) to send the firmware through, but there 
 3. Launch MIDI-OX 
 4. Select your Launchpad Pro as an Output device (Options - Midi Devices - Midi Outputs)
 5. Actions - Send - SysEx file
-6. Select the sysex file (launchpad_pro.syx)
+6. Select the sysex file (`launchpad_pro.syx`)
 7. Wait for the send to complete
 8. Done!
 
