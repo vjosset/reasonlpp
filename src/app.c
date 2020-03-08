@@ -510,7 +510,7 @@ void draw_pads_combi() {
 	for (u8 x = 5; x < 9; x++) {
 		u8 y = 1;
 		
-		if (cc_target_values[get_pad_toggle_cc_number((y * 10) + x)] > 0) {
+		if (cc_actual_values[get_pad_toggle_cc_number((y * 10) + x)] > 0) {
 			// Set this toggle button to "on"
 			set_color((y * 10) + x, COLOR_TOGGLE_ON);
 		} else {
