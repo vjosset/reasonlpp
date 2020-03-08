@@ -38,6 +38,8 @@ For a quick visual example and explanation of this firmware's feature, see the d
 
 ## Global Utilities
 
+![Global Utils](ReasonLPPGlobalControls.png "Global Utils")
+
 ### Modes
 
 Cycle through the modes by pressing the `Mode Switch` button (labeled `User` on the LPP).
