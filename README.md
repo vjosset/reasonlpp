@@ -121,7 +121,7 @@ The first six green buttons control each channel's "Solo". Green buttons 6 and 7
 
 ### MIDI Transport
 
-MIDI transport use the following CCs:
+MIDI transport uses the following CCs:
 - Play: `16`
 - Stop: `10`
 - Record: `12`
@@ -149,3 +149,13 @@ In X/Y mode:
 - X controls CC `44`
 - Y controls CC `45`
 
+# Notes
+
+## Aftertouch
+
+Each note pad is aftertouch-sensitive, sending MIDI aftertouch based on pad pressure.
+
+## Dithering
+
+Since the fader/rotary controls have a limited resolution, I implemented progressive CC changes where appropriate.
+This means that moving a fader between 0 and 100% will not happen instantaneously, but smoothly. This avoids unintended glitchy parameter changes.
