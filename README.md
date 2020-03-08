@@ -27,8 +27,8 @@ For use with Reason, you will also need to install the Remote mapping files:
 - `reasonlpp.remotemap`
 
 On Windows, these are the paths where to install those files:
-- C:\ProgramData\Propellerhead Software\Remote\Codecs\MIDI Codecs\reasonlpp.midicodec
-- C:\ProgramData\Propellerhead Software\Remote\Maps\Other\reasonlpp.remotemap
+- `C:\ProgramData\Propellerhead Software\Remote\Codecs\MIDI Codecs\reasonlpp.midicodec`
+- `C:\ProgramData\Propellerhead Software\Remote\Maps\Other\reasonlpp.remotemap`
 
 # Usage
 
