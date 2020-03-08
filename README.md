@@ -112,7 +112,7 @@ When targeting a Mixer 14:2, the blue buttons represent the first eight channel 
 
 #### Line Mixer 6:2
 
-When targetting a Line Mixer 6:2, columns 1-6 of blue buttons represent the first fix channel volumes, column 7 controls the main Aux return level, and column 8 controls the master volume on the mixer.
+When targetting a Line Mixer 6:2, columns 1-6 of blue buttons represent the first six channel volumes, column 7 controls the main Aux return level, and column 8 controls the master volume on the mixer.
 The first six green buttons control each channel's "Solo". Green buttons 6 and 7 do nothing.
 
 # MIDI Implementation
