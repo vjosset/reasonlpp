@@ -1,8 +1,8 @@
 Universal MIDI Codec Control Surface Definition File				
 File Format Version	1.0.0			
 Control Surface Manufacturer	<Other>
-Control Surface Model	vincelpp
-Codec Version	1.0.4
+Control Surface Model	reasonlpp
+Codec Version	1.0.0
 
 Setup Info Text	Use this generic control surface model if you have a MIDI keyboard with programmable controls (knobs, buttons or faders), that isn't listed on the Model menu.
 Setup Info Text	To control parameters on devices in the program, you need to set up the controls on your keyboard to send MIDI CC messages according to the "MIDI Implementation Charts" document in the Documentation folder.
