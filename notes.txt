@@ -275,12 +275,11 @@ CC Map:
 	GLOBAL VARS
 		Note mode
 			Kong or Keyboard
-		Current octave offset (applies to bottom-left pad)
-			0 - 6
-		Current transpose offset (-11 -> 11, default 0)
-			-11: Transpose - 11
-			  0: Transpose 0
-			 11: Transpose + 11
+		Current transpose offset (default 36, always positive)
+			Octave Up = Transpose + 12
+			Octave Down = Transpose - 12
+			Transpose Up = Transpose + 1
+			Transpose Down = Transpose - 1
 		Global midi channel
 		Color defs
 			Pressed: White
@@ -296,8 +295,8 @@ CC Map:
 				FF: ???
 				RW: ???
 			X/Y map:
-				Not selected: Dark Green
-				Selected: Bright Green
+				Not selected: Blue
+				Selected: White
 				
 		Color map per mode and note mode (array of arrays)
 		Is shift pressed
@@ -340,8 +339,6 @@ CC Map:
 			Octave offset - 1
 		Prev Track
 		Next Track
-		Prev Patch
-		Next Patch
 		
 	
 	MODES
@@ -351,12 +348,12 @@ CC Map:
 		2. COMBINATOR
 			2.a. Keyboard
 				32 Notes - C1 -> G3 (Split colors in three octaves)
-				4 faders  - CC 30 - 33
-				4 toggles - CC 34 - 37
+				4 faders  - CC 44 - 47
+				4 toggles - CC 54 - 57
 			2.b. 2 Kongs
 				32 Notes - C1 -> G3 (Split colors in two sections/kongs)
-				4 faders  - CC 30 - 33
-				4 toggles - CC 34 - 37
+				4 faders  - CC 44 - 47
+				4 toggles - CC 54 - 57
 		3. X/Y CV
 			64 X/Y values for two CCs (X: 60, Y: 61)
 				Pad 0 = CC value   0
