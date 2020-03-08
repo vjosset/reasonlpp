@@ -82,13 +82,22 @@ In this mode, each square pad is a note.
 In "Keyboard" note mode, each color represents one full octave.
 In "Kong" note mode, each color is a set of 16 MIDI notes, allowing you to set up one combinator with four Kongs, each responding to a set of 16 square buttons.
 
+![Keyboard Note Map](ReasonLPPNoteMap.png "Keyboard Note Map")
+![Kong Note Map](ReasonLPPKongMap.png "Kong Note Map")
+
 ### Combinator
 
 In this mode, the left half of the square buttons represents a keyboard (or two Kongs). The right half is used to control the Combinator's rotary and toggle controls.
 
+![Combinator Controls](ReasonLPPCombiControls.png "Combinator Controls")
+
 ### X/Y
 
 In this mode, the full grid represents a two-dimensional control for two CC values.
+
+![X/Y Controls](ReasonLPPXYControls.png "X/Y Controls")
+
+When targeting a Combinator, X is Rotary 1 and Y is Rotary 2.
 
 ### Mixer
 
