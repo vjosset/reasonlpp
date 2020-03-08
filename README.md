@@ -159,3 +159,9 @@ Each note pad is aftertouch-sensitive, sending MIDI aftertouch based on pad pres
 
 Since the fader/rotary controls have a limited resolution, I implemented progressive CC changes where appropriate.
 This means that moving a fader between 0% and 100% will not happen instantaneously, but smoothly. This avoids unintended glitchy parameter changes.
+
+## Rolling Back/Factory Reset
+
+If for whatever reason you want to go back to the original setup of your Launchpad Pro, you can flash the factory firmware by following the instructions here:
+
+https://github.com/dvhdr/launchpad-pro#bricked-it
