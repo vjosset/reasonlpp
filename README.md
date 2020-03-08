@@ -65,8 +65,8 @@ The bottom-left button (labeled `Record Arm` on the LPP) toggles between full-ve
 To transpose the notes sent by the LPP, use the `Up` and `Down` buttons (top-left of the LPP).
 - `Up`: Transpose one full octave up
 - `Down`: Transpose one full octave down
-- `Shift Up`: Transpose one semi-tone up
-- `Shift Down`: Transpose one semi-tone down
+- `Shift + Up`: Transpose one semi-tone up
+- `Shift + Down`: Transpose one semi-tone down
 
 ### Track Selection
 
