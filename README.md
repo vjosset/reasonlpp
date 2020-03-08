@@ -122,30 +122,30 @@ The first six green buttons control each channel's "Solo". Green buttons 6 and 7
 ### MIDI Transport
 
 MIDI transport use the following CCs:
-- Play: 16
-- Stop: 10
-- Record: 12
-- Loop: 13
-- Rewind: 15
-- Fast Forward: 14
-- Previous Track: 20
-- Next Track: 21
+- Play: `16`
+- Stop: `10`
+- Record: `12`
+- Loop: `13`
+- Rewind: `15`
+- Fast Forward: `14`
+- Previous Track: `20`
+- Next Track: `21`
 
 ### Combinator Mode
 
 In Combinator mode:
-- Faders (blue pads) control CCs 40 through 43
-- Toggles (green pads) control CCs 50 through 57
+- Faders (blue pads) control CCs `44` through `47`
+- Toggles (green pads) control CCs `54` through `57`
 
 ### Mixer Mode
 
 In Mixer mode:
-- Faders (blue pads) control CCs 44 through 47
-- Toggles (green pads) control CCs 54 through 57
+- Faders (blue pads) control CCs `40` through `47`
+- Toggles (green pads) control CCs `50` through `57`
 
 ### X/Y Mode
 
 In X/Y mode:
-- X controls CC 44
-- Y controls CC 45
+- X controls CC `44`
+- Y controls CC `45`
 
