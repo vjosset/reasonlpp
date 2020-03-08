@@ -62,14 +62,14 @@ CC Map:
 	037
 	038
 	039
-	040 Mixer Channel 1 / Combinator Fader 1 / X
-	041 Mixer Channel 2 / Combinator Fader 2 / Y
-	042 Mixer Channel 3 / Combinator Fader 3
-	043 Mixer Channel 4 / Combinator Fader 4
-	044 Mixer Channel 5
-	045 Mixer Channel 6
-	046 Mixer Channel 7
-	047 Mixer Channel 8
+	040 Mixer Channel 1
+	041 Mixer Channel 2
+	042 Mixer Channel 3
+	043 Mixer Channel 4
+	044 Mixer Channel 5 / Combinator Fader 1 / X
+	045 Mixer Channel 6 / Combinator Fader 2 / Y
+	046 Mixer Channel 7 / Combinator Fader 3
+	047 Mixer Channel 8 / Combinator Fader 4
 	048
 	049
 	050 Mixer Toggle 1
